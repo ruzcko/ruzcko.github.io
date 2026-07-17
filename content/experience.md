@@ -5,12 +5,13 @@ date: 2026-07-17
 type: landing
 
 design:
-  spacing: '4rem'
+  spacing: '5rem'
 
 sections:
   - block: markdown
+    id: academic-experience
     content:
-      title: Academic and research experience
+      title: Academic and Research Experience
       text: |-
         ### PhD Researcher in Artificial Intelligence
         **Ulsan National Institute of Science and Technology (UNIST)** | South Korea | 2023-present
@@ -35,8 +36,9 @@ sections:
       columns: '1'
 
   - block: markdown
+    id: industry-experience
     content:
-      title: Industry and professional experience
+      title: Industry and Professional Experience
       text: |-
         ### Consultant, Data Science and Analytics
         **Qadworks Technical Solutions, Inc.** | USA | 2022
@@ -66,6 +68,7 @@ sections:
       columns: '1'
 
   - block: markdown
+    id: education
     content:
       title: Education
       text: |-
@@ -91,8 +94,9 @@ sections:
       columns: '1'
 
   - block: markdown
+    id: skills-credentials
     content:
-      title: Skills and credentials
+      title: Skills and Credentials
       text: |-
         **Programming:** Python, SQL, MATLAB, C++, R, HTML, CSS, JavaScript<br>
         **AI and data:** PyTorch, scikit-learn, pandas, NumPy, Matplotlib, Seaborn, Tableau, Power BI<br>

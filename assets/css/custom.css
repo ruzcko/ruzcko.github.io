@@ -1,25 +1,41 @@
-#section-resume-biography {
-  padding-block: 1.5rem;
+#academic-experience .prose,
+#industry-experience .prose {
+  border-inline-start: 2px solid color-mix(in oklab, var(--color-primary-500) 30%, transparent);
+  padding-inline-start: 2rem;
 }
 
-#section-resume-biography + #section-markdown {
-  padding-top: 2.5rem;
+#academic-experience .prose h3,
+#industry-experience .prose h3 {
+  position: relative;
+  margin-top: 3rem;
 }
 
-#section-resume-biography .bio-text {
-  line-height: 1.7;
+#academic-experience .prose h3:first-child,
+#industry-experience .prose h3:first-child {
+  margin-top: 0;
+}
+
+#academic-experience .prose h3::before,
+#industry-experience .prose h3::before {
+  position: absolute;
+  top: 0.55em;
+  inset-inline-start: -2.45rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  box-shadow: 0 0 0 5px var(--hb-color-background);
+  content: '';
 }
 
 @media (max-width: 640px) {
-  #section-resume-biography {
-    padding-block: 1rem;
+  #academic-experience .prose,
+  #industry-experience .prose {
+    padding-inline-start: 1.5rem;
   }
 
-  #section-resume-biography .resume-biography {
-    padding-inline: 1rem;
-  }
-
-  #section-resume-biography + #section-markdown {
-    padding-top: 2rem;
+  #academic-experience .prose h3::before,
+  #industry-experience .prose h3::before {
+    inset-inline-start: -1.95rem;
   }
 }

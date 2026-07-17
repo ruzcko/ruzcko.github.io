@@ -3,6 +3,7 @@ title: Projects
 summary: Research projects in remote sensing, computer vision, and climate AI.
 date: 2026-07-17
 type: landing
+draft: true
 
 sections:
   - block: markdown

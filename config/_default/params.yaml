@@ -32,14 +32,14 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   theme:
     # Mode: 'light', 'dark', or 'system' (follows OS preference)
-    mode: light
+    mode: system
     # Theme pack: name from data/themes/ or { light: "x", dark: "y" } for mix-and-match
     pack: "default"
     # Optional: Override theme pack colors
     colors:
-      primary: "teal" # Tailwind palette name or hex (e.g., "indigo" or "#6366f1")
-      secondary: "amber"
-      neutral: "zinc" # Affects gray utilities (text-gray-*, bg-gray-*)
+      primary: "" # Tailwind palette name or hex (e.g., "indigo" or "#6366f1")
+      secondary: ""
+      neutral: "" # Affects gray utilities (text-gray-*, bg-gray-*)
     # Optional: Mode-specific color overrides
     colors_light: {}
     colors_dark: {}
@@ -68,11 +68,11 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   layout:
     # Border radius: 'none', 'sm', 'md', 'lg', or 'full'
-    radius: "sm"
+    radius: "md"
     # Spacing density: 'compact', 'comfortable', or 'spacious'
-    spacing: "comfortable"
+    spacing: "spacious"
     # Avatar shape in author profiles
-    avatar_shape: rounded # circle | square | rounded
+    avatar_shape: circle # circle | square | rounded
 
   # ────────────────────────────────────────────────────────────────────────────
   # HEADER
@@ -87,7 +87,7 @@ hugoblox:
     # Menu alignment
     align: center # left | center | right
     # Feature toggles
-    search: false
+    search: true
     theme_toggle: true
     theme_picker: false
     language_switcher: false
@@ -163,7 +163,7 @@ hugoblox:
       enable: true
     # Reading time estimates
     reading_time:
-      enable: true
+      enable: false
     # Academic citations
     citations:
       style: apa # apa | mla | chicago | ieee
@@ -173,7 +173,7 @@ hugoblox:
   # Site search
   # ────────────────────────────────────────────────────────────────────────────
   search:
-    enable: false
+    enable: true
     # Trending/suggested search terms
     suggestions: []
     # Quick action shortcuts in search modal
