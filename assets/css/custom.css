@@ -1,0 +1,25 @@
+#section-resume-biography {
+  padding-block: 1.5rem;
+}
+
+#section-resume-biography + #section-markdown {
+  padding-top: 2.5rem;
+}
+
+#section-resume-biography .bio-text {
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  #section-resume-biography {
+    padding-block: 1rem;
+  }
+
+  #section-resume-biography .resume-biography {
+    padding-inline: 1rem;
+  }
+
+  #section-resume-biography + #section-markdown {
+    padding-top: 2rem;
+  }
+}

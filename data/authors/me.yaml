@@ -1,0 +1,92 @@
+schema: hugoblox/author/v1
+slug: me
+is_owner: true
+
+name:
+  display: Rogelio Ruzcko Tobias
+  given: Rogelio Ruzcko
+  family: Tobias
+
+role: PhD Researcher in Artificial Intelligence
+
+bio: |
+  I develop machine learning and computer vision methods for remote sensing,
+  Earth observation, and climate-related applications. My current research
+  focuses on reliable change detection and synthetic-data-assisted learning
+  from satellite imagery.
+
+affiliations:
+  - name: Ulsan National Institute of Science and Technology (UNIST)
+    url: https://www.unist.ac.kr/
+  - name: IRIS Lab
+    url: https://irisunist.wixsite.com/irislab
+
+links:
+  - icon: at-symbol
+    url: mailto:ruzcko@unist.ac.kr
+    label: Email
+  - icon: brands/github
+    url: https://github.com/ruzcko
+    label: GitHub
+  - icon: brands/linkedin
+    url: https://www.linkedin.com/in/ruzcko/
+    label: LinkedIn
+  - icon: academicons/google-scholar
+    url: https://scholar.google.com/citations?user=bu33uNwAAAAJ
+    label: Google Scholar
+  - icon: academicons/orcid
+    url: https://orcid.org/0000-0003-3353-6074
+    label: ORCID
+
+interests:
+  - AI for Earth observation
+  - Remote sensing and satellite imagery
+  - Computer vision and change detection
+  - Climate and environmental applications
+
+education:
+  - degree: PhD in Artificial Intelligence
+    institution: Ulsan National Institute of Science and Technology (UNIST)
+    start: "Present"
+    summary: Global Korea Scholarship
+  - degree: MS in Electronics and Communications Engineering
+    institution: De La Salle University
+    start: "2021"
+    summary: CGPA 4.00/4.00; Research Award; Industry-Academe Scholarship
+  - degree: BS in Electronics Engineering
+    institution: National University-Asia Pacific College
+    start: "2017"
+    summary: SM Foundation Scholarship
+  - degree: Korean Language and Culture Studies
+    institution: Sunchon National University
+    start: "2023"
+    summary: Global Korea Scholarship; TOPIK II Level 3
+
+skills:
+  - name: Research and Engineering
+    items:
+      - label: Python and PyTorch
+        level: 5
+      - label: Machine learning and computer vision
+        level: 5
+      - label: Remote sensing analysis
+        level: 5
+  - name: Data and Development
+    items:
+      - label: SQL and data analytics
+        level: 4
+      - label: Web development
+        level: 4
+      - label: Cloud platforms
+        level: 3
+
+awards:
+  - title: Gilas Award
+    awarder: Embassy of the Republic of the Philippines, South Korea
+    date: "2023-01-01"
+  - title: Research Award
+    awarder: De La Salle University
+    date: "2021-01-01"
+  - title: Outstanding Performance Award
+    awarder: National University
+    date: "2021-01-01"
