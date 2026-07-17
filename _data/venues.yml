@@ -7,3 +7,31 @@
 
 "Vision":
   color: "#009f36"
+
+"ICML":
+  url: https://icml.cc/
+  color: "#ff7f0e"
+
+"NeurIPS":
+  url: https://nips.cc/
+  color: "#4caf50"
+
+"CVPR":
+  url: https://cvpr.thecvf.com/
+  color: "#0055ff"
+
+"ECCV":
+  url: https://eccv2022.ecva.net/
+  color: "#ff5722"
+
+"ICLR":
+  url: https://iclr.cc/
+  color: "#8e44ad"
+
+"AAAI":
+  url: https://aaai.org/
+  color: "#f39c12"
+
+"KJRS":
+  url: http://www.kjrs.or.kr/
+  color: "#27ae60"

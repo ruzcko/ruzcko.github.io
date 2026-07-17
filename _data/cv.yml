@@ -2,96 +2,273 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
-    - name: Languages
-      value: English, German
+      value: Rogelio Ruzcko Tobias
+    - name: Email
+      value: ruzcko@unist.ac.kr
+    - name: Phone
+      value: +82 10 9775 0816
 
 - title: Education
   type: time_table
   contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
+    - title: PhD in Artificial Intelligence
+      institution: Ulsan National Institute of Science and Technology (UNIST), Ulsan, South Korea
+      year: Present
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Federal teaching diploma
-      institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
-      year: 1900
+        - Global Korea Scholarship
+    - title: MS in Electronics and Communications Engineering
+      institution: De La Salle University, Manila, Philippines
+      year: September 2021
       description:
-        - Description 1.
-        - Description 2.
+        - "CGPA: 4.00 / 4.00"
+        - Research Award
+        - Industry-Academe Scholarship
+    - title: BS in Electronics Engineering
+      institution: National University-Asia Pacific College, Makati, Philippines
+      year: September 2017
+      description:
+        - SM Foundation Scholarship
+    - title: Korean Language and Culture Studies
+      institution: Sunchon National University, Suncheon, South Korea
+      year: August 2023
+      description:
+        - Global Korea Scholarship
+        - TOPIK II Level 3 (Korean Language Proficiency Test)
+    - title: Manila Science High School
+      institution: Special Science Curriculum Secondary Education, Manila, Philippines
+      year: March 2012
 
-- title: Experience
+- title: Research and Academic Experience
   type: time_table
   contents:
-    - title: Professor of Theoretical Physics
-      institution: Institute for Advanced Study, Princeton University
-      year: 1933 - 1955
+    - title: Assistant Professor, College of Engineering
+      institution: National University, Manila, Philippines
+      year: 2021 -- 2022
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Visiting Professor
-      institution: California Institute of Technology, Pasadena, California, US
-      year: 1933
+        - Published 3 multidisciplinary research papers with the Office of the Vice President for Research and Development focusing on applications of Artificial Intelligence and Machine Learning.
+        - Coordinated strategic actions to enhance the research index of National University through faculty research collaborations.
+        - Member, National University Research Council.
+    - title: MS Student Researcher, Intelligent Systems Laboratory
+      institution: De La Salle University, Manila, Philippines
+      year: 2019 -- 2021
       description:
-        - Description 1.
-        - Description 2.
-
-    - title: Director
-      institution: Kaiser Wilhelm Institute for Physics, Berlin, Germany.
-      year: 1917-1933
-
-    - title: Professor of Theoretical Physics
-      institution: Karl-Ferdinand University, Prague, Czechoslovakia
-      year: 1911 - 1917
+        - Published 4 journal articles and 15 research papers with the DLSU Intelligent Systems Laboratory focused on precision agriculture, business intelligence, and biomedical engineering.
+    - title: Lecturer, School of Engineering
+      institution: National University-Asia Pacific College, Makati, Philippines
+      year: 2018 -- 2020
       description:
+        - Published 6 multidisciplinary research papers focusing on image processing, neural networks, machine learning, and app development.
+        - "Subjects handled: Computer Programming, Engineering Mathematics, Engineering Management, Statistics, and Control Systems."
+        - Trained and mentored students for national competitions, won 6 awards from 2018 to 2019.
+        - Best Project, Design Thinking for the Classroom.
 
-    - title: Associate Professor of Theoretical Physics
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1909 - 1911
-
-- title: Open Source Projects
+- title: Administrative Experience
   type: time_table
   contents:
-    - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
-      year: 2015-now
-      description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
+    - title: Multi-Campus Coordinator, Quality Management Office
+      institution: National University, Manila, Philippines
+      year: 2021 -- 2022
+      description:
+        - Co-chair for the Quacquarelli Symonds (QS) Stars Rating committee.
+        - "Developed and implemented strategic initiatives that enhanced institutional standards and practices, leading to the achievement of 3 QS Stars rating."
+        - Created strategic plans and actions to establish National University in local and international rankings.
+        - "Maintained quality standards, services, and policies across campuses, ensuring compliance with CHEd, ISO, PACUCOA, PTC-ACBET, and PICAB."
+        - Top 1, Outstanding Performance Awardee.
 
-- title: Honors and Awards
+- title: Industry Experience
   type: time_table
   contents:
-    - year: 1921
-      items:
-        - Nobel Prize in Physics
-        - Matteucci Medal
-    - year: 2029
-      items:
-        - Max Planck Medal
+    - title: Consultant, Data Science and Analytics
+      institution: Qadworks Technical Solutions, Inc., USA
+      year: 2022
+      description:
+        - Advanced analytics and insights generation by transforming complex data sets into actionable insights using SQL and Python.
+    - title: Consultant, Technology Solutions
+      institution: Talkpush, Ltd., Hong Kong
+      year: 2021
+      description:
+        - Collaborated with the Conversation Design and Engineering team on enhancing chatbots and mobile apps and developed web applications from UI/UX designs.
+    - title: Developer, Robotic Process Automation
+      institution: Accenture, Inc., Philippines
+      year: 2017
+      description:
+        - Developed web-based applications to automate collection, transformation, and delivery of company operating data.
+        - Best Automation Project, Automation University.
+    - title: Associate, IT Shared Services
+      institution: SM Investments Corporation, Philippines
+      year: 2016
+      description:
+        - Maintained IT infrastructure, managed help desk issues, and monitored the SM group network.
 
-- title: Academic Interests
-  type: nested_list
+- title: Professional Licences
+  type: time_table
   contents:
-    - title: Topic 1.
-      items:
-        - Description 1.
-        - Description 2.
-    - title: Topic 2.
-      items:
-        - Description 1.
-        - Description 2.
+    - title: Electronics Engineer
+      institution: "Professional License Number: 0069694"
+      year: 2018 -- Present
+    - title: Electronics Technician
+      institution: "Professional License Number: 0016384"
+      year: 2018 -- Present
 
-- title: Other Interests
+- title: Technical Skills
+  type: map
+  contents:
+    - name: Programming Languages
+      value: Python, SQL, Matlab, C++, R, CSS, HTML, JavaScript
+    - name: AI/ML Frameworks and Libraries
+      value: PyTorch, scikit-learn, pandas, NumPy, Matplotlib, Seaborn
+    - name: Data Science Tools
+      value: Tableau, Power BI
+    - name: Development Environments
+      value: GitHub, Jupyter, Google Colab, Visual Studio Code
+    - name: Cloud Platforms
+      value: Microsoft Azure, Google Cloud Platform
+
+- title: Affiliations
   type: list
   contents:
-    - <u>Hobbies:</u> Hobby 1, Hobby 2, etc.
+    - "PIKO (Pinoy Iskolars sa Korea) | Member"
+    - "NRCP (National Research Council of the Philippines) | Associate Member"
+    - "IEEE (Institute of Electrical and Electronics Engineers) | Member"
+    - "IECEP (Institute of Electronics Engineers of the Philippines) | Member"
+    - "IRCA (International Register of Certificated Auditors) | Lead Auditor - ISO 9001"
+    - "CQI (Chartered Quality Institute) | Lead Auditor - ISO 9001"
+    - "PACUCOA (Philippine Association of Colleges and Universities Commission on Accreditation) | Accreditor"
+
+- title: Research Grants
+  type: time_table
+  contents:
+    - title: Office of the Vice President for Research and Development
+      institution: National University
+      year: ""
+      description:
+        - Springer WorldS4 2022 | London, United Kingdom
+        - TENCON 2021 | Auckland, New Zealand
+        - IALP 2021 | Singapore, Singapore
+    - title: Office of the Vice Chancellor for Research and Innovation
+      institution: De La Salle University
+      year: ""
+      description:
+        - LifeTech 2020 | Kyoto, Japan
+    - title: Research Conference Grant
+      institution: National University-Asia Pacific College
+      year: ""
+      description:
+        - R10 HTC 2020 | Kuching, Malaysia
+        - TENCON 2020 | Osaka, Japan
+        - iC3I 2019 | Singapore, Singapore
+        - HNICEM 2019 | Ilocos Norte, Philippines
+
+- title: Publications
+  type: nested_list
+  contents:
+    - title: Research Profiles
+      items:
+        - "<a href=\"https://scholar.google.com/citations?user=bu33uNwAAAAJ&hl=en&oi=ao\">Google Scholar</a>"
+        - "<a href=\"https://www.researchgate.net/profile/Rogelio-Ruzcko-Tobias\">ResearchGate</a>"
+        - "<a href=\"https://orcid.org/0000-0003-3353-6074\">ORCID: 0000-0003-3353-6074</a>"
+    - title: Journal Publications (Selected)
+      items:
+        - "<a href=\"https://link.springer.com/chapter/10.1007/978-981-19-7663-6_16\"><strong>Tobias, R. R.</strong>, Minglana, J., Hernandez, D. K., Mital, M. E., Roxas, R. E. (2023). Artificial Intelligence Applications in Quality Management Systems of Philippine Higher Education Institutions. Springer WorldS4.</a>"
+        - "<a href=\"https://www.semanticscholar.org/paper/A-Comparative-Analysis-of-Machine-Learning-Modeled-Lauguico-Concepcion/76fbdcf4f587af2c1d28184bfbfde2d4a32bd820?sort=is-influential\">Lauguico, S. C., Concepcion, R. S., Alejandrino, J. D., <strong>Tobias, R. R.</strong>, Macasaet, D. D., and Dadios, E. P. (2020). A Comparative Analysis of Machine Learning Algorithms Modeled from Machine Vision-Based Lettuce Growth Stage Classification in Smart Aquaponics. International Journal of Environmental Science and Development.</a>"
+        - "<a href=\"https://ijain.org/index.php/IJAIN/article/view/466\">Lauguico, S. C., Concepcion, R. S., Alejandrino, J. D., <strong>Tobias, R. R.</strong>, and Dadios, E. P. (2020). Lettuce life stage classification from texture attributes using machine learning estimators and feature selection processes. Int. J. Adv. Intell. Informatics, 6(2), 173.</a>"
+        - "<a href=\"https://www.ijmerr.com/index.php?m=content&c=index&a=show&catid=182&id=1481\">Alejandrino, J. D., Concepcion, R. S., Lauguico, S. C., <strong>Tobias, R. R.</strong>, Venancio, L., Macasaet, D., Bandala, A. A., and Dadios, E. P. (2020). A Machine Learning Approach of Lattice Infill Pattern for Increasing Material Efficiency in Additive Manufacturing Processes. International Journal of Mechanical Engineering and Robotics Research, 1253-1263.</a>"
+        - "<a href=\"https://search.proquest.com/openview/262c5d0900f8688b44962dd673dfdb61/1?pq-origsite=gscholar&cbl=2050686\">Concepcion, R. S., Alejandrino, J. D., Lauguico, S. C., <strong>Tobias, R. R.</strong>, Sybingco, E., Dadios, E. P., and Bandala, A. A. (2020). Lettuce growth stage identification based on phytomorphological variations using coupled color superpixels and multifold watershed transformation. Int. J. Adv. Intell. Informatics, 6(3), 261.</a>"
+    - title: Conference Publications (Selected)
+      items:
+        - "<a href=\"https://ieeexplore.ieee.org/abstract/document/9081283\"><strong>Tobias, R. R.</strong> et al. (2020). Faster R-CNN Model with Momentum Optimizer for RBC and WBC Variants Classification. LifeTech 2020, 235-239.</a>"
+        - "<a href=\"https://ieeexplore.ieee.org/abstract/document/9140733\"><strong>Tobias, R. R.</strong> et al. (2020). CNN-based Deep Learning Model for Chest X-ray Health Classification Using TensorFlow. RIVF 2020, 1-6.</a>"
+        - "<a href=\"https://ieeexplore.ieee.org/abstract/document/9293803\">Mital, M. E., <strong>Tobias, R. R.</strong>, et al. (2020). Transfer Learning Approach for the Classification of Conidial Fungi (Genus Aspergillus) Thru Pre-trained Deep Learning Models. IEEE Reg. 10 Conf., 1-6.</a>"
+        - "<a href=\"https://ieeexplore.ieee.org/abstract/document/9080985\">Guillermo, M., <strong>Tobias, R. R.</strong> et al. (2020). Detection and Classification of Public Security Threats in the Philippines Using Neural Networks. LifeTech 2020, 320-324.</a>"
+        - "<a href=\"https://ieeexplore.ieee.org/abstract/document/9205787\">Concepcion, R. S., Lauguico, S. C., <strong>Tobias, R. R.</strong>, Dadios, E. P., Bandala, A. A., and Sybingco, E. (2020). Estimation of Photosynthetic Growth Signature at the Canopy Scale Using New Genetic Algorithm-Modified Visible Band Triangular Greenness Index. ARIS 2020, 1-6.</a>"
+
+- title: Paper Presentations
+  type: nested_list
+  contents:
+    - title: IALP 2021 | 2021 International Conference on Asian Language Processing
+      items:
+        - Scientific Landscape of Publications in Natural Language Processing in the ASEAN Region on COVID-19: A Bibliometric Approach
+        - Singapore, Singapore, December 11 to 13, 2021
+    - title: TENCON 2021 | The 2021 IEEE Region 10 Conference
+      items:
+        - Science Mapping of Social Media Analytics in Health Through Artificial Intelligence
+        - Auckland, New Zealand, December 07 to 10, 2021
+    - title: TENCON 2020 | The 2020 IEEE Region 10 Conference
+      items:
+        - Hybrid Tree-Fuzzy Logic for Aquaponic Lettuce Growth Stage Classification Based on Canopy Texture Descriptors
+        - Osaka, Japan, November 16 to 19, 2020
+    - title: LifeTech 2020 | The 2020 IEEE 2nd Global Conference on Life Sciences and Technologies
+      items:
+        - Android Application for Chest X-ray Health Classification from a CNN Deep Learning TensorFlow Model
+        - Faster R-CNN Model with Momentum Optimizer for RBC and WBC Variants Classification
+        - Mielparque Kyoto, Kyoto, Japan, March 10 to 12, 2020
+    - title: RIVF 2020 | 2020 RIVF International Conference on Computing and Communication Technologies
+      items:
+        - CNN-based Deep Learning Model for Chest X-ray Health Classification Using TensorFlow
+        - RMIT University, Ho Chi Minh City, Vietnam, April 6 to 7, 2020
+    - title: HNICEM 2020 | Humanoid, Nanotechnology, Information Technology, Communication, Environment, and Management
+      items:
+        - Design and Construction of a Solar Energy Module for Optimizing Solar Energy Efficiency
+        - Philippines, December 28 to 29, 2020
+    - title: iC3I 2019 | The Fourth International Conference on Contemporary Computing and Informatics
+      items:
+        - Throat Detection and Health Classification Using Neural Network
+        - Amity Global Institute, Singapore, December 12 to 14, 2019
+    - title: HNICEM 2019 | Humanoid, Nanotechnology, Information Technology, Communication, Environment, and Management
+      items:
+        - Classification of Landcover from Combined LiDAR and Orthophotos Using Support Vector Machine
+        - Fort Ilocandia Resort Hotel, Laoag City, Ilocos Norte, Philippines, November 28 to December 1, 2019
+
+- title: Professional and Academic Engagements
+  type: nested_list
+  contents:
+    - title: Scholarly Reviewer (Selected)
+      items:
+        - International Journal of Imaging Systems and Technology (IMA)
+        - The IEEE International Conference on Humanoid, Nanotechnology, Information Technology, Communication and Control, Environment, and Management (HNICEM 2020 -- 2021)
+        - The 2021 IEEE Region 10 Conference (TENCON 2021)
+        - The 2021 IEEE/SICE International Symposium on System Integration (SII 2021)
+        - The 2021 International Conference on Robotics and Automation (ICRA 2021)
+    - title: Resource Speaker
+      items:
+        - Intelligent Green Box (IGB) Capacity Training | Eastern Visayas State University, Tacloban City, March 03, 2021
+    - title: Technical Committee Member
+      items:
+        - The IEEE International Conference on Humanoid, Nanotechnology, Information Technology, Communication and Control, Environment, and Management (HNICEM 2019 -- 2021)
+    - title: Adviser
+      items:
+        - Student Organization Association of Regents (APC Student Council) | Asia Pacific College, 2019 -- 2020
+    - title: Mentor/Coach
+      items:
+        - 3rd runner-up, Synergy: Electrical and Electronics Engineering Summit 2019 | UP Diliman, Quezon City, Philippines
+        - 2nd Runner-up, Emerson Student Innovation 2019 | Innovation Center, Miriam College, Quezon City, Philippines
+        - 1st Runner-up, 15th Sweep Innovation and Excellence Awards | Makati, Philippines
+        - Top 10 Finalist, Accenture Program the Future 2019 | Bonifacio Global City, Taguig, Philippines
+
+- title: Awards and Recognitions
+  type: list
+  contents:
+    - "Gilas Award | Embassy of the Republic of the Philippines, South Korea, 2023"
+    - "Research Award | DLSU Office of the Vice Chancellor for Research and Innovation, 2021"
+    - "Outstanding Performance Award | National University, 2021"
+    - "Best Design Thinking Project | Asia Pacific College, 2019"
+    - "Best Automation Project | Accenture, Inc. Automation University, 2017"
+    - "Best Design Project (Thesis) Presenter | Asia Pacific College, 2016"
+    - "Best Design Project (Thesis) Exhibitor | Asia Pacific College, 2016"
+    - "Quizzer | Institute of Electronics Engineers of the Philippines (IECEP), 2014 -- 2016"
+    - "Honor Student | Asia Pacific College, 2012 -- 2014"
+    - "Champion, Inter-College Quiz Bee | Asia Pacific College, 2014"
+    - "Top 4, Beat the Whiz (Math Quiz Bee) | Asia Pacific College, 2013"
+
+- title: Community Engagements
+  type: time_table
+  contents:
+    - title: Google Developer Community
+      institution: Google for Developers
+      year: 2022 -- Present
+    - title: Language Exchange Buddy Program
+      institution: Sunchon National University
+      year: 2022 -- 2023
+    - title: Halalan 2019 Vote Validation
+      institution: Parish Pastoral Council for Responsible Voting (PPCRV)
+      year: 2019

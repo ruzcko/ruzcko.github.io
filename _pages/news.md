@@ -1,7 +1,11 @@
 ---
 layout: page
-title: news
+title: News
 permalink: /news/
+nav: false
+published: false
 ---
 
-{% include news.liquid %}
+## Under construction
+
+Research updates and announcements will be added here.

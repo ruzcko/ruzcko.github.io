@@ -32,3 +32,7 @@
 "planck":
   - firstname: ["Max"]
     url: https://en.wikipedia.org/wiki/Max_Planck
+
+"tobias":
+  - firstname: ["Rogelio Ruzcko", "R. R.", "R. R. Tobias", "Rogelio R.", "Rogelio"]
+    url: https://ruzcko.github.io
