@@ -30,12 +30,7 @@ jobs:
       # The site is a single hand-written page — no build step, no generator.
       # Copy the published files into _site and hand that to Pages.
       - name: Assemble site
-        run: |
-          mkdir -p _site
-          cp index.html me.jpg _site/
-          # cv.pdf is optional: the CV link 404s until the file is added
-          if [ -f cv.pdf ]; then cp cv.pdf _site/; fi
-          ls -la _site
+        run: python3 scripts/build.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
