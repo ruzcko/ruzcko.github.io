@@ -461,8 +461,13 @@
 
     /* Collapse duplicate identity text until the masthead scrolls away,
        keeping the location directly below the portrait on first load. */
-    .side-name, .side-tagline { display: none; }
-    .past-header .side-name, .past-header .side-tagline { display: block; }
+    .side-name, .side-tagline {
+      max-height: 0; opacity: 0; overflow: hidden;
+      transition: max-height .4s ease, opacity .3s ease;
+    }
+    .past-header .side-name, .past-header .side-tagline {
+      max-height: 24px; opacity: 1;
+    }
     .side-meta div + div { margin-top: 0; }
     .past-header .side-meta div + div { margin-top: 2px; }
     .portrait { width: 128px; height: 128px; }
@@ -522,7 +527,7 @@
   [data-seg-panel][hidden] { display: block !important; }
   .pubs[data-view="selected"] .pub,
   .pubs[data-view="selected"] .pub-group { display: block !important; }
-  .side-name, .side-tagline { display: block; }
+  .side-name, .side-tagline { max-height: none; opacity: 1; }
 </style></noscript>
 
 </head>
