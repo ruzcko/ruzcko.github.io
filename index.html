@@ -6,12 +6,16 @@
 <title>Rogelio Ruzcko Tobias</title>
 <meta name="description" content="Rogelio Ruzcko Tobias — AI researcher working on multimodal and vision–language models, generative and state space architectures, and data-efficient learning, currently applied to weather, climate and Earth observation.">
 <link rel="canonical" href="https://ruzcko.github.io/">
+<link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg?v=1">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Rogelio Ruzcko Tobias">
 <meta property="og:description" content="Rogelio Ruzcko Tobias — AI researcher working on multimodal and vision–language models, generative and state space architectures, and data-efficient learning, currently applied to weather, climate and Earth observation.">
 <meta property="og:url" content="https://ruzcko.github.io/">
 <meta property="og:image" content="https://ruzcko.github.io/me.jpg">
+<meta property="og:image:alt" content="Portrait of Rogelio Ruzcko Tobias">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ruzcko.github.io/me.jpg">
+<meta name="twitter:image:alt" content="Portrait of Rogelio Ruzcko Tobias">
 <script>try{var t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
 <style>
   :root {
@@ -208,8 +212,8 @@
   .seg button:last-child { border-right: 0; }
   .seg button { transition: background-color .12s ease, color .12s ease; }
   .seg button:hover { background: var(--rule-soft); color: var(--ink); }
-  .seg button[aria-selected="true"] { background: var(--chip); color: var(--ink); }
-  .seg button[aria-selected="true"]:hover { background: var(--chip); }
+  .seg button[aria-selected="true"], .seg button[aria-pressed="true"] { background: var(--chip); color: var(--ink); }
+  .seg button[aria-selected="true"]:hover, .seg button[aria-pressed="true"]:hover { background: var(--chip); }
   .seg button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
 
   /* ---------- news ---------- */
@@ -513,6 +517,13 @@
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
+<noscript><style>
+  [data-seg], .theme-toggle, .tl-head { display: none; }
+  [data-seg-panel][hidden] { display: block !important; }
+  .pubs[data-view="selected"] .pub,
+  .pubs[data-view="selected"] .pub-group { display: block !important; }
+  .side-name, .side-tagline { opacity: 1; }
+</style></noscript>
 
 </head>
 <body>
@@ -1017,10 +1028,51 @@
     var target = seg.dataset.controls ? document.querySelector(seg.dataset.controls) : null;
     var buttons = seg.querySelectorAll('button');
 
+    // Publication choices filter one collection rather than switch panels.
+    if (target) {
+      seg.setAttribute('role', 'group');
+      buttons.forEach(function (btn) {
+        btn.removeAttribute('role');
+        btn.setAttribute('aria-controls', target.id);
+        btn.setAttribute('aria-pressed', btn.getAttribute('aria-selected'));
+        btn.removeAttribute('aria-selected');
+      });
+    } else {
+      buttons.forEach(function (btn) {
+        var panel = document.querySelector('[data-seg-panel="' + name + '"][data-panel="' + btn.dataset.panel + '"]');
+        btn.id = name + '-tab-' + btn.dataset.panel;
+        btn.tabIndex = btn.getAttribute('aria-selected') === 'true' ? 0 : -1;
+        panel.id = name + '-panel-' + btn.dataset.panel;
+        panel.setAttribute('role', 'tabpanel');
+        panel.setAttribute('aria-labelledby', btn.id);
+        panel.tabIndex = 0;
+        btn.setAttribute('aria-controls', panel.id);
+      });
+      seg.addEventListener('keydown', function (event) {
+        var list = Array.prototype.slice.call(buttons);
+        var index = list.indexOf(event.target);
+        if (index < 0) { return; }
+        if (event.key === 'ArrowRight') { index = (index + 1) % list.length; }
+        else if (event.key === 'ArrowLeft') { index = (index + list.length - 1) % list.length; }
+        else if (event.key === 'Home') { index = 0; }
+        else if (event.key === 'End') { index = list.length - 1; }
+        else { return; }
+        event.preventDefault();
+        list[index].click();
+        list[index].focus();
+      });
+    }
+
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var value = btn.dataset.panel;
-        buttons.forEach(function (b) { b.setAttribute('aria-selected', String(b === btn)); });
+        buttons.forEach(function (b) {
+          if (target) { b.setAttribute('aria-pressed', String(b === btn)); }
+          else {
+            b.setAttribute('aria-selected', String(b === btn));
+            b.tabIndex = b === btn ? 0 : -1;
+          }
+        });
         if (target) { target.dataset.view = value; }
         document.querySelectorAll('[data-seg-panel="' + name + '"]').forEach(function (panel) {
           panel.hidden = panel.dataset.panel !== value;
