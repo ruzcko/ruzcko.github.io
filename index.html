@@ -459,12 +459,12 @@
     .side, main { grid-column: 1; }
     :root { --head-shift: 0px; }
 
-    /* On a phone the header sits directly above the photo, so the name and
-       tagline are redundant at rest. They fade in under the photo once the
-       header has scrolled away. Opacity, not display — the space is always
-       reserved, so nothing below jumps when they arrive. */
-    .side-name, .side-tagline { opacity: 0; transition: opacity .22s ease; }
-    .past-header .side-name, .past-header .side-tagline { opacity: 1; }
+    /* Collapse duplicate identity text until the masthead scrolls away,
+       keeping the location directly below the portrait on first load. */
+    .side-name, .side-tagline { display: none; }
+    .past-header .side-name, .past-header .side-tagline { display: block; }
+    .side-meta div + div { margin-top: 0; }
+    .past-header .side-meta div + div { margin-top: 2px; }
     .portrait { width: 128px; height: 128px; }
 
     /* prefixed with [data-view] so these beat the filtered-view rules above */
@@ -522,7 +522,7 @@
   [data-seg-panel][hidden] { display: block !important; }
   .pubs[data-view="selected"] .pub,
   .pubs[data-view="selected"] .pub-group { display: block !important; }
-  .side-name, .side-tagline { opacity: 1; }
+  .side-name, .side-tagline { display: block; }
 </style></noscript>
 
 </head>
