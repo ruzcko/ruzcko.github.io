@@ -1,0 +1,621 @@
+%-------------------------
+% DI Lab CV in LaTeX
+% Author : Rogelio Ruzcko Tobias
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+\usepackage{kotex}
+%\usepackage{fontawesome}
+\usepackage{fontawesome5}
+\usepackage{academicons}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+\usepackage{times}
+
+\pagestyle{fancy}
+\usepackage{xcolor}
+\usepackage{lastpage}
+
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+\setlength{\marginparwidth}{50pt}
+\setlength{\marginparsep}{10pt}
+
+
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\fancyfoot[R]{\textit{\color{black}{Rogelio Ruzcko Tobias}} \color{black}{$|$ \thepage\ of \pageref{LastPage}}} % Right footer
+\fancyfootoffset[R]{0in}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\usepackage{contour}
+\usepackage[normalem]{ulem}
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\footskip}{14pt}
+
+\begin{document}
+
+%----------HEADING----------
+
+\begin{center}
+    {\huge \scshape Rogelio Ruzcko Tobias} \\ \vspace{3pt}
+    \small \href{mailto:ruzcko@dilab.kr}{{ruzcko@dilab.kr}} $|$ +82 10 9775 0816 $|$ +63 917 305 6717
+    % \href{https://linkedin.com/in/...}{\underline{Google Scholar}} $|$
+\end{center}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+    % {\normalfont(인공지능 박사 학위)}
+      % {PhD \normalfont $|$ Doctor of Philosophy in Artificial Intelligence}{Present}
+      {PhD in Artificial Intelligence}{2023\textasciitilde{}}
+      % {Doctor of Philosophy in Artificial Intelligence}{Present}
+      {Ulsan National Institute of Science and Technology (UNIST)}{Ulsan, South Korea}
+      \resumeItemListStart
+        \resumeItem{Global Korea Scholarship}
+      \resumeItemListEnd
+    \resumeSubheading
+      %{MS \normalfont $|$ Master of Science in Electronics and Communications Engineering}{September 2021}
+      {MS in Electronics and Communications Engineering}{September 2021}
+      %{Master of Science in Electronics and Communications Engineering}{September 2021}
+      {De La Salle University}{Manila, Philippines}
+      \resumeItemListStart
+        \resumeItem{CGPA: \textbf{4.00 / 4.00}}
+        \resumeItem{Research Award}
+      \resumeItemListEnd
+    \resumeSubheading
+      % {BS \normalfont $|$ Bachelor of Science in Electronics Engineering}{September 2017}
+      {BS in Electronics Engineering}{September 2017}
+      % {Bachelor of Science in Electronics Engineering}{September 2017}
+      {Asia Pacific College}{Makati, Philippines}
+      \resumeItemListStart
+        \resumeItem{SM Foundation Scholarship}
+        \\\
+      \resumeItemListEnd
+    \resumeSubheading
+      {Korean Language and Culture Studies}{August 2023}
+      {Sunchon National University}{Suncheon, South Korea}
+      \resumeItemListStart
+        \resumeItem{Global Korea Scholarship}
+        \resumeItem{TOPIK II Level 3 (한국어능력시험 3급)}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Special Science Curriculum Secondary Education}{March 2012}
+      {Manila Science High School}{Manila, Philippines}
+      \newline
+      % \resumeItemListStart
+      %   \resumeItem{}
+      % \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+
+%-----------RESEARCH AND ACADEME EXPERIENCE-----------
+\section{Research and Academic Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Researcher, Climate Intelligence Lab}{Present}
+      {DI Lab, Inc.}{South Korea}
+      \resumeItemListStart
+        \resumeItem{Develop AI models and software for satellite-based climate and disaster monitoring, AI-Radar Map enhancement, and precipitation forecasting}
+        \resumeItem{Fuse satellite imagery, radar, ground observations, numerical weather prediction data, terrain, and environmental data to support climate-risk decisions in agriculture and water management}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {\parbox[t]{0.72\textwidth}{Researcher, IRIS Lab}}{2024 -- 2026}
+      {Ulsan National Institute of Science and Technology (UNIST)}{Ulsan, South Korea}
+      \resumeItemListStart
+        \resumeItem{Developed AI methods for satellite imagery, remote sensing, and geospatial analysis, including change detection, soil-moisture retrieval, disaster assessment, and precipitation nowcasting}
+        \resumeItem{Contributed to a Korean government-funded project supporting AI algorithm development for the GEO-KOMPSAT-5 (GK-5) satellite development}
+        \resumeItem{Grand Prize Winner, Change Detection Algorithm Development at the 2024 Satellite Information Application Contest}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Assistant Professor, College of Engineering}{2021 -- 2022}
+      {National University}{Manila, Philippines}
+      \resumeItemListStart
+        \resumeItem{Published 3 multidisciplinary research papers with the Office of the Vice President for Research and Development focusing on the applications of Artificial Intelligence and Machine Learning}
+        \resumeItem{Coordinated strategic actions to enhance the research index of National University through faculty research collaborations}
+        \resumeItem{Member, National University Research Council}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {MS Student Researcher, Intelligent Systems Laboratory}{2019 -- 2021}
+      {De La Salle University}{Manila, Philippines}
+      \resumeItemListStart
+        \resumeItem{Published 4 journal articles and 15 research papers by collaborating with the DLSU Intelligent Systems Laboratory focused on precision agriculture, business intelligence, and biomedical engineering}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Lecturer, School of Engineering}{2018 -- 2020}
+      {Asia Pacific College}{Makati, Philippines}
+      \resumeItemListStart
+        \resumeItem{Published 6 multidisciplinary research papers focusing on image processing, neural networks, machine learning, and app development}
+        \resumeItem{Subjects handled: Computer Programming, Engineering Mathematics, Engineering Management, Statistics, and Control Systems}
+        \resumeItem{Trained and mentored students for national competitions, won 6 awards from 2018 to 2019}
+        \resumeItem{Best Project, Design Thinking for the Classroom}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------ADMINISTRATIVE EXPERIENCE-----------
+\section{Administrative Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Multi-Campus Coordinator, Quality Management Office}{2021 -- 2022}
+      {National University}{Manila, Philippines}
+      \resumeItemListStart
+        \resumeItem{Co-chair for the Quacquarelli Symonds (QS) Stars Rating committee}
+        \resumeItem{Developed and implemented strategic initiatives that successfully enhanced institutional standards and practices, leading to the achievement of \textbf{3 QS Stars rating}}
+        \resumeItem{Created strategic plans and actions to establish National University in local and international rankings}
+        %\resumeItem{Project lead for the Times Higher Education (THE) Impact Rankings committee}        
+        \resumeItem{Maintained the quality standards, services, and policies across campuses, ensuring compliance with the government and accrediting institutions (CHEd, ISO, PACUCOA, PTC-ACBET, \& PICAB)}
+        \resumeItem{Top 1, Outstanding Performance Awardee}
+        \newline
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+
+%-----------INDUSTRY EXPERIENCE-----------
+\section{Industry Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Consultant, Data Science and Analytics}{2022}
+      {Qadworks Technical Solutions, Inc.}{USA}
+      \resumeItemListStart
+        \resumeItem{Advanced analytics and insights generation: transformed complex data sets into actionable insights, utilizing advanced analytics techniques and tools}
+      \resumeItemListEnd
+      
+    \resumeSubheading
+      {Consultant, Technology Solutions}{2021}
+      {Talkpush, Ltd.}{Hong Kong}
+      \resumeItemListStart
+        \resumeItem{Collaborated with the Conversation Design and Engineering team on enhancing chatbots and mobile apps, and developed web applications, translating UI/UX designs into functional code}
+      \resumeItemListEnd
+      
+% -----------Multiple Positions Heading-----------
+%    \resumeSubSubheading
+%     {Software Engineer I}{Oct 2014 - Sep 2016}
+%     \resumeItemListStart
+%        \resumeItem{Apache Beam}
+%          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
+%     \resumeItemListEnd
+%    \resumeSubHeadingListEnd
+%-------------------------------------------
+
+    \resumeSubheading
+      {Developer Intern, Robotic Process Automation}{2017}
+      {Accenture, Inc.}{Philippines}
+      \resumeItemListStart
+        \resumeItem{Developed web-based applications to automate the collection, transformation, and delivery of a company's operating data}
+        \resumeItem{Best Automation Project, Automation University}
+    \resumeItemListEnd
+
+    \resumeSubheading
+      {Intern, IT Shared Services}{2016}
+      {SM Investments Corporation}{Philippines}
+      \resumeItemListStart
+        \resumeItem{Maintained IT infrastructure, managed help desk issues, and monitored the network of the SM group of companies}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+
+
+%-----------PROFESSIONAL LICENCES-----------
+\section{Professional Licences}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Electronics Engineer}{2018 -- Present}
+      {Professional License Number: 0069694}{}
+      \newline
+
+    \resumeSubheading
+      {Electronics Technician}{2018 -- Present}
+      {Professional License Number: 0016384}{}
+      \newline
+ \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+    \begin{itemize}[leftmargin=0.15in, label={}]
+        \small{\item{
+         \textbf{AI Research Areas}{: Deep Learning, Computer Vision, Remote Sensing, AI Agents, and Language Models} \\
+         \textbf{Programming Languages}{: Python, SQL, R, C++, MATLAB} \\
+         \textbf{ML/DL Frameworks}{: PyTorch, TensorFlow, scikit-learn} \\
+         \textbf{Remote Sensing and Geospatial}{: Change Detection, Geo-LLM, Forecasting, and Super-Resolution} \\
+         \textbf{Data Analysis and Visualization}{: pandas, NumPy, Matplotlib, Seaborn, Tableau, Power BI}\\
+         \textbf{Research and Development Tools}{: Git, GitHub, Jupyter, Google Colab, Visual Studio Code, \LaTeX}\\
+         \textbf{Cloud Platforms}{: Microsoft Azure, Google Cloud Platform}
+        }}
+    \end{itemize}
+
+%-----------PROFESSIONAL AFFILIATIONS-----------
+\section{Affiliations}
+% \begin{itemize}[leftmargin=0.15in, label={}]
+%    \small{\item{
+%      \textbf{PIKO}{ (Pinoy Iskolars sa Korea) | Member} \\
+%      \textbf{NRCP}{ (National Research Council of the Philippines) | Associate Member} \\
+%      \textbf{IEEE}{ (Institute of Electrical and Electronics Engineers) | Member} \\
+%      \textbf{IECEP}{ (Institute of Electronics Engineers of the Philippines) | Member} \\
+%      \textbf{IRCA}{ (International Register of Certificated Auditors) | Lead Auditor - ISO 9001} \\
+%      \textbf{CQI}{ (Chartered Quality Institute) | Lead Auditor - ISO 9001} \\
+%      \textbf{PACUCOA}{ (Philippine Association of Colleges and Universities Commission on Accreditation) | Accreditor} \\
+%    }}
+% \end{itemize}
+
+\begin{itemize}[leftmargin=0.15in, label={}]
+   \small{\item{
+     \textbf{PIKO} \emph{(Pinoy Iskolars sa Korea) | Member} \\
+     \textbf{NRCP} \emph{(National Research Council of the Philippines) | Associate Member} \\
+     \textbf{IEEE} \emph{(Institute of Electrical and Electronics Engineers) | Member} \\
+     \textbf{IECEP} \emph{(Institute of Electronics Engineers of the Philippines) | Member} \\
+     \textbf{IRCA} \emph{(International Register of Certificated Auditors) | Lead Auditor - ISO 9001} \\
+     \textbf{CQI} \emph{(Chartered Quality Institute) | Lead Auditor - ISO 9001} \\
+     \textbf{PACUCOA} \emph{(Philippine Association of Colleges and Universities Commission on Accreditation) | Accreditor} \\
+   }}
+\end{itemize}
+    
+%-----------RESEARCH GRANTS-----------
+\section{Research Grants}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Office of the Vice President for Research and Development} $|$ \emph{National University}}{}
+          \resumeItemListStart
+            \resumeItem{Springer WorldS4 2022 | London, United Kingdom}
+            \resumeItem{TENCON 2021 | Auckland, New Zealand}
+            \resumeItem{IALP 2021 | Singapore, Singapore}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{Office of the Vice Chancellor for Research and Innovation} $|$ \emph{De La Salle University}}{}
+          \resumeItemListStart
+            \resumeItem{LifeTech 2020 | Kyoto, Japan}
+          \resumeItemListEnd
+
+        \resumeProjectHeading
+          {\textbf{Research Conference Grant} $|$ \emph{Asia Pacific College}}{}
+          \resumeItemListStart
+            \resumeItem{R10 HTC 2020 | Kuching, Malaysia}
+            \resumeItem{TENCON 2020 | Osaka, Japan}
+            \resumeItem{iC3I 2019 | Singapore, Singapore}
+            \resumeItem{HNICEM 2019 | Ilocos Norte, Philippines}
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+
+%-----------PUBLICATIONS-----------
+\section{Publications}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Research Profiles}}{}
+          \resumeItemListStart
+            \resumeItem{\href{https://scholar.google.com/citations?user=bu33uNwAAAAJ&hl=en&oi=ao}{\faGraduationCap \ \myuline{Google Scholar}}}
+            \resumeItem{\href{https://www.researchgate.net/profile/Rogelio-Ruzcko-Tobias}{\faUsers \ \underline{ResearchGate}}}
+            \resumeItem{\href{https://orcid.org/0000-0003-3353-6074}{\faOrcid \ \underline{ORCID} $|$ \underline{{0000-0003-3353-6074}}}}
+            
+          \resumeItemListEnd
+          
+      \resumeProjectHeading
+          {\textbf{Journal Publications} $|$ \emph{Selected}}{}
+          \resumeItemListStart
+            \resumeItem{\href{https://doi.org/10.1016/j.jag.2026.105206}{Lee, J., Park, H., Im, J., Koyama, C., \textbf{Tobias, R. R.}, \& Tadono, T. (2026). ESCAPE: An ensemble-based self-calibrated autoencoder with physics-informed estimation of high-resolution soil moisture and surface roughness from ALOS-2/PALSAR-2 polarimetric observations. \emph{International Journal of Applied Earth Observation and Geoinformation}, 147, 105206.}}
+            \resumeItem{\href{https://doi.org/10.7780/kjrs.2024.40.6.3.11}{\textbf{Tobias, R. R.}, Bae, S., Cho, H., \& Im, J. (2024). SAMBA: Synthetic data-augmented Mamba-based change detection algorithm using KOMPSAT-3A imagery. \emph{Korean Journal of Remote Sensing}, 40(6-3), 1505--1521.}}
+            \resumeItem{\href{https://link.springer.com/chapter/10.1007/978-981-19-7663-6_16}{\textbf{Tobias, R. R.}, Minglana, J., Hernandez, D. K., Mital, M. E., Roxas, R. E. (2023). Artificial Intelligence Applications in Quality Management Systems of Philippine Higher Education Institutions. Springer WorldS4.}}
+            
+            \resumeItem{\href{https://www.semanticscholar.org/paper/A-Comparative-Analysis-of-Machine-Learning-Modeled-Lauguico-Concepcion/76fbdcf4f587af2c1d28184bfbfde2d4a32bd820?sort=is-influential}{Lauguico, S. C., Concepcion, R. S., Alejandrino, J. D., \textbf{Tobias, R. R.}, Macasaet, D. D., and Dadios, E. P. (2020). A Comparative Analysis of Machine Learning Algorithms Modeled from Machine Vision-Based Lettuce Growth Stage Classification in Smart Aquaponics. International Journal of Environmental Science and Development.}}
+                                  
+            \resumeItem{\href{https://ijain.org/index.php/IJAIN/article/view/466}{Lauguico, S. C., Concepcion, R. S., Alejandrino, J. D., \textbf{Tobias, R. R.}, and Dadios, E. P., “Lettuce life stage classification from texture attributes using machine learning estimators and feature selection processes,” Int. J. Adv. Intell. Informatics, vol. 6, no. 2, p. 173, 2020.}}
+          \resumeItemListEnd
+      
+      \resumeProjectHeading
+          {\textbf{Conference Publications} $|$ \emph{Selected}}{}
+          \resumeItemListStart
+            \resumeItem{\href{https://www.2025.ieeeigarss.org/view_session.php?SessionID=1417}{\textbf{Tobias, R. R.}, Cho, H., \& Im, J. (2025, August). Building Damage Assessment Captioning: A Vision-Language Dataset Leveraging State Space Models. In \emph{IGARSS 2025 IEEE International Geoscience and Remote Sensing Symposium} (pp. 1445--1449). IEEE.}}
+            \resumeItem{\href{https://ieeexplore.ieee.org/abstract/document/9081283}{\textbf{Tobias, R. R.} et al., “Faster R-CNN Model with Momentum Optimizer for RBC and WBC Variants Classification,” LifeTech 2020 - 2020 IEEE 2nd Global Conference on Life Sciences and Technologies, Mar. 2020, pp. 235–239.}}
+            
+            \resumeItem{\href{https://ieeexplore.ieee.org/abstract/document/9140733}{\textbf{Tobias, R. R.} et al., “CNN-based Deep Learning Model for Chest X-ray Health Classification Using TensorFlow,” 2020 RIVF International Conference on Computing and Communication Technologies, pp. 1–6, 2020.}}
+            
+            \resumeItem{\href{https://ieeexplore.ieee.org/abstract/document/9293803}{Mital, M. E., \textbf{Tobias, R. R.},  et al., “Transfer Learning Approach for the Classification of Conidial Fungi (Genus Aspergillus) Thru Pre-trained Deep Learning Models,” 2020 IEEE Reg. 10 Conf., pp. 1–6, 2020.}}
+            
+            \resumeItem{\href{https://ieeexplore.ieee.org/abstract/document/9080985}{Guillermo, M., \textbf{Tobias, R. R.} et al., “Detection and Classification of Public Security Threats in the Philippines Using Neural Networks,” LifeTech 2020 - 2020 IEEE 2nd Global Conference on Life Sciences and Technologies, Mar. 2020, pp. 320–324.}}
+          \resumeItemListEnd
+
+        
+    \resumeSubHeadingListEnd
+
+
+%-----------PAPER PRESENTATIONS-----------
+\section{Paper Presentations}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{2025 KAGIS Fall Conference and IAGi International Symposium}}{}
+          \resumeItemListStart
+            \resumeItem{Hybrid Deterministic-Diffusion Framework for Probabilistic Precipitation Nowcasting}
+            \resumeItem{Jeju Island, South Korea, November 2025}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{IGARSS 2025} $|$ \emph{2025 IEEE International Geoscience and Remote Sensing Symposium}}{}
+          \resumeItemListStart
+            \resumeItem{Building Damage Assessment Captioning: A Vision-Language Dataset Leveraging State Space Models}
+            \resumeItem{Brisbane, Australia, August 2025}
+          \resumeItemListEnd
+
+      \Needspace{5\baselineskip}
+      \resumeProjectHeading
+          {\textbf{KMS 2025} $|$ \emph{2025 Korean Meteorological Society Spring Conference}}{}
+          \resumeItemListStart
+            \resumeItem{HYDRO: Hybrid Deterministic-Residual Diffusion Framework for Precipitation Nowcasting}
+            \resumeItem{Seoul, South Korea, May 2025}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{IALP 2021} $|$ \emph{2021 International Conference on Asian Language Processing}}{}
+          \resumeItemListStart
+            \resumeItem{Scientific Landscape of Publications in Natural Language Processing in the ASEAN Region on COVID-19: A Bibliometric Approach}
+            \resumeItem{Singapore, Singapore, December 11 to 13, 2021}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{TENCON 2021} $|$ \emph{The 2021 IEEE Region 10 Conference}}{}
+          \resumeItemListStart
+            \resumeItem{Science Mapping of Social Media Analytics in Health Through Artificial Intelligence}
+            \resumeItem{Auckland, New Zealand, December 07 to 10, 2021}
+          \resumeItemListEnd
+
+        \resumeProjectHeading
+          {\textbf{TENCON 2020} $|$ \emph{The 2020 IEEE Region 10 Conference}}{}
+          \resumeItemListStart
+            \resumeItem{Hybrid Tree-Fuzzy Logic for Aquaponic Lettuce Growth Stage Classification Based on Canopy Texture Descriptors}
+            \resumeItem{Osaka, Japan, November 16 to 19, 2020}
+          \resumeItemListEnd
+
+        \resumeProjectHeading
+          {\textbf{LifeTech 2020} $|$ \emph{The 2020 IEEE 2nd Global Conference on Life Sciences and Technologies}}{}
+          \resumeItemListStart
+            \resumeItem{Android Application for Chest X-ray Health Classification from a CNN Deep Learning TensorFlow Model}
+            \resumeItem{Faster R-CNN Model with Momentum Optimizer for RBC and WBC Variants Classification}
+            \resumeItem{Mielparque Kyoto, Kyoto, Japan, March 10 to 12, 2020}
+          \resumeItemListEnd
+
+        \resumeProjectHeading
+          {\textbf{RIVF 2020} $|$ \emph{2020 RIVF International Conference on Computing and Communication Technologies}}{}
+          \resumeItemListStart
+            \resumeItem{CNN-based Deep Learning Model for Chest X-ray Health Classification Using TensorFlow}
+            \resumeItem{RMIT University, Ho Chi Minh City, Vietnam, April 6 to 7, 2020}
+            \newline
+          \resumeItemListEnd
+
+        \resumeProjectHeading
+          {\textbf{HNICEM 2020} $|$ \emph{Humanoid, Nanotechnology, Information Technology, Communication, Environment, and Management}}{}
+          \resumeItemListStart
+            \resumeItem{Design and Construction of a Solar Energy Module for Optimizing Solar Energy Efficiency}
+            \resumeItem{Philippines, December 28 to 29, 2020}
+          \resumeItemListEnd
+
+        \resumeProjectHeading
+          {\textbf{iC3I 2019} $|$ \emph{The Fourth International Conference on Contemporary Computing and informatics}}{}
+          \resumeItemListStart
+            \resumeItem{Throat Detection and Health Classification Using Neural Network}
+            \resumeItem{Amity Global Institute, Singapore, December 12 to 14, 2019}
+          \resumeItemListEnd
+
+        \resumeProjectHeading
+          {\textbf{HNICEM 2019} $|$ \emph{Humanoid, Nanotechnology, Information Technology, Communication, Environment, and Management}}{}
+          \resumeItemListStart
+            \resumeItem{Classification of Landcover from Combined LiDAR and Orthophotos Using Support Vector Machine}
+            \resumeItem{Fort Ilocandia Resort Hotel, Laoag City, Ilocos Norte, Philippines, November 28 to December 1, 2019}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+%-----------PROFESSIONAL AND ACADEMIC ENGAGEMENTS-----------
+\section{Professional and Academic Engagements}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Scholarly Reviewer} $|$ \emph{Selected}}{}
+          \resumeItemListStart
+            \resumeItem{International Journal of Imaging Systems and Technology (IMA)}
+            \resumeItem{The IEEE International Conference on Humanoid, Nanotechnology, Information Technology, Communication and Control, Environment, and Management (HNICEM 2020 -- 2021)}
+            \resumeItem{The 2021 IEEE Region 10 Conference (TENCON 2021)}
+            \resumeItem{The 2021 IEEE/SICE International Symposium on System Integration (SII 2021)}
+            \resumeItem{The 2021 International Conference on Robotics and Automation (ICRA 2021)}
+          \resumeItemListEnd
+        
+      \resumeProjectHeading
+          {\textbf{Resource Speaker}}{}
+          \resumeItemListStart
+            \resumeItem{Intelligent Green Box (IGB) Capacity Training | Eastern Visayas State University, Tacloban City, March 03, 2021}
+          \resumeItemListEnd
+          
+      \resumeProjectHeading
+          {\textbf{Technical Committee Member}}{}
+          \resumeItemListStart
+            \resumeItem{The IEEE International Conference on Humanoid, Nanotechnology, Information Technology, Communication and Control, Environment, and Management (HNICEM 2019 -- 2021)}
+            % \resumeItem{The 13th IEEE International Conference on Humanoid, Nanotechnology, Information Technology, Communication and Control, Environment, and Management (HNICEM 2020)}
+            % \resumeItem{The 12th IEEE International Conference on Humanoid, Nanotechnology, Information Technology, Communication and Control, Environment, and Management (HNICEM 2019)}
+          \resumeItemListEnd
+          
+      \resumeProjectHeading
+          {\textbf{Adviser}}{}
+          \resumeItemListStart
+            \resumeItem{Student Organization Association of Regents (APC Student Council) | Asia Pacific College, 2019 - 2020}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Mentor/Coach}}{}
+          \resumeItemListStart
+            \resumeItem{3rd runner-up, Synergy: Electrical and Electronics Engineering Summit 2019 | UP Diliman, Quezon City, Philippines}
+            \resumeItem{2nd Runner-up, Emerson Student Innovation 2019 | Innovation Center, Miriam College, Quezon City, Philippines}
+            \resumeItem{1st Runner-up, 15th Sweep Innovation and Excellence Awards | Makati, Philippines}
+            \resumeItem{Top 10 Finalist, Accenture Program the Future 2019 | Bonifacio Global City, Taguig, Philippines}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+
+%-----------AWARDS AND RECOGNITIONS-----------
+\section{Awards and Recognitions}
+% \begin{itemize}[leftmargin=0.15in, label={}]
+%    \small{\item{
+%      \textbf{Research Awardee} $|$ \emph{DLSU Office of the Vice Chancellor for Research and Innovation} \\
+%      \textbf{Top 1, Outstanding Performance Award} | National University \\
+%      \textbf{Special Award in Reports and Data Analytics} | National University \\
+%      \textbf{Best Design Thinking Project} | Asia Pacific College \\
+%      \textbf{Best Automation Project} | Accenture, Inc. Automation University \\
+%      \textbf{Best Design Project (Thesis) Presenter} | Asia Pacific College \\
+%      \textbf{Best Design Project (Thesis) Exhibitor} | Asia Pacific College \\
+%      \textbf{Quizzer} | Institute of Electronics Engineers of the Philippines (IECEP) \\
+%      \textbf{Honor Student} | Asia Pacific College \\
+%      \textbf{Champion, Intra-College Quiz Bee} | Asia Pacific College \\
+%      \textbf{Mr. Asia Pacific College 2014 1st Runner-up} | Asia Pacific College \\
+%      \textbf{Top 4, Beat the Whiz (Math Quiz Bee)} | Asia Pacific College \\
+%    }}
+% \end{itemize}
+
+\begin{itemize}[leftmargin=0.15in, label={}]
+   \small{\item{
+        \textbf{Gilas Award} | \emph{Embassy of the Republic of the Philippines to the Republic of Korea, South Korea, 2023, 2025, and 2026} \\
+        \textbf{Outstanding Paper Award} | \emph{The Korean Association of Geographic Information Studies and the International Association of Geo-informatics, South Korea, 2025} \\
+        \textbf{Grand Prize - Algorithm Development} | \emph{Korea Aerospace Administration (KASA), South Korea, 2024} \\
+        \textbf{Research Award} | \emph{DLSU Office of the Vice Chancellor for Research and Innovation, 2021} \\
+        \textbf{Outstanding Performance Award} | \emph{National University, 2021} \\
+        % \textbf{Special Award in Reports and Data Analytics} | \emph{National University} \\
+        \textbf{Best Design Thinking Project} | \emph{Asia Pacific College, 2019} \\
+        \textbf{Best Automation Project} | \emph{Accenture, Inc. Automation University, 2017} \\
+        \textbf{Best Design Project (Thesis) Presenter} | \emph{Asia Pacific College, 2016} \\
+        \textbf{Best Design Project (Thesis) Exhibitor} | \emph{Asia Pacific College, 2016} \\
+        \textbf{Quizzer} | \emph{Institute of Electronics Engineers of the Philippines (IECEP), 2014 -- 2016} \\
+        \textbf{Honor Student} | \emph{Asia Pacific College, 2012 -- 2014} \\
+        \textbf{Champion, Inter-College Quiz Bee} | \emph{Asia Pacific College, 2014} \\
+        % \textbf{Mr. Asia Pacific College 2014 1st Runner-up} | \emph{Asia Pacific College} \\
+        \textbf{Top 4, Beat the Whiz (Math Quiz Bee)} | \emph{Asia Pacific College, 2013} \\
+   }}
+\end{itemize}
+
+%-----------COMMUNITY ENGAGEMENTS-----------
+\section{Community Engagements}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Google Developer Community}{2022 -- Present}
+      {Google for Developers}{}
+      \newline
+      
+    \resumeSubheading
+        {Language Exchange Buddy Program}{2022 -- 2023}
+        {Sunchon National University}{}
+        \newline
+
+    \resumeSubheading
+        {Halalan 2019 Vote Validation}{2019}
+        {Parish Pastoral Council for Responsible Voting (PPCRV)}{}
+        \newline
+      
+ \resumeSubHeadingListEnd
+
+%-------------------------------------------
+\end{document}
