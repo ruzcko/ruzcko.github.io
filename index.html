@@ -165,7 +165,7 @@
   .scroll-header {
     position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; z-index: 20;
     max-width: calc(100% - 24px); width: 460px;
-    border-radius: 999px;
+    border-radius: 999px; isolation: isolate;
     visibility: hidden; transform: translate(-50%, 0);
   }
   .scroll-header.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
@@ -176,7 +176,7 @@
     min-height: 44px; padding: 5px 12px;
     display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0;
   }
-  .section-menu { position: relative; justify-self: start; max-width: 108px; margin-right: 0; opacity: 0; visibility: hidden;
+  .section-menu { position: static; justify-self: start; max-width: 108px; margin-right: 0; opacity: 0; visibility: hidden;
     transition: opacity .35s ease .12s, visibility .35s; }
   .scroll-header.is-visible .section-menu { max-width: 108px; opacity: 1; visibility: visible; margin-right: 0; }
   .section-menu summary {
@@ -193,15 +193,20 @@
   .section-menu summary::-webkit-details-marker { display: none; }
   .menu-icon { width: 17px; height: 17px; flex: none; }
   .section-menu nav {
-    position: absolute; top: calc(100% + 8px); left: 0;
-    width: 220px; max-height: calc(100dvh - 88px); overflow-y: auto;
-    padding: 8px; background: var(--ground); border: 1px solid var(--rule);
-    border-radius: 6px; box-shadow: 0 6px 20px #0002;
+    position: absolute; top: calc(100% + 14px); left: -1px;
+    width: 232px; max-width: calc(100vw - 24px);
+    max-height: var(--menu-height, calc(100dvh - 88px)); overflow-y: auto;
+    padding: 10px; border-radius: 8px;
   }
-  .section-menu nav a { display: block; padding: 8px 12px; border-radius: 4px; }
+  .section-menu nav a {
+    display: block; padding: 10px 12px; border-radius: 4px;
+    color: var(--ink); font-size: 13px; line-height: 1.5;
+    transition: color .2s ease;
+  }
   @media (hover: hover) and (pointer: fine) {
-    .section-menu nav a:hover { background: var(--chip); }
+    .section-menu nav a:hover { color: var(--link); text-decoration: none; }
   }
+  .section-menu nav a:active { color: var(--link); box-shadow: none; }
   .section-menu summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .scroll-header .icons { flex-wrap: nowrap; }
   .scroll-header .theme-toggle { position: static; justify-self: end; width: 30px; margin-left: 0; opacity: 0; visibility: hidden;
@@ -226,7 +231,11 @@
     .back-top:hover { text-decoration: none; color: var(--link); }
   }
   .back-top:focus-visible { border-radius: 50%; }
-  .scroll-header, .back-top {
+  .scroll-header::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    border-radius: inherit; pointer-events: none;
+  }
+  .scroll-header::before, .back-top, .section-menu nav {
     background: color-mix(in srgb, var(--ground) 48%, transparent);
     border: 1px solid color-mix(in srgb, var(--muted) 12%, transparent);
     -webkit-backdrop-filter: blur(16px) saturate(170%);
@@ -234,7 +243,7 @@
     box-shadow: 0 5px 22px #0002, inset 0 1px 1px #ffffff28;
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .scroll-header, .back-top { background: var(--ground); }
+    .scroll-header::before, .back-top, .section-menu nav { background: var(--ground); }
   }
 
   /* ---------- sections ---------- */
@@ -1147,6 +1156,30 @@
     dock.className = 'social-dock';
     var docked = false;
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var menuAnimation;
+    var menuExpanded = false;
+    function setMenu(open) {
+      if (menuExpanded === open) { return; }
+      menuExpanded = open;
+      if (menuAnimation) { menuAnimation.cancel(); }
+      if (open) { menu.open = true; }
+      nav.inert = !open;
+      if (reducedMotion.matches) { menu.open = open; return; }
+      var folded = { clipPath: 'inset(0 0 100% 0 round 8px)', opacity: 0, transform: 'translateY(-4px)' };
+      var unfolded = { clipPath: 'inset(0 0 0 0 round 8px)', opacity: 1, transform: 'translateY(0)' };
+      menuAnimation = nav.animate(open ? [folded, unfolded] : [unfolded, folded], {
+        duration: open ? 260 : 180, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both'
+      });
+      menuAnimation.onfinish = function () {
+        menu.open = open;
+        menuAnimation.cancel();
+        menuAnimation = null;
+      };
+    }
+    menu.querySelector('summary').addEventListener('click', function (event) {
+      event.preventDefault();
+      setMenu(!menuExpanded);
+    });
     document.querySelectorAll('main > section').forEach(function (section) {
       var heading = section.querySelector('h2');
       if (!heading) { return; }
@@ -1158,57 +1191,63 @@
       link.textContent = heading.textContent;
       nav.appendChild(link);
       link.addEventListener('click', function () {
-        menu.open = false;
+        setMenu(false);
         section.tabIndex = -1;
         section.focus({ preventScroll: true });
       });
     });
     document.addEventListener('click', function (event) {
-      if (!menu.contains(event.target)) { menu.open = false; }
+      if (!menu.contains(event.target)) { setMenu(false); }
     });
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && menu.open) {
-        menu.open = false;
+        setMenu(false);
         menu.querySelector('summary').focus();
       }
     });
     topLink.addEventListener('click', function () {
-      menu.open = false;
+      setMenu(false);
       var title = document.querySelector('.masthead');
       title.tabIndex = -1;
       title.focus({ preventScroll: true });
     });
-    new IntersectionObserver(function (entries) {
-      var show = entries[0].boundingClientRect.bottom < 0;
-      if (show === docked) { return; }
-      docked = show;
-      var links = Array.from(socials.querySelectorAll('a'));
-      var positions = links.map(function (link) { return link.getBoundingClientRect(); });
-      // Move the original social links, retaining their place in the page layout.
+    var tagline = document.querySelector('.side-tagline');
+    var framePending = false;
+    function positionHeader() {
+      framePending = false;
+      var show = tagline.getBoundingClientRect().bottom <= 0;
+      if (show !== docked) {
+        docked = show;
+        // Preserve the original row as the scroll anchor for the floating pill.
+        if (show) {
+          home.style.height = home.getBoundingClientRect().height + 'px';
+          dock.appendChild(socials);
+        } else {
+          home.appendChild(socials);
+          home.style.height = '';
+          setMenu(false);
+        }
+        header.classList.toggle('is-visible', show);
+        topLink.classList.toggle('is-visible', show);
+        header.inert = !show;
+        topLink.inert = !show;
+      }
       if (show) {
-        home.style.height = home.getBoundingClientRect().height + 'px';
-        dock.appendChild(socials);
-      } else {
-        home.appendChild(socials);
-        home.style.height = '';
+        var row = home.getBoundingClientRect();
+        var height = header.getBoundingClientRect().height;
+        // Follow the row continuously until the pill reaches its sticky offset.
+        var top = Math.max(12, row.top + row.height / 2 - height / 2);
+        header.style.top = 'max(' + top + 'px, env(safe-area-inset-top))';
+        header.style.setProperty('--menu-height', Math.max(80, window.innerHeight - top - height - 28) + 'px');
       }
-      header.classList.toggle('is-visible', show);
-      topLink.classList.toggle('is-visible', show);
-      header.inert = !show;
-      topLink.inert = !show;
-      if (!show) { menu.open = false; }
-      if (!reducedMotion.matches) {
-        links.forEach(function (link, index) {
-          var to = link.getBoundingClientRect();
-          var from = positions[index];
-          link.getAnimations().forEach(function (animation) { animation.cancel(); });
-          link.animate([
-            { transform: 'translate(' + (from.left - to.left) + 'px,' + (from.top - to.top) + 'px)' },
-            { transform: 'translate(0,0)' }
-          ], { duration: 450, easing: 'cubic-bezier(.22,1,.36,1)' });
-        });
-      }
-    }).observe(document.querySelector('.side-tagline'));
+    }
+    function schedulePosition() {
+      if (!framePending) { framePending = true; requestAnimationFrame(positionHeader); }
+    }
+    window.addEventListener('scroll', schedulePosition, { passive: true });
+    window.addEventListener('resize', schedulePosition);
+    new ResizeObserver(schedulePosition).observe(document.querySelector('.side'));
+    positionHeader();
   })();
 
   document.querySelectorAll('[data-seg]').forEach(function (seg) {
