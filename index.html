@@ -158,7 +158,7 @@
   main section { scroll-margin-top: 80px; }
   .scroll-header {
     position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; z-index: 20;
-    max-width: calc(100% - 24px); width: max-content;
+    max-width: calc(100% - 24px); width: 460px;
     background: color-mix(in srgb, var(--ground) 78%, transparent);
     border: 1px solid color-mix(in srgb, var(--muted) 24%, transparent);
     border-radius: 999px; box-shadow: 0 6px 24px #0001, inset 0 1px 0 #ffffff20;
@@ -169,19 +169,24 @@
   }
   .scroll-header.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
   .scroll-header-inner {
-    min-height: 48px; padding: 8px 12px;
-    display: flex; align-items: center; justify-content: center; gap: 0;
+    min-height: 44px; padding: 5px 12px;
+    display: flex; align-items: center; justify-content: space-between; gap: 0;
   }
   .section-menu { position: relative; max-width: 0; opacity: 0; visibility: hidden;
     transition: max-width .5s ease, opacity .35s ease, margin .5s ease, visibility .35s; }
   .scroll-header.is-visible .section-menu { max-width: 108px; opacity: 1; visibility: visible; margin-right: 12px; }
   .section-menu summary {
-    list-style: none; cursor: pointer; font-weight: 700;
-    padding: 6px 4px; border-radius: 20px; white-space: nowrap;
+    list-style: none; cursor: pointer; font-weight: 600; font-size: 13px;
+    padding: 6px 8px; border-radius: 20px; white-space: nowrap;
     display: flex; align-items: center; gap: 7px;
+    transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .section-menu summary:hover, .section-menu[open] summary {
+    color: var(--link); background: color-mix(in srgb, var(--focus) 8%, transparent);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--focus) 18%, transparent);
   }
   .section-menu summary::-webkit-details-marker { display: none; }
-  .menu-icon { font-size: 18px; line-height: 1; font-weight: 400; color: var(--muted); }
+  .menu-icon { width: 17px; height: 17px; flex: none; }
   .section-menu nav {
     position: absolute; top: calc(100% + 8px); left: 0;
     width: 220px; max-height: calc(100dvh - 88px); overflow-y: auto;
@@ -196,7 +201,7 @@
     transition: width .5s ease, margin .5s ease, opacity .35s ease, visibility .35s; }
   .scroll-header.is-visible .theme-toggle { width: 30px; margin-left: 10px; opacity: 1; visibility: visible; }
   @media (max-width: 380px) {
-    .scroll-header-inner { padding: 7px 9px; }
+    .scroll-header-inner { padding: 5px 8px; }
     .scroll-header .icons { gap: 4px; }
     .scroll-header.is-visible .section-menu { margin-right: 6px; }
     .scroll-header.is-visible .theme-toggle { margin-left: 6px; }
@@ -607,7 +612,7 @@
 <header class="scroll-header" inert>
   <div class="scroll-header-inner">
     <details class="section-menu">
-      <summary aria-label="Ruzcko, section navigation" title="Page sections"><span class="menu-icon" aria-hidden="true">☰</span>Ruzcko</summary>
+      <summary aria-label="Ruzcko, section navigation" title="Page sections"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20M7 8v3M12 8v3M17 8v3M7 4h.01M12 4h.01M17 4h.01"/></svg>Ruzcko</summary>
       <nav aria-label="Page sections"></nav>
     </details>
     <div class="icons" aria-label="Social links"></div>
