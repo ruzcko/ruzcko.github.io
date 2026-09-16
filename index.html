@@ -184,6 +184,8 @@
     padding: 6px 8px; border-radius: 20px; white-space: nowrap;
     display: flex; align-items: center; gap: 7px;
     transition: color .2s ease;
+    -webkit-user-select: none; user-select: none;
+    outline: none;
   }
   @media (hover: hover) and (pointer: fine) {
     .section-menu summary:hover { color: var(--link); }
@@ -193,21 +195,25 @@
   .section-menu summary::-webkit-details-marker { display: none; }
   .menu-icon { width: 17px; height: 17px; flex: none; }
   .section-menu nav {
-    position: absolute; top: calc(100% + 14px); left: 0;
-    width: 232px; max-width: calc(100vw - 24px);
+    position: absolute; top: calc(100% + 7px); left: 0;
+    width: 200px; max-width: calc(100vw - 24px);
     max-height: var(--menu-height, calc(100dvh - 88px)); overflow-y: auto;
-    padding: 10px; border-radius: 8px;
+    padding: 6px; border-radius: 8px;
   }
   .section-menu nav a {
-    display: block; padding: 10px 12px; border-radius: 4px;
-    color: var(--ink); font-size: 13px; line-height: 1.5;
+    display: block; padding: 7px 10px; border-radius: 4px;
+    color: var(--ink); font-size: 13px; line-height: 1.4;
     transition: color .2s ease;
   }
   @media (hover: hover) and (pointer: fine) {
     .section-menu nav a:hover { color: var(--link); text-decoration: none; }
   }
   .section-menu nav a:active { color: var(--link); box-shadow: none; }
-  .section-menu summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .section-menu summary:focus-visible {
+    outline: none; text-decoration: underline;
+    text-decoration-color: var(--focus); text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
   .scroll-header .icons { flex-wrap: nowrap; }
   .scroll-header .theme-toggle { position: static; justify-self: end; width: 30px; margin-left: 0; opacity: 0; visibility: hidden;
     transition: opacity .35s ease .12s, visibility .35s; }
