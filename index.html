@@ -167,6 +167,9 @@
     visibility: hidden; transform: translate(-50%, 0);
   }
   .scroll-header.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  @media (min-width: 761px) {
+    .scroll-header { width: 648px; }
+  }
   .scroll-header-inner {
     min-height: 44px; padding: 5px 12px;
     display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0;
