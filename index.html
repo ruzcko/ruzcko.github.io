@@ -157,23 +157,31 @@
   html { scroll-behavior: smooth; }
   main section { scroll-margin-top: 80px; }
   .scroll-header {
-    position: fixed; inset: 0 0 auto; z-index: 20;
-    background: var(--ground); border-bottom: 1px solid var(--rule);
-    opacity: 0; visibility: hidden; transform: translateY(-8px);
-    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+    position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; z-index: 20;
+    max-width: calc(100% - 24px); width: max-content;
+    background: color-mix(in srgb, var(--ground) 78%, transparent);
+    border: 1px solid color-mix(in srgb, var(--muted) 24%, transparent);
+    border-radius: 999px; box-shadow: 0 6px 24px #0001, inset 0 1px 0 #ffffff20;
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    opacity: 0; visibility: hidden; transform: translate(-50%, -6px);
+    transition: opacity .35s ease, transform .5s ease, visibility .35s;
   }
-  .scroll-header.is-visible { opacity: 1; visibility: visible; transform: none; }
+  .scroll-header.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
   .scroll-header-inner {
-    max-width: 920px; min-height: 56px; margin: auto; padding: 8px 16px;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    min-height: 48px; padding: 8px 12px;
+    display: flex; align-items: center; justify-content: center; gap: 0;
   }
-  .section-menu { position: relative; }
+  .section-menu { position: relative; max-width: 0; opacity: 0; visibility: hidden;
+    transition: max-width .5s ease, opacity .35s ease, margin .5s ease, visibility .35s; }
+  .scroll-header.is-visible .section-menu { max-width: 108px; opacity: 1; visibility: visible; margin-right: 12px; }
   .section-menu summary {
     list-style: none; cursor: pointer; font-weight: 700;
-    padding: 6px 4px; border-radius: 4px;
+    padding: 6px 4px; border-radius: 20px; white-space: nowrap;
+    display: flex; align-items: center; gap: 7px;
   }
   .section-menu summary::-webkit-details-marker { display: none; }
-  .section-menu summary::after { content: " \2304"; color: var(--muted); }
+  .menu-icon { font-size: 18px; line-height: 1; font-weight: 400; color: var(--muted); }
   .section-menu nav {
     position: absolute; top: calc(100% + 8px); left: 0;
     width: 220px; max-height: calc(100dvh - 88px); overflow-y: auto;
@@ -184,6 +192,15 @@
   .section-menu nav a:hover { background: var(--chip); }
   .section-menu summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .scroll-header .icons { flex-wrap: nowrap; }
+  .scroll-header .theme-toggle { position: static; flex: none; width: 0; opacity: 0; visibility: hidden;
+    transition: width .5s ease, margin .5s ease, opacity .35s ease, visibility .35s; }
+  .scroll-header.is-visible .theme-toggle { width: 30px; margin-left: 10px; opacity: 1; visibility: visible; }
+  @media (max-width: 380px) {
+    .scroll-header-inner { padding: 7px 9px; }
+    .scroll-header .icons { gap: 4px; }
+    .scroll-header.is-visible .section-menu { margin-right: 6px; }
+    .scroll-header.is-visible .theme-toggle { margin-left: 6px; }
+  }
   .back-top {
     position: fixed; right: max(18px, env(safe-area-inset-right));
     bottom: max(18px, env(safe-area-inset-bottom)); z-index: 19;
@@ -207,6 +224,7 @@
     margin: 0 0 18px; padding-bottom: 9px; border-bottom: 1px solid var(--rule);
   }
   p { margin: 0 0 12px; }
+  main section p { text-align: justify; hyphens: auto; }
   p:last-child { margin-bottom: 0; }
   ul.plain { margin: 0; padding-left: 20px; }
   ul.plain li { margin-bottom: 4px; }
@@ -589,7 +607,7 @@
 <header class="scroll-header" inert>
   <div class="scroll-header-inner">
     <details class="section-menu">
-      <summary aria-label="Ruzcko, section navigation">Ruzcko</summary>
+      <summary aria-label="Ruzcko, section navigation" title="Page sections"><span class="menu-icon" aria-hidden="true">☰</span>Ruzcko</summary>
       <nav aria-label="Page sections"></nav>
     </details>
     <div class="icons" aria-label="Social links"></div>
@@ -1097,6 +1115,7 @@
     var menu = header.querySelector('.section-menu');
     var nav = menu.querySelector('nav');
     var topLink = document.querySelector('.back-top');
+    header.querySelector('.scroll-header-inner').appendChild(document.querySelector('.theme-toggle').cloneNode(true));
     document.querySelectorAll('.side .icons a').forEach(function (link) {
       header.querySelector('.icons').appendChild(link.cloneNode(true));
     });
@@ -1138,7 +1157,7 @@
       header.inert = !show;
       topLink.inert = !show;
       if (!show) { menu.open = false; }
-    }).observe(document.querySelector('.side-loc'));
+    }).observe(document.querySelector('.side .icons'));
   })();
 
   document.querySelectorAll('[data-seg]').forEach(function (seg) {
@@ -1202,8 +1221,7 @@
   /* theme switch: remembers the choice, follows the OS until you make one */
   (function () {
     var root = document.documentElement;
-    var btn = document.querySelector('.theme-toggle');
-    if (!btn) { return; }
+    var buttons = document.querySelectorAll('.theme-toggle');
     var media = window.matchMedia('(prefers-color-scheme: dark)');
 
     function read() { try { return localStorage.getItem('theme'); } catch (e) { return null; } }
@@ -1212,17 +1230,19 @@
       else { root.removeAttribute('data-theme'); }
       var dark = choice ? choice === 'dark' : media.matches;
       root.classList.toggle('is-dark', dark);
-      btn.title = dark ? 'Switch to light' : 'Switch to dark';
-      btn.setAttribute('aria-label', btn.title);
+      buttons.forEach(function (btn) {
+        btn.title = dark ? 'Switch to light' : 'Switch to dark';
+        btn.setAttribute('aria-label', btn.title);
+      });
     }
 
     apply(read());
     media.addEventListener('change', function () { if (!read()) { apply(null); } });
-    btn.addEventListener('click', function () {
+    buttons.forEach(function (btn) { btn.addEventListener('click', function () {
       var next = root.classList.contains('is-dark') ? 'light' : 'dark';
       try { localStorage.setItem('theme', next); } catch (e) {}
       apply(next);
-    });
+    }); });
   })();
 
   /* flags the page once the big header has scrolled out of view */
