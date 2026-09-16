@@ -159,11 +159,7 @@
   .scroll-header {
     position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; z-index: 20;
     max-width: calc(100% - 24px); width: 460px;
-    background: color-mix(in srgb, var(--ground) 78%, transparent);
-    border: 1px solid color-mix(in srgb, var(--muted) 24%, transparent);
-    border-radius: 999px; box-shadow: 0 6px 24px #0001, inset 0 1px 0 #ffffff20;
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    backdrop-filter: blur(18px) saturate(140%);
+    border-radius: 999px;
     visibility: hidden; transform: translate(-50%, 0);
   }
   .scroll-header.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
@@ -211,14 +207,23 @@
     position: fixed; right: max(18px, env(safe-area-inset-right));
     bottom: max(18px, env(safe-area-inset-bottom)); z-index: 19;
     width: 40px; height: 40px; display: grid; place-items: center;
-    border: 1px solid var(--rule); border-radius: 50%;
-    background: var(--ground); color: var(--muted); font-size: 22px;
-    box-shadow: 0 2px 10px #0001; opacity: 0; visibility: hidden;
+    border-radius: 50%; color: var(--muted); font-size: 22px;
+    opacity: 0; visibility: hidden;
     transition: opacity .2s ease, visibility .2s;
   }
   .back-top.is-visible { opacity: 1; visibility: visible; }
-  .back-top:hover { text-decoration: none; background: var(--chip); }
+  .back-top:hover { text-decoration: none; color: var(--link); }
   .back-top:focus-visible { border-radius: 50%; }
+  .scroll-header, .back-top {
+    background: color-mix(in srgb, var(--ground) 48%, transparent);
+    border: 1px solid color-mix(in srgb, var(--muted) 28%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    backdrop-filter: blur(16px) saturate(170%);
+    box-shadow: 0 5px 22px #0002, inset 0 1px 1px #ffffff65, inset 0 -1px 1px #ffffff18;
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .scroll-header, .back-top { background: var(--ground); }
+  }
 
   /* ---------- sections ---------- */
   section { margin-bottom: 44px; }
@@ -1191,7 +1196,7 @@
           ], { duration: 450, easing: 'cubic-bezier(.22,1,.36,1)' });
         });
       }
-    }).observe(document.querySelector('.side-loc'));
+    }).observe(document.querySelector('.side-tagline'));
   })();
 
   document.querySelectorAll('[data-seg]').forEach(function (seg) {
