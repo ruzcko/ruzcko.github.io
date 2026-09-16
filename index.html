@@ -91,7 +91,9 @@
     }
   }
   a { color: var(--link); text-decoration: none; }
-  a:hover { color: var(--link-hover); text-decoration: underline; }
+  @media (hover: hover) and (pointer: fine) {
+    a:hover { color: var(--link-hover); text-decoration: underline; }
+  }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
 
   .wrap { max-width: 976px; margin: 0 auto; padding: 44px 28px 72px; position: relative; }
@@ -136,7 +138,9 @@
     border: 1px solid var(--rule); color: var(--muted);
     transition: color .12s ease, border-color .12s ease;
   }
-  .icons a:hover { color: var(--link); border-color: var(--link); text-decoration: none; }
+  @media (hover: hover) and (pointer: fine) {
+    .icons a:hover { color: var(--link); border-color: var(--link); text-decoration: none; }
+  }
   .icons svg { width: 15px; height: 15px; display: block; }
 
   /* theme switch, parked in the page's top-right corner */
@@ -147,7 +151,9 @@
     border: 0; border-radius: 50%; background: none; color: var(--muted); cursor: pointer;
     transition: color .12s ease;
   }
-  .theme-toggle:hover { color: var(--link); }
+  @media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover { color: var(--link); }
+  }
   .theme-toggle svg { width: 18px; height: 18px; display: block; }
   .theme-toggle .sun { display: none; }
   .is-dark .theme-toggle .sun { display: block; }
@@ -179,9 +185,11 @@
     display: flex; align-items: center; gap: 7px;
     transition: color .2s ease;
   }
-  .section-menu summary:hover, .section-menu[open] summary {
-    color: var(--link);
+  @media (hover: hover) and (pointer: fine) {
+    .section-menu summary:hover { color: var(--link); }
   }
+  .section-menu summary:active { box-shadow: none; color: var(--link); }
+  .theme-toggle:active { box-shadow: none; color: var(--link); }
   .section-menu summary::-webkit-details-marker { display: none; }
   .menu-icon { width: 17px; height: 17px; flex: none; }
   .section-menu nav {
@@ -191,7 +199,9 @@
     border-radius: 6px; box-shadow: 0 6px 20px #0002;
   }
   .section-menu nav a { display: block; padding: 8px 12px; border-radius: 4px; }
-  .section-menu nav a:hover { background: var(--chip); }
+  @media (hover: hover) and (pointer: fine) {
+    .section-menu nav a:hover { background: var(--chip); }
+  }
   .section-menu summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .scroll-header .icons { flex-wrap: nowrap; }
   .scroll-header .theme-toggle { position: static; justify-self: end; width: 30px; margin-left: 0; opacity: 0; visibility: hidden;
@@ -212,14 +222,16 @@
     transition: opacity .2s ease, visibility .2s;
   }
   .back-top.is-visible { opacity: 1; visibility: visible; }
-  .back-top:hover { text-decoration: none; color: var(--link); }
+  @media (hover: hover) and (pointer: fine) {
+    .back-top:hover { text-decoration: none; color: var(--link); }
+  }
   .back-top:focus-visible { border-radius: 50%; }
   .scroll-header, .back-top {
     background: color-mix(in srgb, var(--ground) 48%, transparent);
-    border: 1px solid color-mix(in srgb, var(--muted) 28%, transparent);
+    border: 1px solid color-mix(in srgb, var(--muted) 12%, transparent);
     -webkit-backdrop-filter: blur(16px) saturate(170%);
     backdrop-filter: blur(16px) saturate(170%);
-    box-shadow: 0 5px 22px #0002, inset 0 1px 1px #ffffff65, inset 0 -1px 1px #ffffff18;
+    box-shadow: 0 5px 22px #0002, inset 0 1px 1px #ffffff28;
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .scroll-header, .back-top { background: var(--ground); }
