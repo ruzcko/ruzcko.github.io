@@ -169,11 +169,11 @@
   .scroll-header.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
   .scroll-header-inner {
     min-height: 44px; padding: 5px 12px;
-    display: flex; align-items: center; justify-content: space-between; gap: 0;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0;
   }
-  .section-menu { position: relative; max-width: 108px; margin-right: 12px; opacity: 0; visibility: hidden;
+  .section-menu { position: relative; justify-self: start; max-width: 108px; margin-right: 0; opacity: 0; visibility: hidden;
     transition: opacity .35s ease .12s, visibility .35s; }
-  .scroll-header.is-visible .section-menu { max-width: 108px; opacity: 1; visibility: visible; margin-right: 12px; }
+  .scroll-header.is-visible .section-menu { max-width: 108px; opacity: 1; visibility: visible; margin-right: 0; }
   .section-menu summary {
     list-style: none; cursor: pointer; font-weight: 600; font-size: 13px;
     padding: 6px 8px; border-radius: 20px; white-space: nowrap;
@@ -195,14 +195,14 @@
   .section-menu nav a:hover { background: var(--chip); }
   .section-menu summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .scroll-header .icons { flex-wrap: nowrap; }
-  .scroll-header .theme-toggle { position: static; flex: none; width: 30px; margin-left: 10px; opacity: 0; visibility: hidden;
+  .scroll-header .theme-toggle { position: static; justify-self: end; width: 30px; margin-left: 0; opacity: 0; visibility: hidden;
     transition: opacity .35s ease .12s, visibility .35s; }
-  .scroll-header.is-visible .theme-toggle { width: 30px; margin-left: 10px; opacity: 1; visibility: visible; }
+  .scroll-header.is-visible .theme-toggle { width: 30px; margin-left: 0; opacity: 1; visibility: visible; }
   @media (max-width: 380px) {
     .scroll-header-inner { padding: 5px 8px; }
-    .scroll-header .icons { gap: 4px; }
-    .scroll-header.is-visible .section-menu { margin-right: 6px; }
-    .scroll-header.is-visible .theme-toggle { margin-left: 6px; }
+    .scroll-header .icons { gap: 3px; }
+    .scroll-header .icons a { width: 24px; height: 24px; }
+    .section-menu summary { font-size: 12px; padding: 6px 4px; gap: 4px; }
   }
   .back-top {
     position: fixed; right: max(18px, env(safe-area-inset-right));
@@ -610,7 +610,7 @@
 <header class="scroll-header" inert>
   <div class="scroll-header-inner">
     <details class="section-menu">
-      <summary aria-label="Ruzcko, section navigation" title="Page sections"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none"/><path d="M8 9h8M5 14h14M3 19h18"/></svg>Ruzcko</summary>
+      <summary aria-label="Ruzcko, section navigation" title="Page sections"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none"/><path d="M4 9h16M4 14h16M4 19h16"/></svg>Ruzcko</summary>
       <nav aria-label="Page sections"></nav>
     </details>
     <div class="icons" aria-label="Social links"></div>
