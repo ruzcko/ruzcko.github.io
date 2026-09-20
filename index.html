@@ -1245,9 +1245,9 @@
         <h2 id="contact">Contact</h2>
         <p class="contact-intro">Have something in mind? Let’s talk. Enjoy something I’ve made? Coffee is always welcome.</p>
         <div class="contact-actions">
-          <a class="booking-button" href="https://cal.com/ruzcko"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg><span>Book a call</span></a>
+          <a class="booking-button" href="https://cal.com/ruzcko" data-tooltip="Choose a meeting and find a time on Cal.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg><span>Book a call</span></a>
           <!-- Official button image: https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png -->
-          <a class="coffee-button" href="https://buymeacoffee.com/ruzcko"><img src="/buy-me-a-coffee.png" alt="Buy me a coffee" width="545" height="153"></a>
+          <a class="coffee-button" href="https://buymeacoffee.com/ruzcko" data-tooltip="Support my work with a coffee"><img src="/buy-me-a-coffee.png" alt="Buy me a coffee" width="545" height="153"></a>
         </div>
       </section>
 
@@ -1542,7 +1542,7 @@
     function show(control) {
       hide();
       active = control;
-      tip.textContent = control.getAttribute('aria-label') || control.textContent;
+      tip.textContent = control.getAttribute('data-tooltip') || control.getAttribute('aria-label') || control.textContent;
       tip.style.maxWidth = control.closest('.pub-title') ? 'min(480px, calc(100vw - 16px))' : 'calc(100vw - 16px)';
       tip.hidden = false;
       control.setAttribute('aria-describedby', tip.id);
@@ -1551,7 +1551,7 @@
       tip.style.left = Math.max(8, Math.min(innerWidth - size.width - 8, box.left + box.width / 2 - size.width / 2)) + 'px';
       tip.style.top = (box.bottom + size.height + 14 < innerHeight ? box.bottom + 8 : box.top - size.height - 8) + 'px';
     }
-    document.querySelectorAll('.icons a, .theme-toggle, .back-top, .pub-title a, .news-linkedin').forEach(function (control) {
+    document.querySelectorAll('.icons a, .theme-toggle, .back-top, .pub-title a, .news-linkedin, .contact-actions a').forEach(function (control) {
       control.removeAttribute('title');
       control.addEventListener('pointerenter', function (event) { if (event.pointerType !== 'touch') { show(control); } });
       control.addEventListener('pointerleave', hide);
