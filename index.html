@@ -580,9 +580,11 @@
   }
   .closer blockquote { margin: 0; }
   .closer blockquote p {
-    max-width: 44ch; margin: 0 auto 9px;
-    font-size: 16px; line-height: 1.65; font-style: italic;
+    max-width: 100%; margin: 0 auto 7px;
+    font-size: 13px; line-height: 1.6; font-style: italic; color: var(--muted);
   }
+  .quote-break { display: none; }
+  @media(min-width:761px) { .quote-break { display: block; } }
   .closer cite { display: block; font-style: normal; font-weight: 600; font-size: 12.5px; color: var(--muted); }
 
   footer {
@@ -1251,7 +1253,7 @@
 
       <div class="closer">
         <blockquote>
-          <p>&ldquo;Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less.&rdquo;</p>
+          <p>&ldquo;Nothing in life is to be feared, it is only to be understood.<br class="quote-break"> Now is the time to understand more, so that we may fear less.&rdquo;</p>
           <cite>Marie Curie</cite>
         </blockquote>
       </div>
@@ -1655,6 +1657,25 @@
     analytics.src = 'https://static.cloudflareinsights.com/beacon.min.js';
     analytics.setAttribute('data-cf-beacon', '{"token":"ed77a43cb92e4eefa71f954f674a0fad","spa":false}');
     document.body.appendChild(analytics);
+    var umamiScript = document.createElement('script');
+    umamiScript.defer = true;
+    umamiScript.src = 'https://cloud.umami.is/script.js';
+    umamiScript.setAttribute('data-website-id', '4655c31e-4d1c-43af-b80e-0e534432fb50');
+    umamiScript.setAttribute('data-domains', 'ruzcko.com,www.ruzcko.com');
+    umamiScript.setAttribute('data-exclude-search', 'true');
+    umamiScript.setAttribute('data-exclude-hash', 'true');
+    document.head.appendChild(umamiScript);
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest('a');
+      if (!link || !window.umami) return;
+      var name;
+      if (link.closest('.project-preview')) name = 'Project opened';
+      else if (link.closest('.pub-title')) name = 'Paper opened';
+      else if (link.href.startsWith('mailto:')) name = 'Email clicked';
+      else if (link.href.startsWith('https://cal.com/')) name = 'Book a call clicked';
+      else if (link.href.startsWith('https://buymeacoffee.com/')) name = 'Coffee clicked';
+      if (name) window.umami.track(name);
+    }, { capture: true });
   }
 </script>
 </body>
