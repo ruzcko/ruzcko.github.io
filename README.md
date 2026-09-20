@@ -1,6 +1,6 @@
 # Rogelio Ruzcko Tobias
 
-Minimal personal website hosted at https://ruzcko.github.io/ with GitHub Pages.
+Minimal personal website hosted at https://ruzcko.com/ with GitHub Pages.
 
 ## Editing
 
@@ -17,3 +17,13 @@ current mockup includes a CV link but no PDF has been supplied.
 
 The old Hugo content and configuration remain as reference material and are
 not published. Publication folder names are used to preserve old URLs.
+
+## Domain and recovery
+
+The primary address is https://ruzcko.com. GitHub Pages handles redirects from
+ruzcko.github.io and www.ruzcko.com. Cloudflare provides DNS, with DNS-only
+GitHub Pages A records at the apex and a www CNAME to ruzcko.github.io.
+The repository Pages publishing source is GitHub Actions.
+
+Source and image assets are versioned in GitHub. To roll back a release, revert
+the relevant commit on main and push; the deployment workflow republishes it.

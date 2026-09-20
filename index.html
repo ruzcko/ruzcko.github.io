@@ -5,29 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rogelio Ruzcko Tobias</title>
 <meta name="description" content="Rogelio Ruzcko Tobias: AI researcher working on multimodal and vision–language models, generative and state space architectures, and data-efficient learning, currently applied to weather, climate and Earth observation.">
-<link rel="canonical" href="https://ruzcko.github.io/">
+<link rel="canonical" href="https://ruzcko.com/">
 <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg?v=1">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Rogelio Ruzcko Tobias">
 <meta property="og:description" content="Rogelio Ruzcko Tobias: AI researcher working on multimodal and vision–language models, generative and state space architectures, and data-efficient learning, currently applied to weather, climate and Earth observation.">
-<meta property="og:url" content="https://ruzcko.github.io/">
-<meta property="og:image" content="https://ruzcko.github.io/me.jpg">
+<meta property="og:url" content="https://ruzcko.com/">
+<meta property="og:image" content="https://ruzcko.com/me.jpg">
 <meta property="og:image:alt" content="Portrait of Rogelio Ruzcko Tobias">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ruzcko.github.io/me.jpg">
+<meta name="twitter:image" content="https://ruzcko.com/me.jpg">
 <meta name="twitter:image:alt" content="Portrait of Rogelio Ruzcko Tobias">
 <script>try{var t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
 <style>
   :root {
-    --ground: #F7F7F5;
-    --ink: #1B1B1B;
-    --muted: #6A6A66;
+    --ground: #F3EFE6;
+    --ink: #292722;
+    --muted: #716B61;
     --link: #1A4E8A;
     --link-hover: #10365F;
-    --rule: #D6D6D1;
-    --rule-soft: #E6E6E2;
-    --chip: #ECECE7;
-    --chip-ink: #55554F;
+    --rule: #D7CFC1;
+    --rule-soft: #E5DED2;
+    --chip: #EAE3D7;
+    --chip-ink: #60594E;
     --focus: #1A4E8A;
     /* experience tracks: blue-green vs orange, the safest pair for
        red/green colour blindness. Position still encodes track as well. */
@@ -96,7 +96,7 @@
   }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
 
-  .wrap { max-width: 976px; margin: 0 auto; padding: 44px 28px 72px; position: relative; }
+  .wrap { max-width: 1036px; margin: 0 auto; padding: 44px 28px 72px; position: relative; }
 
   .masthead {
     text-align: center; font-size: 34px; font-weight: 700;
@@ -105,6 +105,7 @@
   }
   /* max-width:none: the generic p rule was boxing this to 66ch and
      centring it inside that box rather than across the page. */
+  .masthead-role { max-width: none; text-align: center; font-size: 15px; margin: 0 0 4px var(--head-shift); }
   .masthead-sub {
     max-width: none; text-align: center; color: var(--muted);
     font-size: 14.5px; margin: 0 0 40px var(--head-shift);
@@ -170,7 +171,9 @@
   }
   .scroll-header.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
   @media (min-width: 761px) {
-    .scroll-header { width: 648px; left: calc(50% + var(--head-shift) / 2); }
+    .scroll-header { width: min(692px, calc(100vw - 80px)); left: calc(50% + var(--head-shift) / 2); }
+    .wrap > .theme-toggle { right: 156px; top: 20px; }
+
   }
   .scroll-header-inner {
     min-height: 44px; padding: 5px 12px;
@@ -242,11 +245,15 @@
     border-radius: inherit; pointer-events: none;
   }
   .scroll-header::before, .back-top, .section-menu nav {
-    background: color-mix(in srgb, var(--ground) 48%, transparent);
-    border: 1px solid color-mix(in srgb, var(--muted) 12%, transparent);
-    -webkit-backdrop-filter: blur(16px) saturate(170%);
-    backdrop-filter: blur(16px) saturate(170%);
-    box-shadow: 0 5px 22px #0002, inset 0 1px 1px #ffffff28;
+    background: linear-gradient(135deg, #ffffff20 0%, transparent 42%, #ffffff08 75%, #ffffff18 100%), color-mix(in srgb, var(--ground) 32%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
+    -webkit-backdrop-filter: blur(4px) saturate(155%) contrast(105%);
+    backdrop-filter: blur(4px) saturate(155%) contrast(105%);
+    box-shadow: 0 6px 20px #00000014, inset 0 1px 0 #ffffff25;
+  }
+  .section-menu nav { background-color: color-mix(in srgb, var(--ground) 90%, transparent); }
+  @media (prefers-reduced-transparency: reduce) {
+    .scroll-header::before, .back-top, .section-menu nav { background: var(--ground); backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .scroll-header::before, .back-top, .section-menu nav { background: var(--ground); }
@@ -288,6 +295,11 @@
     color: var(--muted); cursor: pointer;
     transition: color .12s ease, border-color .12s ease;
   }
+  .tab-lock { width: 12px; height: 12px; vertical-align: -1px; }
+  .tab[aria-disabled="true"] { cursor: not-allowed; opacity: .65; }
+  .tab.is-locked-shaking { animation: locked-shake .32s ease-in-out; }
+  @keyframes locked-shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-3px); } 40%,80% { transform: translateX(3px); } }
+  @media(prefers-reduced-motion:reduce) { .tab.is-locked-shaking { animation: none; outline: 1px solid var(--muted); } }
   .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
   .tab:hover { color: var(--ink); }
   .tab:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
@@ -323,6 +335,25 @@
   .seg button[aria-selected="true"]:hover, .seg button[aria-pressed="true"]:hover { background: var(--chip); }
   .seg button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
 
+  .now-note { margin-top: 22px; padding-left: 14px; border-left: 2px solid var(--ind); }
+  .now-note h3 { font-size: 12px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 6px; }
+  .now-note p { margin: 0; }
+  .news-preview { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 16px; align-items: center; margin-top: 12px; font-size: 13px; }
+  .news-preview img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px; }
+  @media(max-width:480px) { .news-preview { grid-template-columns: 100px minmax(0, 1fr); gap: 12px; } }
+  .news-linkedin { display: flex; align-items: flex-end; gap: 6px; min-width: 0; color: var(--ink); }
+  .news-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+  .news-linkedin svg { width: 17px; height: 17px; flex-shrink: 0; margin-bottom: 3px; fill: currentColor; color: var(--link); }
+  .news-linkedin:hover { color: var(--link); }
+  .news-preview p { margin: 0 0 7px; }
+
+  .news-expand { display: none; }
+  @media(max-width:760px) {
+    .news-item.is-collapsible:not(.is-expanded) .news-text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+    .news-item.is-collapsible .news-expand { display: inline-block; border: 0; background: none; padding: 4px 0; font: inherit; font-size: 12px; color: var(--link); cursor: pointer; }
+    .news-item.is-collapsible .news-text { cursor: pointer; }
+  }
+
   /* ---------- news ---------- */
   .news-list { position: relative; padding-left: 24px; }
   .news-list::before {
@@ -345,10 +376,11 @@
 
   /* ---------- publications ---------- */
   .pub { margin-bottom: 20px; }
-  .pub-title { font-weight: 600; margin-bottom: 1px; }
-  .pub-authors { font-size: 14.5px; }
+  @media (hover: hover) and (pointer: fine) { .pub-title a { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 2lh; } }
+  .pub-title { font-size: 14px; font-weight: 600; margin-bottom: 1px; }
+  .pub-authors { font-size: 12.5px; }
   .pub-authors .me { font-weight: 700; }
-  .pub-venue { font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: 1px; }
+  .pub-venue { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: 1px; }
   .pub-links { font-size: 13.5px; margin-top: 2px; }
   .pub-links a + a::before { content: " · "; color: var(--muted); }
 
@@ -631,6 +663,60 @@
     * { transition: none !important; }
     html { scroll-behavior: auto; }
   }
+  /* Preserve the name and original circular links in a single header row. */
+  .scroll-header-inner { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .scroll-header .icons { gap: 4px; }
+  .scroll-header .icons a { width: 28px; height: 28px; flex: 0 0 28px; }
+  @media (max-width: 760px) {
+    .section-menu summary { padding: 6px 4px; gap: 4px; }
+    .scroll-header-inner { padding: 5px 8px; }
+  }
+  @media (max-width: 380px) {
+    .section-menu .menu-icon { display: none; }
+  }
+  @media (max-width: 360px) {
+    .scroll-header .icons a[aria-label="CV (PDF)"] { display: none; }
+  }
+  .contact-actions a:hover { text-decoration: none; box-shadow: 0 0 0 2px var(--focus); }
+  .coffee-button:hover { color: #000; }
+  /* Project placeholders and contact actions. */
+  .preview-note, .project-tags { color: var(--muted); font-size: 12px; }
+  .project-preview { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 18px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--rule-soft); }
+  .project-preview.project-live { grid-template-columns: 160px minmax(0, 1fr); padding-top: 0; gap: 20px; }
+  .project-preview .project-access { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .project-preview:last-child { border-bottom: 0; }
+  .project-thumbnail { display: grid; place-items: center; min-height: 78px; background: var(--chip); border: 1px dashed var(--rule); border-radius: 3px; color: var(--muted); text-align: center; font-size: 11px; line-height: 1.4; }
+  .project-preview h3 { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
+  .project-preview p { text-align: left; margin: 0 0 5px; font-size: 14px; }
+  main section .contact-intro { text-align: left; margin-bottom: 18px; }
+  .contact-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 368px; gap: 12px; margin-bottom: 10px; }
+  @media (max-width: 400px) { .contact-actions { grid-template-columns: minmax(0, 1fr); max-width: 178.1px; } }
+  .contact-actions a { display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 50px; padding: 10px 14px; border-radius: 8px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; opacity: 1; }
+  .booking-button { color: #fff; background: #984B3D; border: 1px solid #984B3D; }
+  .booking-button:hover { color: #fff; background: #803D32; border-color: #803D32; }
+  .contact-actions .coffee-button { padding: 0; border: 0; background: transparent; }
+  .booking-button svg { width: 21px; height: 26px; flex: none; }
+  .coffee-button img { display: block; width: 100%; height: 50px; object-fit: contain; }
+  @media (max-width: 760px) { .masthead-role { margin-left: 0; } }
+  @media (max-width: 380px) { .project-preview { grid-template-columns: 70px minmax(0, 1fr); gap: 12px; } }
+  @media (min-width: 761px) {
+    .back-top { right: max(28px, calc((100vw - 1036px) / 2 + 168px)); bottom: 28px; }
+  }
+  .project-image-link { display: block; margin: 0; }
+  .project-image { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule-soft); }
+  .icon-tooltip { position: fixed; z-index: 100; pointer-events: none; max-width: calc(100vw - 16px); padding: 5px 9px; border-radius: 5px; background: var(--ink); color: var(--ground); font-size: 12px; line-height: 1.4; box-shadow: 0 2px 8px #0002; }
+  .icon-tooltip[hidden] { display: none; }
+  .side-location { width: max-content; max-width: none; position: relative; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 12px; }
+  @media (min-width: 761px) {
+    .side .icons { max-width: 128px; margin-inline: auto; }
+  }
+  @media (max-width: 480px) {
+    .project-preview.project-live { grid-template-columns: 100px minmax(0, 1fr); gap: 14px; }
+  }
+  .booking-button[aria-busy="true"] { opacity: .75; cursor: progress; }
+  .location-pin { width: 12px; height: 12px; vertical-align: -1px; }
+  .back-top svg { width: 26px; height: 26px; }
+  @media (min-width: 761px) { .contact-actions { margin-inline: auto; } }
 </style>
 <noscript><style>
   [data-seg], .theme-toggle, .tl-head { display: none; }
@@ -645,13 +731,13 @@
 <header class="scroll-header" inert>
   <div class="scroll-header-inner">
     <details class="section-menu">
-      <summary aria-label="Ruzcko, section navigation" title="Page sections"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none"/><path d="M4 9h16M4 14h16M4 19h16"/></svg>Ruzcko</summary>
+      <summary aria-label="Ruzcko, section navigation" title="Page sections"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none"/><path d="M4 9h16M4 14h16M4 19h16"/></svg><span class="menu-label">Ruzcko</span></summary>
       <nav aria-label="Page sections"></nav>
     </details>
     <div class="icons" aria-label="Social links"></div>
   </div>
 </header>
-<a class="back-top" href="#top" aria-label="Back to top" title="Back to top" inert>↑</a>
+<a class="back-top" href="#top" aria-label="Back to top" title="Back to top" inert><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="m14 3 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7L7.2 8l4.7-.7Z" fill="currentColor"/><path d="M14 17v8M9 19v4M19 19v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
 <div class="wrap" id="top">
   <button type="button" class="theme-toggle" title="Switch theme" aria-label="Switch theme">
           <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
@@ -659,6 +745,7 @@
         </button>
 
   <h1 class="masthead">Rogelio Ruzcko Tobias</h1>
+  <p class="masthead-role">AI Researcher &amp; Developer</p>
   <p class="masthead-sub">Curiouser and curiouser</p>
 
   <div class="cols">
@@ -668,7 +755,7 @@
         <div class="side-name">Ruzcko</div>
         <div class="side-meta">
           <div class="side-tagline">Down the rabbit hole</div>
-          <div><span class="side-loc"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Seoul, South Korea</span></div>
+          <div class="side-location"><svg class="location-pin" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg> Seoul <span role="img" aria-label="South Korea">🇰🇷</span> · Anywhere on Earth <span role="img" aria-label="globe">🌍</span></div>
         </div>
       </div>
       <div class="icons">
@@ -684,9 +771,12 @@
         <a href="/cv.pdf" title="CV (PDF)" aria-label="CV (PDF)">
           <svg viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="16.4" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" letter-spacing="-0.3" fill="currentColor">CV</text></svg>
         </a>
+
         <a href="mailto:ruzcko@dilab.kr" title="Email" aria-label="Email">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6Zm2.9.5L12 11.8l7.1-5.3H4.9ZM20 8.3l-7.4 5.5a1 1 0 0 1-1.2 0L4 8.3V18h16V8.3Z"/></svg>
         </a>
+        <a href="https://cal.com/ruzcko" title="Book a call" aria-label="Book a call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg></a>
+        <a href="https://buymeacoffee.com/ruzcko" title="Buy me a coffee" aria-label="Buy me a coffee"><svg fill="none" aria-hidden="true" focusable="false" viewBox="0 0 25 35" width="30" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M22.0672 8.1281L22.0437 8.11426L21.9893 8.09766C22.0112 8.11614 22.0386 8.12685 22.0672 8.1281Z"></path><path fill="currentColor" d="M22.4111 10.5781L22.3848 10.5855L22.4111 10.5781Z"></path><path fill="currentColor" d="M22.0735 8.11128C22.0708 8.11093 22.0681 8.11029 22.0655 8.10938C22.0654 8.11115 22.0654 8.11293 22.0655 8.1147C22.0685 8.11432 22.0712 8.11313 22.0735 8.11128Z"></path><path fill="currentColor" d="M22.3877 10.5647L22.4274 10.5421L22.4421 10.5338L22.4555 10.5195C22.4303 10.5304 22.4074 10.5457 22.3877 10.5647Z"></path><path fill="currentColor" d="M22.1334 8.1762L22.0947 8.1393L22.0684 8.125C22.0825 8.14993 22.1058 8.16832 22.1334 8.1762Z"></path><path fill="currentColor" d="M12.3836 31.9453C12.3526 31.9587 12.3255 31.9796 12.3047 32.0062L12.3291 31.9905C12.3457 31.9753 12.3693 31.9573 12.3836 31.9453Z"></path><path fill="currentColor" d="M18.0497 30.8309C18.0497 30.7958 18.0326 30.8023 18.0368 30.9268C18.0368 30.9167 18.0409 30.9065 18.0428 30.8969C18.0451 30.8747 18.0469 30.853 18.0497 30.8309Z"></path><path fill="currentColor" d="M17.4617 31.9453C17.4307 31.9587 17.4036 31.9796 17.3828 32.0062L17.4073 31.9905C17.4239 31.9753 17.4474 31.9573 17.4617 31.9453Z"></path><path fill="currentColor" d="M8.39845 32.2145C8.37496 32.1941 8.34619 32.1807 8.31543 32.1758C8.34034 32.1878 8.36524 32.1998 8.38185 32.209L8.39845 32.2145Z"></path><path fill="currentColor" d="M7.50541 31.3533C7.50173 31.317 7.49058 31.2818 7.47266 31.25C7.48535 31.2831 7.49598 31.317 7.50448 31.3515L7.50541 31.3533Z"></path><path d="M13.5278 15.9814C12.2963 16.5086 10.8987 17.1064 9.08736 17.1064C8.32963 17.1048 7.57558 17.0009 6.8457 16.7973L8.09845 29.6592C8.14279 30.1968 8.38769 30.698 8.78452 31.0634C9.18134 31.4288 9.70106 31.6316 10.2405 31.6315C10.2405 31.6315 12.0167 31.7237 12.6094 31.7237C13.2474 31.7237 15.1601 31.6315 15.1601 31.6315C15.6995 31.6315 16.2191 31.4286 16.6158 31.0633C17.0125 30.6979 17.2574 30.1967 17.3017 29.6592L18.6435 15.4463C18.0439 15.2415 17.4387 15.1055 16.7565 15.1055C15.5767 15.105 14.626 15.5114 13.5278 15.9814Z" fill="#FFDD00"></path><path fill="currentColor" d="M2.96582 10.5039L2.98704 10.5237L3.00088 10.532C2.99022 10.5215 2.97847 10.512 2.96582 10.5039Z"></path><path fill="currentColor" d="M24.4376 9.31226L24.249 8.36071C24.0797 7.50694 23.6955 6.70022 22.8191 6.39164C22.5382 6.29294 22.2195 6.2505 22.0041 6.04617C21.7887 5.84184 21.725 5.5245 21.6752 5.23023C21.583 4.6901 21.4963 4.14952 21.4017 3.61033C21.3201 3.14677 21.2555 2.62602 21.0428 2.20075C20.7661 1.62973 20.1918 1.29579 19.6208 1.07485C19.3282 0.965622 19.0296 0.873222 18.7265 0.798101C17.2998 0.421723 15.7999 0.283349 14.3322 0.204476C12.5705 0.107269 10.8042 0.136556 9.04673 0.292113C7.73863 0.411114 6.36089 0.555024 5.11783 1.00751C4.6635 1.1731 4.19533 1.37189 3.84986 1.7229C3.42597 2.15417 3.2876 2.82113 3.5971 3.35894C3.81711 3.74086 4.1898 4.01069 4.58509 4.18919C5.09997 4.41919 5.63769 4.5942 6.18931 4.71132C7.72526 5.0508 9.3161 5.1841 10.8853 5.24083C12.6245 5.31103 14.3665 5.25414 16.0974 5.07063C16.5254 5.02359 16.9527 4.96716 17.3792 4.90136C17.8815 4.82433 18.2039 4.16751 18.0558 3.70995C17.8787 3.16292 17.4027 2.95074 16.8644 3.0333C16.7851 3.04576 16.7062 3.05729 16.6269 3.06882L16.5697 3.07712C16.3873 3.10019 16.205 3.12171 16.0226 3.1417C15.646 3.18229 15.2683 3.2155 14.8898 3.24133C14.042 3.30037 13.192 3.32758 12.3423 3.32896C11.5075 3.32896 10.6722 3.30544 9.83916 3.25055C9.45909 3.22564 9.07994 3.19397 8.70172 3.15553C8.52967 3.13755 8.35809 3.11864 8.18651 3.09742L8.02322 3.07666L7.98771 3.07159L7.81843 3.04714C7.4725 2.99502 7.12656 2.93506 6.78431 2.86264C6.74978 2.85498 6.71889 2.83577 6.69675 2.80818C6.67461 2.78059 6.66254 2.74627 6.66254 2.71089C6.66254 2.67552 6.67461 2.6412 6.69675 2.61361C6.71889 2.58602 6.74978 2.5668 6.78431 2.55914H6.79077C7.08735 2.49595 7.38624 2.44199 7.68605 2.39494C7.78599 2.37926 7.88623 2.36388 7.98679 2.34881H7.98955C8.17728 2.33636 8.36593 2.30269 8.55274 2.28055C10.178 2.11149 11.813 2.05386 13.4461 2.10804C14.239 2.13111 15.0314 2.17769 15.8206 2.25795C15.9903 2.27548 16.1592 2.29393 16.328 2.31468C16.3926 2.32252 16.4576 2.33175 16.5226 2.33959L16.6536 2.3585C17.0355 2.41539 17.4154 2.48442 17.7934 2.5656C18.3533 2.68737 19.0724 2.72704 19.3215 3.3405C19.4008 3.53514 19.4368 3.75147 19.4806 3.9558L19.5364 4.2164C19.5379 4.22108 19.5389 4.22586 19.5396 4.2307C19.6716 4.8457 19.8036 5.46069 19.9359 6.07569C19.9455 6.12112 19.9458 6.16806 19.9365 6.21359C19.9273 6.25911 19.9087 6.30224 19.8821 6.34028C19.8554 6.37832 19.8212 6.41046 19.7816 6.4347C19.7419 6.45893 19.6977 6.47474 19.6517 6.48113H19.648L19.5673 6.4922L19.4875 6.50281C19.2348 6.53571 18.9817 6.56646 18.7283 6.59506C18.2292 6.65194 17.7294 6.70114 17.2288 6.74265C16.234 6.82537 15.2373 6.87965 14.2385 6.90548C13.7296 6.919 13.2209 6.92531 12.7123 6.92439C10.6878 6.92279 8.66519 6.80513 6.65424 6.57199C6.43653 6.54616 6.21883 6.51849 6.00112 6.49035C6.16993 6.51203 5.87843 6.47375 5.81939 6.46545C5.68101 6.44607 5.54264 6.42593 5.40426 6.40502C4.93979 6.33537 4.47808 6.24958 4.01453 6.1744C3.45411 6.08215 2.91814 6.12827 2.41123 6.40502C1.99513 6.63272 1.65836 6.98188 1.44584 7.40593C1.22721 7.85795 1.16217 8.3501 1.06439 8.8358C0.966604 9.32149 0.814392 9.84408 0.872048 10.3427C0.996123 11.4188 1.74842 12.2933 2.8305 12.4889C3.84848 12.6734 4.87198 12.8228 5.89826 12.9501C9.9297 13.4439 14.0025 13.5029 18.0466 13.1263C18.3759 13.0956 18.7048 13.062 19.0332 13.0258C19.1358 13.0145 19.2396 13.0263 19.337 13.0604C19.4344 13.0944 19.523 13.1498 19.5962 13.2225C19.6694 13.2952 19.7255 13.3834 19.7602 13.4805C19.795 13.5777 19.8075 13.6814 19.797 13.7841L19.6946 14.7794C19.4883 16.7908 19.282 18.802 19.0756 20.813C18.8604 22.9249 18.6437 25.0366 18.4257 27.1482C18.3642 27.7429 18.3027 28.3375 18.2412 28.9319C18.1822 29.5172 18.1739 30.121 18.0627 30.6994C17.8875 31.609 17.2717 32.1675 16.3732 32.3719C15.55 32.5592 14.7091 32.6575 13.8649 32.6652C12.929 32.6703 11.9936 32.6288 11.0578 32.6338C10.0587 32.6394 8.83502 32.5471 8.06381 31.8036C7.38624 31.1505 7.29261 30.1279 7.20036 29.2437C7.07736 28.073 6.95544 26.9025 6.83459 25.7322L6.15656 19.2245L5.71791 15.0137C5.71053 14.9441 5.70315 14.8754 5.69623 14.8053C5.64365 14.303 5.28803 13.8113 4.72761 13.8366C4.24792 13.8579 3.70272 14.2656 3.759 14.8053L4.08417 17.927L4.75667 24.3844C4.94824 26.2187 5.13935 28.0532 5.33 29.888C5.3669 30.2395 5.40149 30.5919 5.44024 30.9434C5.65103 32.864 7.11779 33.899 8.93419 34.1906C9.99506 34.3612 11.0818 34.3963 12.1583 34.4138C13.5384 34.4359 14.9322 34.489 16.2897 34.239C18.3012 33.87 19.8104 32.5268 20.0258 30.4434C20.0873 29.8419 20.1488 29.2403 20.2103 28.6385C20.4148 26.6484 20.619 24.6581 20.8228 22.6677L21.4898 16.1641L21.7956 13.1835C21.8108 13.0357 21.8733 12.8968 21.9736 12.7872C22.0739 12.6776 22.2069 12.6033 22.3528 12.5751C22.928 12.463 23.4778 12.2716 23.8869 11.8339C24.5382 11.137 24.6678 10.2283 24.4376 9.31226ZM2.80098 9.95524C2.80975 9.95109 2.7936 10.0263 2.78669 10.0613C2.7853 10.0083 2.78807 9.96124 2.80098 9.95524ZM2.8568 10.387C2.86141 10.3837 2.87524 10.4022 2.88954 10.4243C2.86786 10.404 2.85403 10.3888 2.85633 10.387H2.8568ZM2.91168 10.4594C2.93152 10.4931 2.94213 10.5143 2.91168 10.4594V10.4594ZM3.02192 10.5489H3.02469C3.02469 10.5521 3.02976 10.5553 3.03161 10.5586C3.02855 10.555 3.02515 10.5518 3.02146 10.5489H3.02192ZM22.326 10.4151C22.1194 10.6116 21.8081 10.7029 21.5004 10.7486C18.0503 11.2606 14.5499 11.5198 11.0619 11.4054C8.56565 11.3201 6.09567 11.0429 3.62431 10.6937C3.38215 10.6596 3.11971 10.6153 2.9532 10.4368C2.63955 10.1001 2.7936 9.42204 2.87524 9.01522C2.94997 8.64253 3.09295 8.14577 3.53621 8.09272C4.22808 8.01155 5.03158 8.30352 5.71607 8.4073C6.54016 8.53306 7.36733 8.63377 8.19758 8.70941C11.7409 9.03229 15.3437 8.98201 18.8713 8.50969C19.5143 8.42329 20.1549 8.32289 20.7933 8.2085C21.362 8.10656 21.9926 7.91515 22.3362 8.50416C22.5719 8.90544 22.6033 9.44233 22.5668 9.89574C22.5556 10.0933 22.4693 10.2791 22.3256 10.4151H22.326Z"></path></svg></a>
       </div>
     </aside>
 
@@ -695,23 +785,33 @@
         <h2 class="sr-only">About</h2>
         <div class="tabs" data-seg="about" role="tablist" aria-label="About">
           <button type="button" role="tab" class="tab" data-panel="pro" aria-selected="true">About me</button>
-          <button type="button" role="tab" class="tab" data-panel="fun" aria-selected="false">Also about me <span class="aside">(off the record)</span></button>
+          <button type="button" role="tab" class="tab" data-panel="fun" aria-selected="false" aria-disabled="true" aria-label="Also about me, locked for now"><svg class="tab-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Also about me <span class="aside">(off the record)</span></button>
         </div>
 
         <div data-seg-panel="about" data-panel="pro">
-          <p>I am an AI researcher. What holds my attention is the methods themselves, and what breaks when you take them off a benchmark and point them at something real.</p>
-          <p>Right now that something is satellites: weather, climate, disasters. Before it was crops, and before that, cells. The domain keeps changing; the problems don't. Too few labels, distributions that drift, instruments that disagree. I follow those wherever they turn up next.</p>
+          <p>I research AI and build things with it. I’m interested in how models learn, how data shapes them, and what happens when you put them to use. The occasional working prototype helps keep the curiosity funded.</p>
         </div>
 
         <div data-seg-panel="about" data-panel="fun" hidden>
-          <p class="secret">It&rsquo;s a secret for now. <span class="emoji" role="img" aria-label="shushing face">🤫</span></p>
+          <p class="secret">I opened one paper to answer a question. Now I have 37 tabs and a side project.</p>
         </div>
       </section>
 
       <section>
+        <h2 id="projects">Projects</h2>
+        <article class="project-preview project-live">
+          <a class="project-image-link" href="https://weather-observatory.pages.dev/web/next/" aria-label="Open Weather Observatory"><img class="project-image" src="/weather-observatory.png" width="2824" height="1596" loading="lazy" decoding="async" alt="Weather Observatory interface with an interactive globe, precipitation forecasts, tropical cyclone tracks, and a forecast timeline."></a>
+          <div><h3><a href="https://weather-observatory.pages.dev/web/next/">Weather Observatory</a></h3>
+          <p>Explore and compare weather forecasts.</p>
+          <div class="project-tags">AI · Weather &amp; Climate · Earth Observation</div>
+</div>
+        </article>
+      </section>
+
+      <section>
         <h2>Research Interests</h2>
-        <p>Mostly I chase methods: multimodal and vision–language models, generative and state space architectures, and the long-running problem of learning something useful when labels are scarce: synthetic data, transfer learning, super-resolution.</p>
-        <p>At the moment those get pointed at weather and climate: precipitation nowcasting, change detection, soil-moisture retrieval, damage assessment from satellite imagery. Ask again next year and the list will probably have moved.</p>
+        <p>Multimodal models, computer vision, generative models, and state-space architectures. I’m interested in learning from limited labels and imperfect data.</p>
+        <div class="now-note"><h3>Now / exploring</h3><p>Currently exploring how AI can help address weather and climate challenges, with a focus on precipitation nowcasting and Earth observation.</p></div>
       </section>
 
       <section>
@@ -722,7 +822,7 @@
           <button role="tab" data-panel="2024" aria-selected="false">2024</button>
         </div>
         <div class="news-list" data-seg-panel="news" data-panel="2026">
-          <div class="news-item"><span class="when">2026</span>: Joined the Climate Intelligence Lab at <strong>DI Lab, Inc.</strong> as a researcher.</div>
+          <div class="news-item"><span class="when">2026</span>: Joined the Climate Intelligence Lab at <strong>DI Lab, Inc.</strong> as a researcher.<div class="news-preview"><a href="https://lnkd.in/p/gHuXCZ43" aria-label="View DI Lab announcement"><img src="/di-lab.jpg" alt="Photo from my DI Lab announcement" loading="lazy"></a><a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-linkedin"><span class="news-summary">AI and deep learning for space science, including a project with DOST-PAGASA under KOICA’s Creative Technology Solution program.</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 17.5v-6.6H6.2v6.6h2.14ZM7.27 9.96a1.24 1.24 0 1 0 0-2.48 1.24 1.24 0 0 0 0 2.48Zm10.53 7.54v-3.77c0-1.96-1.05-2.87-2.44-2.87-1.13 0-1.63.62-1.91 1.05v-.9h-2.14c.03.6 0 6.6 0 6.6h2.14v-3.69c0-.19.01-.38.07-.52.16-.38.5-.78 1.09-.78.77 0 1.08.59 1.08 1.44v3.54h2.11Z"/></svg></a></div></div>
           <div class="news-item"><span class="when">2026</span>: <strong>ESCAPE</strong> published in the <em>International Journal of Applied Earth Observation and Geoinformation</em>: physics-informed soil moisture and surface roughness from ALOS-2/PALSAR-2.</div>
           <div class="news-item"><span class="when">2026</span>: Received the <strong>Gilas Award</strong> from the Philippine Embassy in Korea for the third time.</div>
         </div>
@@ -1133,6 +1233,16 @@
         </details>
       </section>
 
+      <section>
+        <h2 id="contact">Contact</h2>
+        <p class="contact-intro">Have something in mind? Let’s talk. Enjoy something I’ve made? Coffee is always welcome.</p>
+        <div class="contact-actions">
+          <a class="booking-button" href="https://cal.com/ruzcko"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg><span>Book a call</span></a>
+          <!-- Official button image: https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png -->
+          <a class="coffee-button" href="https://buymeacoffee.com/ruzcko"><img src="/buy-me-a-coffee.png" alt="Buy me a coffee" width="545" height="153"></a>
+        </div>
+      </section>
+
       <div class="closer">
         <blockquote>
           <p>&ldquo;Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less.&rdquo;</p>
@@ -1185,6 +1295,19 @@
     menu.querySelector('summary').addEventListener('click', function (event) {
       event.preventDefault();
       setMenu(!menuExpanded);
+    });
+    var hoverMenu = window.matchMedia('(hover: hover) and (pointer: fine)');
+    var closeTimer;
+    menu.addEventListener('pointerenter', function () {
+      if (!hoverMenu.matches) { return; }
+      clearTimeout(closeTimer);
+      setMenu(true);
+    });
+    menu.addEventListener('pointerleave', function () {
+      if (!hoverMenu.matches) { return; }
+      closeTimer = setTimeout(function () {
+        if (!menu.contains(document.activeElement)) { setMenu(false); }
+      }, 220);
     });
     document.querySelectorAll('main > section').forEach(function (section) {
       var heading = section.querySelector('h2');
@@ -1298,6 +1421,13 @@
 
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
+        if (btn.getAttribute('aria-disabled') === 'true') {
+          btn.classList.remove('is-locked-shaking');
+          void btn.offsetWidth;
+          btn.classList.add('is-locked-shaking');
+          setTimeout(function () { btn.classList.remove('is-locked-shaking'); }, 400);
+          return;
+        }
         var value = btn.dataset.panel;
         buttons.forEach(function (b) {
           if (target) { b.setAttribute('aria-pressed', String(b === btn)); }
@@ -1385,6 +1515,130 @@
     });
 
     render();
+  })();
+
+  /* Load the official Cal.com scheduler only when a booking link is used. */
+  (function () {
+    var loading;
+    function loadCalendar() {
+      if (loading) { return loading; }
+      loading = new Promise(function (resolve, reject) {
+        window.Cal = window.Cal || function () { window.Cal.q.push(arguments); };
+        window.Cal.q = window.Cal.q || [];
+        window.Cal.ns = window.Cal.ns || {};
+        window.Cal.loaded = true;
+        window.Cal('init', { origin: 'https://cal.com' });
+        var script = document.createElement('script');
+        script.src = 'https://app.cal.com/embed/embed.js';
+        script.async = true;
+        var timeout = setTimeout(function () { reject(new Error('Calendar load timed out')); }, 10000);
+        script.onload = function () { clearTimeout(timeout); resolve(); };
+        script.onerror = function () { clearTimeout(timeout); reject(new Error('Calendar unavailable')); };
+        document.head.appendChild(script);
+      });
+      return loading;
+    }
+    document.querySelectorAll('a[href="https://cal.com/ruzcko"]').forEach(function (link) {
+      function warm() { loadCalendar().catch(function () {}); }
+      link.addEventListener('pointerenter', warm, { once: true });
+      link.addEventListener('focus', warm, { once: true });
+    });
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest('a[href="https://cal.com/ruzcko"]');
+      if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) { return; }
+      event.preventDefault();
+      if (link.getAttribute('aria-busy') === 'true') { return; }
+      link.setAttribute('aria-busy', 'true');
+      var label = link.querySelector('span');
+      if (label) { label.textContent = 'Opening…'; }
+      loadCalendar().then(function () {
+        link.removeAttribute('aria-busy');
+        if (label) { label.textContent = 'Book a call'; }
+        window.Cal('modal', {
+          calLink: 'ruzcko',
+          config: { theme: document.documentElement.classList.contains('is-dark') ? 'dark' : 'light' }
+        });
+      }).catch(function () { window.location.assign(link.href); });
+    });
+  })();
+
+  /* Hover and keyboard descriptions for the shared icon rail and controls. */
+  (function () {
+    var tip = document.createElement('div');
+    tip.className = 'icon-tooltip';
+    tip.id = 'icon-tooltip';
+    tip.setAttribute('role', 'tooltip');
+    tip.hidden = true;
+    document.body.appendChild(tip);
+    var active;
+    function hide() {
+      if (active) { active.removeAttribute('aria-describedby'); }
+      active = null;
+      tip.hidden = true;
+    }
+    function show(control) {
+      hide();
+      active = control;
+      tip.textContent = control.getAttribute('aria-label') || control.textContent;
+      tip.style.maxWidth = control.closest('.pub-title') ? 'min(480px, calc(100vw - 16px))' : 'calc(100vw - 16px)';
+      tip.hidden = false;
+      control.setAttribute('aria-describedby', tip.id);
+      var box = control.getBoundingClientRect();
+      var size = tip.getBoundingClientRect();
+      tip.style.left = Math.max(8, Math.min(innerWidth - size.width - 8, box.left + box.width / 2 - size.width / 2)) + 'px';
+      tip.style.top = (box.bottom + size.height + 14 < innerHeight ? box.bottom + 8 : box.top - size.height - 8) + 'px';
+    }
+    document.querySelectorAll('.icons a, .theme-toggle, .back-top, .pub-title a, .news-linkedin').forEach(function (control) {
+      control.removeAttribute('title');
+      control.addEventListener('pointerenter', function (event) { if (event.pointerType !== 'touch') { show(control); } });
+      control.addEventListener('pointerleave', hide);
+      control.addEventListener('focus', function () { show(control); });
+      control.addEventListener('blur', hide);
+      control.addEventListener('click', hide);
+    });
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape') { hide(); } });
+    window.addEventListener('scroll', hide, { passive: true });
+    window.addEventListener('resize', hide);
+  })();
+
+  (function () {
+    var mobile = matchMedia('(max-width:760px)');
+    var entries = [];
+    document.querySelectorAll('.news-item').forEach(function (item, index) {
+      if (item.querySelector('.news-preview')) return;
+      var text = document.createElement('div');
+      text.className = 'news-text';
+      text.id = 'news-text-' + index;
+      while (item.firstChild) text.appendChild(item.firstChild);
+      var button = document.createElement('button');
+      button.className = 'news-expand';
+      button.type = 'button';
+      button.textContent = 'Show more';
+      button.setAttribute('aria-expanded', 'false');
+      button.setAttribute('aria-controls', text.id);
+      item.append(text, button);
+      function toggle() {
+        if (!mobile.matches || !item.classList.contains('is-collapsible')) return;
+        var expanded = item.classList.toggle('is-expanded');
+        button.setAttribute('aria-expanded', String(expanded));
+        button.textContent = expanded ? 'Show less' : 'Show more';
+      }
+      button.addEventListener('click', toggle);
+      text.addEventListener('click', function (event) { if (!event.target.closest('a')) toggle(); });
+      entries.push({ item: item, text: text });
+    });
+    function measure() {
+      entries.forEach(function (entry) {
+        if (!entry.item.getClientRects().length) return;
+        entry.item.classList.remove('is-collapsible');
+        var line = parseFloat(getComputedStyle(entry.text).lineHeight);
+        entry.item.classList.toggle('is-collapsible', mobile.matches && entry.text.getBoundingClientRect().height > line * 3 + 1);
+      });
+    }
+    window.addEventListener('resize', measure);
+    document.querySelector('[data-seg="news"]').addEventListener('click', function () { requestAnimationFrame(measure); });
+    measure();
+    document.fonts.ready.then(measure);
   })();
 </script>
 </body>
