@@ -6,7 +6,7 @@
 <title>Rogelio Ruzcko Tobias</title>
 <meta name="description" content="Rogelio Ruzcko Tobias: AI researcher working on multimodal and vision–language models, generative and state space architectures, and data-efficient learning, currently applied to weather, climate and Earth observation.">
 <link rel="canonical" href="https://ruzcko.com/">
-<link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg?v=2">
+<link rel="icon" type="image/svg+xml" sizes="any" href="favicon.svg?v=2">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Rogelio Ruzcko Tobias">
 <meta property="og:description" content="Rogelio Ruzcko Tobias: AI researcher working on multimodal and vision–language models, generative and state space architectures, and data-efficient learning, currently applied to weather, climate and Earth observation.">
@@ -18,6 +18,9 @@
 <meta name="twitter:image:alt" content="Portrait of Rogelio Ruzcko Tobias">
 <script>try{var t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
 <style>
+  @font-face { font-family: 'Coffee Script'; src: url('coffee-script.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+  .coffee-button span { font-family: 'Coffee Script', cursive; font-weight: 400; font-size: clamp(18px, 4.7vw, 25px); line-height: 1; white-space: nowrap; }
+
   :root {
     --ground: #F3EFE6;
     --ink: #292722;
@@ -92,7 +95,7 @@
   }
   a { color: var(--link); text-decoration: none; }
   @media (hover: hover) and (pointer: fine) {
-    a:hover { color: var(--link-hover); text-decoration: underline; }
+    a:hover { color: var(--muted); text-decoration: none; }
   }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
 
@@ -140,7 +143,7 @@
     transition: color .12s ease, border-color .12s ease;
   }
   @media (hover: hover) and (pointer: fine) {
-    .icons a:hover { color: var(--link); border-color: var(--link); text-decoration: none; }
+    .icons a:hover { color: var(--ink); border-color: var(--rule); text-decoration: none; }
   }
   .icons svg { width: 15px; height: 15px; display: block; }
 
@@ -153,7 +156,7 @@
     transition: color .12s ease;
   }
   @media (hover: hover) and (pointer: fine) {
-    .theme-toggle:hover { color: var(--link); }
+    .theme-toggle:hover { color: var(--ink); background-color: var(--rule-soft); text-decoration: none; }
   }
   .theme-toggle svg { width: 18px; height: 18px; display: block; }
   .theme-toggle .sun { display: none; }
@@ -175,6 +178,19 @@
     .wrap > .theme-toggle { right: 156px; top: 20px; }
 
   }
+  /* Tablet portrait: keep the reading column generous instead of squeezing
+     the desktop sidebar and spacer into a narrow viewport. */
+  @media (min-width: 761px) and (max-width: 900px) {
+    .wrap { padding: 36px 36px 64px; }
+    :root { --head-shift: 0px; }
+    .masthead, .masthead-role, .masthead-sub { margin-left: 0; }
+    .wrap { max-width: 900px; }
+    .cols { grid-template-columns: 170px minmax(0, 660px); gap: 28px; justify-content: center; }
+    .side { grid-column: 1; }
+    main { grid-column: 2; min-width: 0; }
+    .scroll-header { width: min(692px, calc(100vw - 48px)); left: 50%; }
+    .wrap > .theme-toggle { right: 36px; }
+  }
   .scroll-header-inner {
     min-height: 44px; padding: 5px 12px;
     display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0;
@@ -191,7 +207,7 @@
     outline: none;
   }
   @media (hover: hover) and (pointer: fine) {
-    .section-menu summary:hover { color: var(--link); }
+    .section-menu summary:hover { color: var(--ink); background-color: var(--rule-soft); text-decoration: none; }
   }
   .section-menu summary:active { box-shadow: none; color: var(--link); }
   .theme-toggle:active { box-shadow: none; color: var(--link); }
@@ -209,7 +225,7 @@
     transition: color .2s ease;
   }
   @media (hover: hover) and (pointer: fine) {
-    .section-menu nav a:hover { color: var(--link); text-decoration: none; }
+    .section-menu nav a:hover { color: var(--ink); background-color: var(--rule-soft); text-decoration: none; }
   }
   .section-menu nav a:active { color: var(--link); box-shadow: none; }
   .section-menu summary:focus-visible {
@@ -237,7 +253,7 @@
   }
   .back-top.is-visible { opacity: 1; visibility: visible; }
   @media (hover: hover) and (pointer: fine) {
-    .back-top:hover { text-decoration: none; color: var(--link); }
+    .back-top:hover { color: var(--ink); background-color: var(--rule-soft); text-decoration: none; }
   }
   .back-top:focus-visible { border-radius: 50%; }
   .scroll-header::before {
@@ -287,6 +303,7 @@
     margin: 0 0 18px; border-bottom: 1px solid var(--rule);
   }
   .tab {
+    border-radius: 0;
     font: inherit; font-size: 12.5px; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.2;
     display: inline-flex; align-items: baseline; gap: 5px;
@@ -343,8 +360,9 @@
   @media(max-width:480px) { .news-preview { grid-template-columns: 100px minmax(0, 1fr); gap: 12px; } }
   .news-linkedin { display: flex; align-items: flex-end; gap: 6px; min-width: 0; color: var(--ink); }
   .news-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
-  .news-linkedin svg { width: 17px; height: 17px; flex-shrink: 0; margin-bottom: 3px; fill: currentColor; color: var(--link); }
-  .news-linkedin:hover { color: var(--link); }
+  .news-social { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; flex: none; border-radius: 50%; color: var(--muted); }
+  .news-social svg { width: 15px; height: 15px; fill: currentColor; }
+  .news-copy { color: var(--ink); min-width: 0; }
   .news-preview p { margin: 0 0 7px; }
 
   .news-expand { display: none; }
@@ -439,9 +457,6 @@
   /* after the track rules so an off toggle always reads as off */
   .tl-toggle[aria-pressed="false"] { color: var(--muted); opacity: .7; }
   .tl-toggle[aria-pressed="false"]::before { background: transparent; }
-  .tl-toggle:hover:not([aria-disabled="true"]) {
-    opacity: 1; text-decoration: underline; text-underline-offset: 4px;
-  }
   .tl-toggle[aria-disabled="true"] { cursor: default; }
   /* dot sits next to the spine on the left-hand track */
   .tl-head .l .tl-toggle { flex-direction: row-reverse; }
@@ -538,7 +553,7 @@
   .more > summary::-webkit-details-marker { display: none; }
   .more > summary::after { content: "▾"; font-size: 8px; transition: transform .14s ease; }
   .more[open] > summary::after { transform: rotate(180deg); }
-  .more > summary:hover { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+  .more > summary:hover { color: var(--ink); background-color: var(--rule-soft); text-decoration: none; }
   .more > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .more.centred > summary { margin: 10px auto 4px; }
   .more.left > summary { margin: 14px 0 4px; }
@@ -652,10 +667,10 @@
       text-transform: uppercase; padding: 1px 6px; border-radius: 3px;
     }
     .tl-item.acad .tl-tag {
-      color: var(--acad); background: color-mix(in oklab, var(--acad) 14%, transparent);
+      color: var(--acad);
     }
     .tl-item.ind .tl-tag {
-      color: var(--ind); background: color-mix(in oklab, var(--ind) 14%, transparent);
+      color: var(--ind);
     }
   }
 
@@ -677,7 +692,7 @@
   @media (max-width: 360px) {
     .scroll-header .icons a[aria-label="CV (PDF)"] { display: none; }
   }
-  .contact-actions a:hover { text-decoration: none; box-shadow: 0 0 0 2px var(--focus); }
+  .contact-actions a:hover { text-decoration: none; }
   .coffee-button:hover { color: #000; }
   /* Project placeholders and contact actions. */
   .preview-note, .project-tags { color: var(--muted); font-size: 12px; }
@@ -689,19 +704,19 @@
   .project-preview h3 { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
   .project-preview p { text-align: left; margin: 0 0 5px; font-size: 14px; }
   main section .contact-intro { text-align: left; margin-bottom: 18px; }
-  .contact-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 368px; gap: 12px; margin-bottom: 10px; }
+  .contact-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 368px; gap: 12px; margin: 0 auto 10px; }
   .contact-actions a { display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 50px; padding: 10px 14px; border-radius: 8px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; opacity: 1; }
   .booking-button { color: #fff; background: #984B3D; border: 1px solid #984B3D; }
   .booking-button:hover { color: #fff; background: #803D32; border-color: #803D32; }
   .contact-actions .coffee-button { padding: 0; border: 0; background: transparent; }
   .booking-button svg { width: 21px; height: 26px; flex: none; }
-  .coffee-button img { display: block; width: 100%; height: 50px; object-fit: contain; }
+
   @media(max-width:480px) {
     .contact-actions { max-width: 328px; gap: 8px; }
     .contact-actions a { height: auto; aspect-ratio: 545 / 153; padding: 4px; gap: 5px; font-size: clamp(11px, 3.1vw, 13px); white-space: nowrap; }
     .contact-actions .coffee-button { padding: 0; }
     .booking-button svg { width: 17px; height: 19px; }
-    .coffee-button img { height: auto; }
+
   }
   @media (max-width: 760px) { .masthead-role { margin-left: 0; } }
   @media (max-width: 380px) { .project-preview { grid-template-columns: 70px minmax(0, 1fr); gap: 12px; } }
@@ -723,6 +738,84 @@
   .location-pin { width: 12px; height: 12px; vertical-align: -1px; }
   .back-top svg { width: 26px; height: 26px; }
   @media (min-width: 761px) { .contact-actions { margin-inline: auto; } }
+  /* Shared control surfaces, after component layouts to avoid cascade conflicts. */
+  .icons a, .theme-toggle, .back-top, .seg, .tl .tl-toggle, .news-social {
+    background: linear-gradient(135deg, #ffffff09, transparent 45%, #ffffff04),
+      color-mix(in srgb, var(--ground) 34%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+    -webkit-backdrop-filter: blur(5px) saturate(145%);
+    backdrop-filter: blur(5px) saturate(145%);
+    box-shadow: inset 0 1px 0 #ffffff10, 0 4px 14px #0000000d;
+  }
+  .theme-toggle { border: 0; box-shadow: none; background: transparent; }
+  .tl .tl-toggle { padding: 5px 10px; border-radius: 4px; }
+  .tl .tl-toggle[aria-pressed="true"] { background-color: var(--chip); }
+  @media (hover: hover) and (pointer: fine) {
+    .icons a:hover, .news-social:hover, .theme-toggle:hover, .back-top:hover,
+    .tl .tl-toggle:hover:not([aria-disabled="true"]) {
+      background: var(--rule-soft);
+      text-decoration: none;
+      border-color: var(--rule);
+      box-shadow: inset 0 1px 0 #ffffff10, 0 4px 14px #0000000d;
+    }
+    .theme-toggle:hover { box-shadow: none; }
+    .contact-actions a.booking-button:hover {
+      color: #fff;
+      background: color-mix(in srgb, #984B3D 88%, var(--ground));
+      border-color: color-mix(in srgb, #984B3D 20%, transparent);
+      box-shadow: inset 0 1px 0 #ffffff18, 0 5px 16px #984b3d2b;
+      text-decoration: none;
+    }
+    .contact-actions a.coffee-button:hover {
+      color: #292722;
+      background: color-mix(in srgb, #FFDD00 88%, var(--ground));
+      box-shadow: inset 0 1px 0 #ffffff18, 0 5px 16px #d6ad252b;
+
+      text-decoration: none;
+    }
+  }
+  .contact-actions .booking-button {
+    border-color: color-mix(in srgb, #984B3D 18%, transparent);
+    color: var(--ink);
+    background: linear-gradient(135deg, #ffffff09, transparent 45%),
+      color-mix(in srgb, #984B3D 45%, transparent);
+    box-shadow: inset 0 1px 0 #ffffff10, 0 4px 14px #0000000d;
+    -webkit-backdrop-filter: blur(5px) saturate(145%);
+    backdrop-filter: blur(5px) saturate(145%);
+  }
+  .contact-actions .coffee-button {
+    color: var(--ink); padding: 4px; gap: 6px;
+    border: 1px solid color-mix(in srgb, #D6AD25 18%, transparent);
+    background: linear-gradient(135deg, #ffffff10, transparent 48%, #ffffff06),
+      color-mix(in srgb, #FFDD00 45%, transparent);
+    -webkit-backdrop-filter: blur(5px) saturate(145%);
+    backdrop-filter: blur(5px) saturate(145%);
+    box-shadow: inset 0 1px 0 #ffffff18, 0 4px 14px #0000000d;
+    transition: background-color .12s ease, box-shadow .12s ease;
+  }
+  .coffee-button svg { width: 18px; height: 25px; flex: none; }
+  .tl-toggle[data-track="acad"] { --track-color: var(--acad); }
+  .tl-toggle[data-track="ind"] { --track-color: var(--ind); }
+  .tl-toggle[data-track="acad"]::before { color: var(--acad); }
+  .tl-toggle[data-track="ind"]::before { color: var(--ind); }
+  @media (hover: hover) and (pointer: fine) {
+    .tl .tl-toggle:hover:not([aria-disabled="true"]) {
+      color: color-mix(in srgb, var(--track-color) 80%, var(--ink)); opacity: 1;
+      background: color-mix(in srgb, var(--track-color) 16%, var(--ground));
+    }
+  }
+  .icons a:focus-visible, .theme-toggle:focus-visible, .back-top:focus-visible,
+  .contact-actions a:focus-visible, .tl .tl-toggle:focus-visible, .seg button:focus-visible {
+    outline: 2px solid var(--muted);
+  }
+  .tl .tl-tag {
+    border-radius: 4px; cursor: default;
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+    background: linear-gradient(135deg, #ffffff09, transparent 45%, #ffffff04), var(--chip);
+    -webkit-backdrop-filter: blur(5px) saturate(145%);
+    backdrop-filter: blur(5px) saturate(145%);
+    box-shadow: inset 0 1px 0 #ffffff10, 0 4px 14px #0000000d;
+  }
 </style>
 <noscript><style>
   [data-seg], .theme-toggle, .tl-head { display: none; }
@@ -806,7 +899,7 @@
       <section>
         <h2 id="projects">Projects</h2>
         <article class="project-preview project-live">
-          <a class="project-image-link" href="https://wo-preview.ruzcko.com/" aria-label="Open Weather Observatory"><img class="project-image" src="/weather-observatory.png" width="2824" height="1596" loading="lazy" decoding="async" alt="Weather Observatory interface with an interactive globe, precipitation forecasts, tropical cyclone tracks, and a forecast timeline."></a>
+          <a class="project-image-link" href="https://wo-preview.ruzcko.com/" aria-label="Open Weather Observatory"><img class="project-image" src="weather-observatory.png" width="2824" height="1596" loading="lazy" decoding="async" alt="Weather Observatory interface with an interactive globe, precipitation forecasts, tropical cyclone tracks, and a forecast timeline."></a>
           <div><h3><a href="https://wo-preview.ruzcko.com/">Weather Observatory</a></h3>
           <p>Explore and compare weather forecasts.</p>
           <div class="project-tags">AI · Weather &amp; Climate · Earth Observation</div>
@@ -828,7 +921,7 @@
           <button role="tab" data-panel="2024" aria-selected="false">2024</button>
         </div>
         <div class="news-list" data-seg-panel="news" data-panel="2026">
-          <div class="news-item"><span class="when">2026</span>: Joined the Climate Intelligence Lab at <strong>DI Lab, Inc.</strong> as a researcher.<div class="news-preview"><a href="https://lnkd.in/p/gHuXCZ43" aria-label="View DI Lab announcement"><img src="/di-lab.jpg" alt="Photo from my DI Lab announcement" loading="lazy"></a><a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-linkedin"><span class="news-summary">AI and deep learning for space science, including a project with DOST-PAGASA under KOICA’s Creative Technology Solution program.</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 17.5v-6.6H6.2v6.6h2.14ZM7.27 9.96a1.24 1.24 0 1 0 0-2.48 1.24 1.24 0 0 0 0 2.48Zm10.53 7.54v-3.77c0-1.96-1.05-2.87-2.44-2.87-1.13 0-1.63.62-1.91 1.05v-.9h-2.14c.03.6 0 6.6 0 6.6h2.14v-3.69c0-.19.01-.38.07-.52.16-.38.5-.78 1.09-.78.77 0 1.08.59 1.08 1.44v3.54h2.11Z"/></svg></a></div></div>
+          <div class="news-item"><span class="when">2026</span>: Joined the Climate Intelligence Lab at <strong>DI Lab, Inc.</strong> as a researcher.<div class="news-preview"><a href="https://lnkd.in/p/gHuXCZ43" aria-label="View DI Lab announcement"><img src="di-lab.jpg" alt="Photo from my DI Lab announcement" loading="lazy"></a><div class="news-linkedin"><a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-copy"><span class="news-summary">AI and deep learning for space science, including a project with DOST-PAGASA under KOICA’s Creative Technology Solution program.</span></a><a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-social" aria-label="View announcement on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 17.5v-6.6H6.2v6.6h2.14ZM7.27 9.96a1.24 1.24 0 1 0 0-2.48 1.24 1.24 0 0 0 0 2.48Zm10.53 7.54v-3.77c0-1.96-1.05-2.87-2.44-2.87-1.13 0-1.63.62-1.91 1.05v-.9h-2.14c.03.6 0 6.6 0 6.6h2.14v-3.69c0-.19.01-.38.07-.52.16-.38.5-.78 1.09-.78.77 0 1.08.59 1.08 1.44v3.54h2.11Z"/></svg></a></div></div></div>
           <div class="news-item"><span class="when">2026</span>: <strong>ESCAPE</strong> published in the <em>International Journal of Applied Earth Observation and Geoinformation</em>: physics-informed soil moisture and surface roughness from ALOS-2/PALSAR-2.</div>
           <div class="news-item"><span class="when">2026</span>: Received the <strong>Gilas Award</strong> from the Philippine Embassy in Korea for the third time.</div>
         </div>
@@ -1244,8 +1337,8 @@
         <p class="contact-intro">Have something in mind? Let’s talk. Enjoy something I’ve made? Coffee is always welcome.</p>
         <div class="contact-actions">
           <a class="booking-button" href="https://cal.com/ruzcko" data-tooltip="Choose a meeting and find a time on Cal.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2"/></svg><span>Book a call</span></a>
-          <!-- Official button image: https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png -->
-          <a class="coffee-button" href="https://buymeacoffee.com/ruzcko" data-tooltip="Support my work with a coffee"><img src="/buy-me-a-coffee.png" alt="Buy me a coffee" width="545" height="153"></a>
+          <!-- Custom glass button using the existing coffee brand mark. -->
+          <a class="coffee-button" href="https://buymeacoffee.com/ruzcko" data-tooltip="Support my work with a coffee"><svg fill="none" aria-hidden="true" focusable="false" viewBox="0 0 25 35" width="30" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M22.0672 8.1281L22.0437 8.11426L21.9893 8.09766C22.0112 8.11614 22.0386 8.12685 22.0672 8.1281Z"></path><path fill="currentColor" d="M22.4111 10.5781L22.3848 10.5855L22.4111 10.5781Z"></path><path fill="currentColor" d="M22.0735 8.11128C22.0708 8.11093 22.0681 8.11029 22.0655 8.10938C22.0654 8.11115 22.0654 8.11293 22.0655 8.1147C22.0685 8.11432 22.0712 8.11313 22.0735 8.11128Z"></path><path fill="currentColor" d="M22.3877 10.5647L22.4274 10.5421L22.4421 10.5338L22.4555 10.5195C22.4303 10.5304 22.4074 10.5457 22.3877 10.5647Z"></path><path fill="currentColor" d="M22.1334 8.1762L22.0947 8.1393L22.0684 8.125C22.0825 8.14993 22.1058 8.16832 22.1334 8.1762Z"></path><path fill="currentColor" d="M12.3836 31.9453C12.3526 31.9587 12.3255 31.9796 12.3047 32.0062L12.3291 31.9905C12.3457 31.9753 12.3693 31.9573 12.3836 31.9453Z"></path><path fill="currentColor" d="M18.0497 30.8309C18.0497 30.7958 18.0326 30.8023 18.0368 30.9268C18.0368 30.9167 18.0409 30.9065 18.0428 30.8969C18.0451 30.8747 18.0469 30.853 18.0497 30.8309Z"></path><path fill="currentColor" d="M17.4617 31.9453C17.4307 31.9587 17.4036 31.9796 17.3828 32.0062L17.4073 31.9905C17.4239 31.9753 17.4474 31.9573 17.4617 31.9453Z"></path><path fill="currentColor" d="M8.39845 32.2145C8.37496 32.1941 8.34619 32.1807 8.31543 32.1758C8.34034 32.1878 8.36524 32.1998 8.38185 32.209L8.39845 32.2145Z"></path><path fill="currentColor" d="M7.50541 31.3533C7.50173 31.317 7.49058 31.2818 7.47266 31.25C7.48535 31.2831 7.49598 31.317 7.50448 31.3515L7.50541 31.3533Z"></path><path d="M13.5278 15.9814C12.2963 16.5086 10.8987 17.1064 9.08736 17.1064C8.32963 17.1048 7.57558 17.0009 6.8457 16.7973L8.09845 29.6592C8.14279 30.1968 8.38769 30.698 8.78452 31.0634C9.18134 31.4288 9.70106 31.6316 10.2405 31.6315C10.2405 31.6315 12.0167 31.7237 12.6094 31.7237C13.2474 31.7237 15.1601 31.6315 15.1601 31.6315C15.6995 31.6315 16.2191 31.4286 16.6158 31.0633C17.0125 30.6979 17.2574 30.1967 17.3017 29.6592L18.6435 15.4463C18.0439 15.2415 17.4387 15.1055 16.7565 15.1055C15.5767 15.105 14.626 15.5114 13.5278 15.9814Z" fill="#FFDD00"></path><path fill="currentColor" d="M2.96582 10.5039L2.98704 10.5237L3.00088 10.532C2.99022 10.5215 2.97847 10.512 2.96582 10.5039Z"></path><path fill="currentColor" d="M24.4376 9.31226L24.249 8.36071C24.0797 7.50694 23.6955 6.70022 22.8191 6.39164C22.5382 6.29294 22.2195 6.2505 22.0041 6.04617C21.7887 5.84184 21.725 5.5245 21.6752 5.23023C21.583 4.6901 21.4963 4.14952 21.4017 3.61033C21.3201 3.14677 21.2555 2.62602 21.0428 2.20075C20.7661 1.62973 20.1918 1.29579 19.6208 1.07485C19.3282 0.965622 19.0296 0.873222 18.7265 0.798101C17.2998 0.421723 15.7999 0.283349 14.3322 0.204476C12.5705 0.107269 10.8042 0.136556 9.04673 0.292113C7.73863 0.411114 6.36089 0.555024 5.11783 1.00751C4.6635 1.1731 4.19533 1.37189 3.84986 1.7229C3.42597 2.15417 3.2876 2.82113 3.5971 3.35894C3.81711 3.74086 4.1898 4.01069 4.58509 4.18919C5.09997 4.41919 5.63769 4.5942 6.18931 4.71132C7.72526 5.0508 9.3161 5.1841 10.8853 5.24083C12.6245 5.31103 14.3665 5.25414 16.0974 5.07063C16.5254 5.02359 16.9527 4.96716 17.3792 4.90136C17.8815 4.82433 18.2039 4.16751 18.0558 3.70995C17.8787 3.16292 17.4027 2.95074 16.8644 3.0333C16.7851 3.04576 16.7062 3.05729 16.6269 3.06882L16.5697 3.07712C16.3873 3.10019 16.205 3.12171 16.0226 3.1417C15.646 3.18229 15.2683 3.2155 14.8898 3.24133C14.042 3.30037 13.192 3.32758 12.3423 3.32896C11.5075 3.32896 10.6722 3.30544 9.83916 3.25055C9.45909 3.22564 9.07994 3.19397 8.70172 3.15553C8.52967 3.13755 8.35809 3.11864 8.18651 3.09742L8.02322 3.07666L7.98771 3.07159L7.81843 3.04714C7.4725 2.99502 7.12656 2.93506 6.78431 2.86264C6.74978 2.85498 6.71889 2.83577 6.69675 2.80818C6.67461 2.78059 6.66254 2.74627 6.66254 2.71089C6.66254 2.67552 6.67461 2.6412 6.69675 2.61361C6.71889 2.58602 6.74978 2.5668 6.78431 2.55914H6.79077C7.08735 2.49595 7.38624 2.44199 7.68605 2.39494C7.78599 2.37926 7.88623 2.36388 7.98679 2.34881H7.98955C8.17728 2.33636 8.36593 2.30269 8.55274 2.28055C10.178 2.11149 11.813 2.05386 13.4461 2.10804C14.239 2.13111 15.0314 2.17769 15.8206 2.25795C15.9903 2.27548 16.1592 2.29393 16.328 2.31468C16.3926 2.32252 16.4576 2.33175 16.5226 2.33959L16.6536 2.3585C17.0355 2.41539 17.4154 2.48442 17.7934 2.5656C18.3533 2.68737 19.0724 2.72704 19.3215 3.3405C19.4008 3.53514 19.4368 3.75147 19.4806 3.9558L19.5364 4.2164C19.5379 4.22108 19.5389 4.22586 19.5396 4.2307C19.6716 4.8457 19.8036 5.46069 19.9359 6.07569C19.9455 6.12112 19.9458 6.16806 19.9365 6.21359C19.9273 6.25911 19.9087 6.30224 19.8821 6.34028C19.8554 6.37832 19.8212 6.41046 19.7816 6.4347C19.7419 6.45893 19.6977 6.47474 19.6517 6.48113H19.648L19.5673 6.4922L19.4875 6.50281C19.2348 6.53571 18.9817 6.56646 18.7283 6.59506C18.2292 6.65194 17.7294 6.70114 17.2288 6.74265C16.234 6.82537 15.2373 6.87965 14.2385 6.90548C13.7296 6.919 13.2209 6.92531 12.7123 6.92439C10.6878 6.92279 8.66519 6.80513 6.65424 6.57199C6.43653 6.54616 6.21883 6.51849 6.00112 6.49035C6.16993 6.51203 5.87843 6.47375 5.81939 6.46545C5.68101 6.44607 5.54264 6.42593 5.40426 6.40502C4.93979 6.33537 4.47808 6.24958 4.01453 6.1744C3.45411 6.08215 2.91814 6.12827 2.41123 6.40502C1.99513 6.63272 1.65836 6.98188 1.44584 7.40593C1.22721 7.85795 1.16217 8.3501 1.06439 8.8358C0.966604 9.32149 0.814392 9.84408 0.872048 10.3427C0.996123 11.4188 1.74842 12.2933 2.8305 12.4889C3.84848 12.6734 4.87198 12.8228 5.89826 12.9501C9.9297 13.4439 14.0025 13.5029 18.0466 13.1263C18.3759 13.0956 18.7048 13.062 19.0332 13.0258C19.1358 13.0145 19.2396 13.0263 19.337 13.0604C19.4344 13.0944 19.523 13.1498 19.5962 13.2225C19.6694 13.2952 19.7255 13.3834 19.7602 13.4805C19.795 13.5777 19.8075 13.6814 19.797 13.7841L19.6946 14.7794C19.4883 16.7908 19.282 18.802 19.0756 20.813C18.8604 22.9249 18.6437 25.0366 18.4257 27.1482C18.3642 27.7429 18.3027 28.3375 18.2412 28.9319C18.1822 29.5172 18.1739 30.121 18.0627 30.6994C17.8875 31.609 17.2717 32.1675 16.3732 32.3719C15.55 32.5592 14.7091 32.6575 13.8649 32.6652C12.929 32.6703 11.9936 32.6288 11.0578 32.6338C10.0587 32.6394 8.83502 32.5471 8.06381 31.8036C7.38624 31.1505 7.29261 30.1279 7.20036 29.2437C7.07736 28.073 6.95544 26.9025 6.83459 25.7322L6.15656 19.2245L5.71791 15.0137C5.71053 14.9441 5.70315 14.8754 5.69623 14.8053C5.64365 14.303 5.28803 13.8113 4.72761 13.8366C4.24792 13.8579 3.70272 14.2656 3.759 14.8053L4.08417 17.927L4.75667 24.3844C4.94824 26.2187 5.13935 28.0532 5.33 29.888C5.3669 30.2395 5.40149 30.5919 5.44024 30.9434C5.65103 32.864 7.11779 33.899 8.93419 34.1906C9.99506 34.3612 11.0818 34.3963 12.1583 34.4138C13.5384 34.4359 14.9322 34.489 16.2897 34.239C18.3012 33.87 19.8104 32.5268 20.0258 30.4434C20.0873 29.8419 20.1488 29.2403 20.2103 28.6385C20.4148 26.6484 20.619 24.6581 20.8228 22.6677L21.4898 16.1641L21.7956 13.1835C21.8108 13.0357 21.8733 12.8968 21.9736 12.7872C22.0739 12.6776 22.2069 12.6033 22.3528 12.5751C22.928 12.463 23.4778 12.2716 23.8869 11.8339C24.5382 11.137 24.6678 10.2283 24.4376 9.31226ZM2.80098 9.95524C2.80975 9.95109 2.7936 10.0263 2.78669 10.0613C2.7853 10.0083 2.78807 9.96124 2.80098 9.95524ZM2.8568 10.387C2.86141 10.3837 2.87524 10.4022 2.88954 10.4243C2.86786 10.404 2.85403 10.3888 2.85633 10.387H2.8568ZM2.91168 10.4594C2.93152 10.4931 2.94213 10.5143 2.91168 10.4594V10.4594ZM3.02192 10.5489H3.02469C3.02469 10.5521 3.02976 10.5553 3.03161 10.5586C3.02855 10.555 3.02515 10.5518 3.02146 10.5489H3.02192ZM22.326 10.4151C22.1194 10.6116 21.8081 10.7029 21.5004 10.7486C18.0503 11.2606 14.5499 11.5198 11.0619 11.4054C8.56565 11.3201 6.09567 11.0429 3.62431 10.6937C3.38215 10.6596 3.11971 10.6153 2.9532 10.4368C2.63955 10.1001 2.7936 9.42204 2.87524 9.01522C2.94997 8.64253 3.09295 8.14577 3.53621 8.09272C4.22808 8.01155 5.03158 8.30352 5.71607 8.4073C6.54016 8.53306 7.36733 8.63377 8.19758 8.70941C11.7409 9.03229 15.3437 8.98201 18.8713 8.50969C19.5143 8.42329 20.1549 8.32289 20.7933 8.2085C21.362 8.10656 21.9926 7.91515 22.3362 8.50416C22.5719 8.90544 22.6033 9.44233 22.5668 9.89574C22.5556 10.0933 22.4693 10.2791 22.3256 10.4151H22.326Z"></path></svg><span>Buy me a coffee</span></a>
         </div>
       </section>
 
@@ -1549,7 +1642,7 @@
       tip.style.left = Math.max(8, Math.min(innerWidth - size.width - 8, box.left + box.width / 2 - size.width / 2)) + 'px';
       tip.style.top = (box.bottom + size.height + 14 < innerHeight ? box.bottom + 8 : box.top - size.height - 8) + 'px';
     }
-    document.querySelectorAll('.icons a, .theme-toggle, .back-top, .pub-title a, .news-linkedin, .contact-actions a').forEach(function (control) {
+    document.querySelectorAll('.icons a, .theme-toggle, .back-top, .pub-title a, .news-social, .contact-actions a').forEach(function (control) {
       control.removeAttribute('title');
       control.addEventListener('pointerenter', function (event) { if (event.pointerType !== 'touch') { show(control); } });
       control.addEventListener('pointerleave', hide);
