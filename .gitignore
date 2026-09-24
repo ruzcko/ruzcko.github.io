@@ -34,6 +34,9 @@ node_modules/
 # Environment & Configuration
 # ============================================================================
 
+# Local-only Codex guidance (keep personal strategy out of the public repo)
+/AGENTS.md
+
 # Environment variables
 .env
 .env.local

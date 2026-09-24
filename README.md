@@ -12,8 +12,8 @@ or package installation is required. Open `index.html` in a browser to preview.
 
 Run `python3 scripts/build.py` to assemble `_site/`. Push to `main` to deploy
 through GitHub Actions. The build includes redirects for the former publication
-and experience pages, a sitemap, and robots.txt. Add `cv.pdf` when ready; the
-current mockup includes a CV link but no PDF has been supplied.
+and experience pages, a sitemap, and robots.txt. The CV button opens
+`cv.pdf`, which is included in the published site.
 
 The old Hugo content and configuration remain as reference material and are
 not published. Publication folder names are used to preserve old URLs.
