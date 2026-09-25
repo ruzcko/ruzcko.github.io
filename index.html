@@ -264,7 +264,7 @@
   .section-menu nav a {
     display: block; padding: 7px 10px; border-radius: 4px;
     color: var(--ink); font-size: 13px; line-height: 1.4;
-    transition: color .2s ease;
+    transition: color .16s ease, background .16s ease, box-shadow .16s ease;
   }
   .section-menu nav a:active { color: var(--ink); box-shadow: none; }
   .section-menu summary:focus-visible { outline: 2px solid var(--muted); outline-offset: 2px; }
@@ -299,7 +299,11 @@
     backdrop-filter: blur(4px) saturate(155%) contrast(105%);
     box-shadow: 0 6px 20px #00000014, inset 0 1px 0 #ffffff25;
   }
-  .section-menu nav { background-color: color-mix(in srgb, var(--ground) 90%, transparent); }
+  .section-menu nav {
+    background: linear-gradient(180deg, var(--glass-sheen), transparent 48%), color-mix(in srgb, var(--ground) 90%, transparent);
+    box-shadow: inset 0 1px 0 var(--glass-edge), 0 4px 12px var(--glass-shadow);
+    -webkit-backdrop-filter: blur(4px) saturate(155%); backdrop-filter: blur(4px) saturate(155%);
+  }
   @media (prefers-reduced-transparency: reduce) {
     .scroll-header::before, .back-top, .section-menu nav { background: var(--ground); backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
@@ -317,7 +321,8 @@
     margin: 0 0 18px; padding-bottom: 9px; border-bottom: 1px solid var(--rule);
   }
   p { margin: 0 0 12px; }
-  main section p { text-align: justify; hyphens: auto; }
+  main section p { text-align: left; hyphens: manual; }
+  .intro-prose { font-size: 15px; line-height: 1.6; }
   p:last-child { margin-bottom: 0; }
   ul.plain { margin: 0; padding-left: 20px; }
   ul.plain li { margin-bottom: 4px; }
@@ -377,6 +382,11 @@
     border: 0; border-right: 1px solid var(--rule);
     cursor: pointer; font-variant-numeric: tabular-nums;
   }
+  .seg[data-seg="news"], .seg[data-seg="pubs"] {
+    flex-wrap: nowrap; max-width: 100%; overflow-x: auto;
+    overscroll-behavior-x: contain; scrollbar-width: thin;
+  }
+  .seg[data-seg="news"] button, .seg[data-seg="pubs"] button { flex: 0 0 auto; padding-inline: 10px; white-space: nowrap; }
   .seg button:last-child { border-right: 0; }
   .seg button { transition: background-color .12s ease, color .12s ease; }
   .seg button[aria-selected="true"], .seg button[aria-pressed="true"] { background: var(--chip); color: var(--ink); }
@@ -422,7 +432,7 @@
       transparent 0, var(--rule) 18px,
       var(--rule) calc(100% - 18px), transparent 100%);
   }
-  .news-item { position: relative; margin-bottom: 14px; }
+  .news-item { position: relative; margin-bottom: 14px; font-size: 15px; line-height: 1.55; }
   .news-item:last-child { margin-bottom: 0; }
   .news-item::before {
     content: ""; position: absolute; left: -24px; top: 9px;
@@ -832,7 +842,7 @@
     }
   }
   @media (hover: hover) and (pointer: fine) {
-    .icons a:hover, .news-social:hover, .back-top:hover,
+    .icons a:hover, .news-social:hover, .back-top:hover, .section-menu nav a:hover,
     .tl[data-view] .tl-toggle[data-track]:hover:not([aria-disabled="true"]),
     .seg button:hover {
       background: linear-gradient(180deg, var(--glass-sheen), transparent 48%), var(--glass-hover-fill);
@@ -877,7 +887,7 @@
 <header class="scroll-header" inert>
   <div class="scroll-header-inner">
     <details class="section-menu">
-      <summary aria-label="Ruzcko, section navigation" title="Page sections"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="4" r="1" fill="currentColor" stroke="none"/><path d="M4 9h16M4 14h16M4 19h16"/></svg><span class="menu-label">Ruzcko</span></summary>
+      <summary aria-label="Ruzcko, section navigation" title="Page sections"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 17V10c0-3 2-6 4-8 2 2 4 5 4 8v7Z M8 12l-4 5v3l4-3M16 12l4 5v3l-4-3M10 20l2 3 2-3"/><circle cx="12" cy="10" r="2"/></svg><span class="menu-label">Ruzcko</span></summary>
       <nav aria-label="Page sections"></nav>
     </details>
     <div class="icons" aria-label="Social links"></div>
@@ -934,7 +944,7 @@
           <button type="button" role="tab" class="tab" data-panel="fun" aria-selected="false" aria-disabled="true" aria-label="Also about me, locked for now"><svg class="tab-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Also about me <span class="aside">(off the record)</span></button>
         </div>
 
-        <div data-seg-panel="about" data-panel="pro">
+        <div class="intro-prose" data-seg-panel="about" data-panel="pro">
           <p>I like figuring things out, making things work, and finding good ways to communicate them.</p>
         </div>
 
@@ -954,11 +964,11 @@
         </article>
       </section>
 
-      <section>
+      <section class="intro-prose">
         <h2>Research Interests</h2>
         <p>My research usually starts with something I want to understand. I turn that curiosity into questions, then build and experiment to see where they lead me.</p>
         <div class="exploring-note">
-          <h3>Exploring</h3>
+          <h3><span aria-hidden="true">🛰️</span> Exploring</h3>
           <p>How AI and satellite observations can help us better anticipate extreme weather and respond to the impacts of the climate crisis.</p>
         </div>
       </section>
@@ -969,6 +979,9 @@
           <button role="tab" data-panel="2026" aria-selected="true">2026</button>
           <button role="tab" data-panel="2025" aria-selected="false">2025</button>
           <button role="tab" data-panel="2024" aria-selected="false">2024</button>
+          <button role="tab" data-panel="2023" aria-selected="false">2023</button>
+          <button role="tab" data-panel="2022" aria-selected="false">2022</button>
+          <button role="tab" data-panel="earlier" aria-selected="false">Earlier</button>
         </div>
         <div class="news-list" data-seg-panel="news" data-panel="2026">
           <div class="news-item"><span class="when">2026</span>: Joined the Climate Intelligence Lab at <strong>DI Lab, Inc.</strong> as a researcher.<div class="news-preview"><a href="https://lnkd.in/p/gHuXCZ43" aria-label="View DI Lab announcement"><img src="di-lab.jpg" alt="Photo from my DI Lab announcement" loading="lazy"></a><div class="news-linkedin"><a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-copy"><span class="news-summary">AI and deep learning for space science, including a project with DOST-PAGASA under KOICA’s Creative Technology Solution program.</span></a><a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-social" aria-label="View announcement on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 17.5v-6.6H6.2v6.6h2.14ZM7.27 9.96a1.24 1.24 0 1 0 0-2.48 1.24 1.24 0 0 0 0 2.48Zm10.53 7.54v-3.77c0-1.96-1.05-2.87-2.44-2.87-1.13 0-1.63.62-1.91 1.05v-.9h-2.14c.03.6 0 6.6 0 6.6h2.14v-3.69c0-.19.01-.38.07-.52.16-.38.5-.78 1.09-.78.77 0 1.08.59 1.08 1.44v3.54h2.11Z"/></svg></a></div></div></div>
@@ -986,6 +999,27 @@
           <div class="news-item"><span class="when">2024/12</span>: <strong>SAMBA</strong> published in the <em>Korean Journal of Remote Sensing</em> (40(6-3), 1505–1521).</div>
           <div class="news-item"><span class="when">2024</span>: Won the <strong>Grand Prize</strong> for algorithm development from the Korea Aerospace Administration (KASA), for change detection at the Satellite Information Application Contest.</div>
           <div class="news-item"><span class="when">2024</span>: Joined the IRIS Lab at UNIST as a researcher.</div>
+        </div>
+        <div class="news-list" data-seg-panel="news" data-panel="2023" hidden>
+          <div class="news-item"><span class="when">2023</span>: Started the <strong>PhD program in Artificial Intelligence</strong> at UNIST.</div>
+          <div class="news-item"><span class="when">2023</span>: Achieved <strong>TOPIK II Level 3</strong> in Korean language proficiency.</div>
+          <div class="news-item"><span class="when">2023</span>: Received the <strong>Gilas Award</strong> from the Philippine Embassy in Korea.</div>
+        </div>
+        <div class="news-list" data-seg-panel="news" data-panel="2022" hidden>
+          <div class="news-item"><span class="when">2022</span>: Awarded the <strong>Global Korea Scholarship</strong>.</div>
+          <div class="news-item"><span class="when">2022</span>: Worked as a Data Science and Analytics consultant at <strong>Qadworks Technical Solutions, Inc.</strong></div>
+        </div>
+        <div class="news-list" data-seg-panel="news" data-panel="earlier" hidden>
+          <div class="news-item"><span class="when">2021/12</span>: Presented a bibliometric study of ASEAN research on NLP and COVID-19 at <strong>IALP 2021</strong>.</div>
+          <div class="news-item"><span class="when">2021/12</span>: Presented research mapping AI-based social media analytics in health at <strong>TENCON 2021</strong>.</div>
+          <div class="news-item"><span class="when">2021/09</span>: Completed my MS in Electronics and Communications Engineering at <strong>De La Salle University</strong>, with a CGPA of 4.00 / 4.00 and a Research Award.</div>
+          <div class="news-item"><span class="when">2021/03</span>: Served as a resource speaker for <strong>Intelligent Green Box Capacity Training</strong> at Eastern Visayas State University.</div>
+          <div class="news-item"><span class="when">2020/12</span>: Presented a solar-energy module design for improving energy efficiency at <strong>HNICEM 2020</strong>.</div>
+          <div class="news-item"><span class="when">2020/11</span>: Presented a tree–fuzzy logic approach to classifying lettuce growth stages at <strong>TENCON 2020</strong>.</div>
+          <div class="news-item"><span class="when">2020/04</span>: Presented CNN-based chest X-ray classification at <strong>RIVF 2020</strong>.</div>
+          <div class="news-item"><span class="when">2020/03</span>: Presented chest X-ray and blood-cell classification projects at <strong>LifeTech 2020</strong>.</div>
+          <div class="news-item"><span class="when">2019/12</span>: Presented neural-network-based throat detection and health classification at <strong>iC3I 2019</strong>.</div>
+          <div class="news-item"><span class="when">2019/11</span>: Presented land-cover classification using LiDAR, aerial imagery, and an SVM at <strong>HNICEM 2019</strong>.</div>
         </div>
       </section>
 
@@ -1076,7 +1110,7 @@
           <div>
             <div class="edu-degree">PhD in Artificial Intelligence</div>
             <div class="edu-org">Ulsan National Institute of Science and Technology (UNIST) · Ulsan, South Korea</div>
-            <div class="edu-note">Coursework completed · Global Korea Scholarship</div>
+            <div class="edu-note">2023~ · Global Korea Scholarship</div>
           </div>
         </div>
         <div class="edu-item">
