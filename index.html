@@ -418,7 +418,9 @@
     .exploring-note { background: var(--ground); -webkit-backdrop-filter: none; backdrop-filter: none; }
   }
   .news-preview { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 16px; align-items: center; margin-top: 12px; font-size: 13px; }
-  .news-preview img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px; }
+  /* height:auto is required — the width/height attributes act as
+     presentational hints, and a fixed height cancels aspect-ratio */
+  .news-preview img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px; }
   @media(max-width:480px) { .news-preview { grid-template-columns: 100px minmax(0, 1fr); gap: 12px; } }
   .news-linkedin { display: flex; align-items: flex-end; gap: 6px; min-width: 0; color: var(--ink); }
   .news-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
