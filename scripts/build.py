@@ -6,7 +6,7 @@ import shutil
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / '_site'
 OUT.mkdir(exist_ok=True)
-for name in ('index.html', 'coffee-script.ttf', 'coffee-font-license.txt', 'me.jpg', 'favicon.svg', 'buy-me-a-coffee.png', 'weather-observatory.png', 'di-lab.jpg', 'ai4sci-korea.jpg'):
+for name in ('index.html', 'coffee-script.ttf', 'coffee-font-license.txt', 'me.jpg', 'favicon.svg', 'buy-me-a-coffee.png', 'weather-observatory.jpg', 'di-lab.jpg', 'ai4sci-korea.jpg'):
     shutil.copy2(ROOT / name, OUT / name)
 if (ROOT / 'cv.pdf').is_file():
     shutil.copy2(ROOT / 'cv.pdf', OUT / 'cv.pdf')
@@ -15,12 +15,15 @@ def redirect(route, target):
     folder = OUT / route
     folder.mkdir(parents=True, exist_ok=True)
     url = escape(target, quote=True)
+    # search engines discard a canonical that carries a fragment, so the
+    # canonical points at the page the fragment lives on
+    canonical = 'https://ruzcko.com' + escape(target.split('#')[0] or '/', quote=True)
     (folder / 'index.html').write_text(
         '<!doctype html><html lang="en"><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
         '<title>Page moved</title><meta name="robots" content="noindex">'
         f'<meta http-equiv="refresh" content="0;url={url}">'
-        f'<link rel="canonical" href="https://ruzcko.com{url}">'
+        f'<link rel="canonical" href="{canonical}">'
         f'<p>This page has moved. <a href="{url}">Continue to the website</a>.</p></html>',
         encoding='utf-8')
 
