@@ -6,7 +6,7 @@ import shutil
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / '_site'
 OUT.mkdir(exist_ok=True)
-for name in ('index.html', 'coffee-script.ttf', 'coffee-font-license.txt', 'me.jpg', 'favicon.svg', 'buy-me-a-coffee.png', 'weather-observatory.jpg', 'di-lab.jpg', 'ai4sci-korea.jpg'):
+for name in ('index.html', 'coffee-script.ttf', 'coffee-font-license.txt', 'me.jpg', 'favicon.svg', 'buy-me-a-coffee.png', 'weather-observatory.jpg', 's2rain.jpg', 'di-lab.jpg', 'ai4sci-korea.jpg'):
     shutil.copy2(ROOT / name, OUT / name)
 if (ROOT / 'cv.pdf').is_file():
     shutil.copy2(ROOT / 'cv.pdf', OUT / 'cv.pdf')
