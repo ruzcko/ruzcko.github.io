@@ -898,6 +898,15 @@
     .project-preview.project-live, .tl .tl-toggle[data-track], .contact-actions a { transition: none; }
     .project-preview.project-live:hover, .project-preview.project-live:focus-within { transform: none; }
   }
+
+  /* Desktop: centre the icons on the pill rather than in the space the menu
+     leaves. The pill is centred on the masthead axis, so docked icons land
+     exactly where they sat under the name instead of 28px to the right.
+     Phones keep the content-sized menu column: their pill is too narrow for
+     equal side columns to hold the menu label. */
+  @media (min-width: 761px) {
+    .scroll-header .scroll-header-inner { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  }
 </style>
 <noscript><style>
   [data-seg], .theme-toggle, .tl-head { display: none; }
