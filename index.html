@@ -241,7 +241,7 @@
   @media (min-width: 761px) and (max-width: 900px) {
     .wrap { padding: 36px 36px 64px; }
     :root { --head-shift: 0px; }
-    .masthead, .masthead-role, .masthead-sub, .masthead-icons { margin-left: 0; }
+    .masthead, .masthead-role, .masthead-sub, .icons-home { margin-left: 0; }
     .wrap { max-width: 900px; }
     .cols { grid-template-columns: 170px minmax(0, 660px); gap: 28px; justify-content: center; }
     .side { grid-column: 1; }
@@ -670,7 +670,7 @@
   }
 
   @media (max-width: 760px) {
-    .masthead-icons { margin: 0; }
+    .masthead-icons, .icons-home { margin: 0; }
       .wrap { padding: 32px 20px 56px; }
     .masthead { font-size: 27px; }
     .tabs { gap: 0 16px; }
@@ -782,7 +782,8 @@
   .side-location { width: max-content; max-width: none; position: relative; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 12px; }
   @media (min-width: 761px) {
     /* sits under the name, so the sticky dock only has to move it a little */
-  .masthead-icons { margin: 0 0 38px var(--head-shift); }
+  .icons-home { margin: 0 0 38px var(--head-shift); }
+  .masthead-icons { margin: 0; }
   }
   @media (max-width: 480px) {
     .project-preview.project-live { grid-template-columns: 100px minmax(0, 1fr); gap: 14px; }
@@ -1490,6 +1491,9 @@
     header.querySelector('.scroll-header-inner').appendChild(document.querySelector('.theme-toggle').cloneNode(true));
     var socials = document.querySelector('.masthead-icons');
     var home = document.createElement('div');
+    // The masthead spacing lives on this placeholder, not on the icons, so it
+    // stays behind when they dock instead of following them into the pill.
+    home.className = 'icons-home';
     socials.before(home);
     home.appendChild(socials);
     // The row belongs under the name on desktop, where the sticky dock is a
