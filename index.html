@@ -1610,7 +1610,14 @@
     var framePending = false;
     function positionHeader() {
       framePending = false;
-      var show = tagline.getBoundingClientRect().bottom <= 0;
+      var row = home.getBoundingClientRect();
+      var height = header.getBoundingClientRect().height;
+      // Where the pill would sit if it were centred on the icon row.
+      var rowTop = row.top + row.height / 2 - height / 2;
+      // Desktop: hand over the moment the row reaches the pill's resting
+      // offset, so the pill takes the row over in place rather than appearing
+      // after it has scrolled away. Phones keep the tagline trigger.
+      var show = narrow.matches ? tagline.getBoundingClientRect().bottom <= 0 : rowTop <= 12;
       if (show !== docked) {
         docked = show;
         // Preserve the original row as the scroll anchor for the floating pill.
@@ -1628,10 +1635,11 @@
         topLink.inert = !show;
       }
       if (show) {
-        var row = home.getBoundingClientRect();
-        var height = header.getBoundingClientRect().height;
+        // Re-read the row: docking may have just moved the icons into the pill.
+        row = home.getBoundingClientRect();
+        rowTop = row.top + row.height / 2 - height / 2;
         // Follow the row continuously until the pill reaches its sticky offset.
-        var top = Math.max(12, row.top + row.height / 2 - height / 2);
+        var top = Math.max(12, rowTop);
         header.style.top = 'max(' + top + 'px, env(safe-area-inset-top))';
         header.style.setProperty('--menu-height', Math.max(80, window.innerHeight - top - height - 28) + 'px');
       }
