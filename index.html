@@ -670,6 +670,7 @@
   }
 
   @media (max-width: 760px) {
+    .masthead-icons { max-width: 128px; margin: 0 auto; }
       .wrap { padding: 32px 20px 56px; }
     .masthead { font-size: 27px; }
     .tabs { gap: 0 16px; }
@@ -1491,6 +1492,25 @@
     var home = document.createElement('div');
     socials.before(home);
     home.appendChild(socials);
+    // The row belongs under the name on desktop, where the sticky dock is a
+    // short hop away. On phones the header already sits right above the
+    // portrait, so the row goes back under it as it was.
+    var deskSlot = document.createElement('div');
+    home.before(deskSlot);
+    var sideSlot = document.querySelector('.side');
+    var narrow = window.matchMedia('(max-width: 760px)');
+    var placedNarrow = null;
+    function placeHome() {
+      var isNarrow = narrow.matches;
+      if (isNarrow === placedNarrow) { return; }
+      placedNarrow = isNarrow;
+      if (isNarrow) { sideSlot.appendChild(home); } else { deskSlot.after(home); }
+    }
+    placeHome();
+    // resize as well as the media query: the change event is not reliable
+    // everywhere, and the guard above makes the extra calls a boolean compare
+    narrow.addEventListener('change', placeHome);
+    window.addEventListener('resize', placeHome, { passive: true });
     var dock = header.querySelector('.icons');
     dock.className = 'social-dock';
     var docked = false;
