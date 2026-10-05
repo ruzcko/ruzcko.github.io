@@ -423,11 +423,12 @@
      Each image keeps its own shape, so a wide banner takes less height than a photo. */
   .news-preview img { display: block; width: 100%; height: auto; border-radius: 4px; }
   @media(max-width:480px) { .news-preview { grid-template-columns: 100px minmax(0, 1fr); gap: 12px; } }
-  .news-linkedin { display: flex; align-items: flex-end; gap: 6px; min-width: 0; color: var(--ink); }
+  /* summary on its own lines, link icons on the line below it */
+  .news-linkedin { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; min-width: 0; color: var(--ink); }
   .news-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
   .news-social { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; flex: none; border-radius: 50%; color: var(--muted); }
   .news-social svg { width: 15px; height: 15px; fill: currentColor; }
-  .news-copy { color: var(--ink); min-width: 0; }
+  .news-copy { flex: 0 0 100%; color: var(--ink); min-width: 0; }
   .news-preview p { margin: 0 0 7px; }
 
   .news-expand { display: none; }
