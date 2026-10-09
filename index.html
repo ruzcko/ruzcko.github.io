@@ -196,7 +196,7 @@
   }
   .hero-text { min-width: 0; padding-bottom: 32px; }
   .eyebrow {
-    display: inline-flex; align-items: center; gap: 9px; margin: 0 0 22px;
+    display: inline-flex; align-items: center; gap: 9px; margin: 0 0 22px; white-space: nowrap;
     font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
   }
   .eyebrow::before {
@@ -210,29 +210,14 @@
     -webkit-background-clip: text; background-clip: text; color: transparent;
     padding-bottom: .06em;
   }
-  .fullname { margin: 0 0 18px; font-size: 14.5px; color: var(--muted); }
-  .role { margin: 0 0 18px; font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .fullname { margin: 0 0 20px; font-size: 14.5px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
     display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px;
     border-radius: 999px; border: 1px solid var(--card-edge); background: var(--chip);
     font-size: 13.5px; color: var(--ink); white-space: nowrap;
   }
   .chip svg { width: 14px; height: 14px; color: var(--muted); flex: none; }
-  .chip .mono { font-size: 12px; color: var(--muted); }
-  .cta { display: flex; flex-wrap: wrap; gap: 10px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 22px;
-    border-radius: 999px; font-size: 14.5px; font-weight: 600; color: var(--ink);
-    border: 1px solid var(--card-edge); background: var(--chip);
-    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
-  }
-  .btn svg { width: 15px; height: 15px; flex: none; }
-  .btn.primary { background: var(--btn-bg); color: var(--btn-ink); border-color: transparent; box-shadow: 0 6px 20px color-mix(in srgb, var(--btn-bg) 28%, transparent); }
-  @media (hover: hover) and (pointer: fine) {
-    .btn:hover { transform: translateY(-1px); color: var(--ink); }
-    .btn.primary:hover { color: var(--btn-ink); box-shadow: 0 10px 26px color-mix(in srgb, var(--btn-bg) 34%, transparent); }
-  }
   .hero-portrait { align-self: start; padding: 7px; border-radius: 26px; margin-bottom: 32px; }
   .hero-portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 20px; }
   /* the icon row sits on the card's bottom edge, centred on the page axis,
@@ -352,7 +337,6 @@
   @media (hover: hover) and (pointer: fine) {
     .seg button:not([aria-selected="true"]):not([aria-pressed="true"]):hover, .tab:not([aria-selected="true"]):hover { color: var(--ink); }
   }
-  .tab .aside { font-size: 12px; font-weight: 400; }
   .tab-lock { width: 12px; height: 12px; }
   .tab[aria-disabled="true"] { cursor: not-allowed; opacity: .7; }
   .tab.is-locked-shaking { animation: locked-shake .32s ease-in-out; }
@@ -371,13 +355,22 @@
   .exploring p { font-size: 16px; }
 
   /* ---------- news ---------- */
-  .news-list { padding: 4px 22px; border-radius: 20px; }
-  .news-item { padding: 16px 0; border-top: 1px solid var(--rule-soft); }
-  .news-item:first-child { border-top: 0; }
-  /* image beside the text at every width, so a story with a picture is
-     only a little taller than one without */
-  .news-item.has-media { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; align-items: center; }
-  .news-item img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; border: 1px solid var(--card-edge); }
+  /* a timeline down the left of each year's card */
+  .news-list { position: relative; padding: 6px 22px; border-radius: 20px; }
+  .news-list::before {
+    content: ""; position: absolute; left: 26px; top: 14px; bottom: 14px; width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--rule) 20px, var(--rule) calc(100% - 20px), transparent);
+  }
+  .news-item { position: relative; padding: 14px 0 14px 26px; }
+  .news-item::before {
+    content: ""; position: absolute; left: 0; top: 20px; width: 9px; height: 9px; border-radius: 50%; box-sizing: border-box;
+    background: var(--chip-solid); border: 1.5px solid var(--muted);
+  }
+  .news-list[data-panel="2026"] .news-item:first-child::before { background: var(--link); border-color: var(--link); box-shadow: 0 0 0 3px color-mix(in srgb, var(--link) 22%, transparent); }
+  /* date and headline on top; the picture sits beside its summary below */
+  .news-media { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 18px; align-items: start; margin-top: 10px; }
+  .news-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; border: 1px solid var(--card-edge); }
+  .news-media .news-summary { margin-top: 0; }
   .when { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .news-item .when { display: block; margin-bottom: 3px; }
   .news-head { display: block; color: var(--ink); font-size: 16px; font-weight: 600; line-height: 1.45; letter-spacing: -.01em; }
@@ -394,18 +387,17 @@
     .news-social:hover { color: var(--ink); }
   }
 
-  /* "More..." disclosures: label plus a mono tally, like a folded drawer */
-  .more { margin-top: 12px; }
-  .more > summary {
+  /* a fold at the foot of a list card: the tail opens inside the card */
+  .list-more > summary {
     list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 14px 20px; border-radius: 16px; border: 1px solid var(--card-edge); background: var(--chip);
-    font-size: 14.5px; font-weight: 600; transition: background .15s ease;
+    padding: 14px 0; border-top: 1px solid var(--rule-soft); font-size: 14px; font-weight: 600; color: var(--muted);
+    transition: color .15s ease;
   }
-  .more > summary::-webkit-details-marker { display: none; }
-  .more > summary .tally { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--muted); display: inline-flex; align-items: center; gap: 10px; }
-  .more > summary .tally::after { content: ""; width: 5px; height: 5px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .15s ease; }
-  .more[open] > summary .tally::after { transform: translateY(1px) rotate(225deg); }
-  @media (hover: hover) and (pointer: fine) { .more > summary:hover { background: color-mix(in srgb, var(--chip) 100%, var(--card-edge)); } }
+  .list-more > summary::-webkit-details-marker { display: none; }
+  .list-more .tally { font-family: var(--mono); font-size: 12px; font-weight: 400; display: inline-flex; align-items: center; gap: 10px; }
+  .list-more .tally::after { content: ""; width: 5px; height: 5px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .15s ease; }
+  .list-more[open] .tally::after { transform: translateY(1px) rotate(225deg); }
+  @media (hover: hover) and (pointer: fine) { .list-more > summary:hover { color: var(--ink); } }
 
   /* ---------- projects ---------- */
   .proj-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
@@ -518,14 +510,13 @@
     display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; align-items: baseline;
     padding: 14px 0; border-top: 1px solid var(--rule-soft);
   }
-  .list > .row:first-child, .more .row:first-child { border-top: 0; }
+  .list > .row:first-child { border-top: 0; }
   .row .what { font-size: 15px; font-weight: 600; letter-spacing: -.01em; line-height: 1.4; }
   .row .sub { font-size: 13.5px; color: var(--muted); font-weight: 400; letter-spacing: 0; margin-top: 2px; }
   .row .note { font-size: 13px; color: var(--faint); font-weight: 400; letter-spacing: 0; margin-top: 3px; }
   .row .when { white-space: nowrap; }
   .list .gap { height: 10px; border-top: 1px solid var(--rule-soft); }
   .list .gap + .row { border-top-color: transparent; }
-  .more .list { margin-top: 10px; }
 
   .svc + .svc { margin-top: 22px; }
   .svc-label { font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
@@ -588,15 +579,15 @@
     .hero { grid-template-columns: minmax(0, 1fr) 112px; gap: 0 14px; padding: 24px 22px 0; border-radius: 24px; }
     .hero-text { display: contents; }
     .hero-text > * { grid-column: 1 / -1; }
-    .hero-text > .eyebrow, .hero-text > .hello, .hero-text > .name, .hero-text > .fullname { grid-column: 1; }
-    .hero-portrait { grid-column: 2; grid-row: 1 / span 4; align-self: start; width: 112px; padding: 4px; border-radius: 20px; margin: 0; }
+    /* the role line runs full width on top; the portrait starts below it */
+    .hero-text > .hello, .hero-text > .name, .hero-text > .fullname { grid-column: 1; }
+    .hero-portrait { grid-column: 2; grid-row: 2 / span 3; align-self: center; width: 112px; padding: 4px; border-radius: 20px; margin: 0; }
     .hero-portrait img { border-radius: 16px; }
-    .cta { margin-bottom: 24px; gap: 8px; }
-    .btn { height: 44px; padding: 0 16px; font-size: 14px; }
+    .chips { margin: 4px 0 24px; }
+    .chip { font-size: 13px; }
     .eyebrow { margin-bottom: 14px; font-size: 10.5px; letter-spacing: .1em; }
     .hello { font-size: 18px; }
     .name { font-size: clamp(38px, 12.5vw, 54px); }
-    .role { font-size: 17px; }
     .hero-foot { margin: 0 -22px; padding: 10px 0; }
     .icons { gap: 4px; }
     .icons a { width: 28px; height: 28px; flex-basis: 28px; }
@@ -611,8 +602,10 @@
     .lede { font-size: 19px; }
     .prose { font-size: 16px; }
     .news-list { padding: 2px 16px; }
-    .news-item.has-media { grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: start; }
-    .news-item.has-media img { border-radius: 9px; margin-top: 3px; }
+    .news-list::before { left: 20px; }
+    .news-item { padding-left: 22px; }
+    .news-media { grid-template-columns: 120px minmax(0, 1fr); gap: 12px; }
+    .news-media img { border-radius: 9px; }
     .news-head { font-size: 15px; }
     .news-summary { font-size: 13.5px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
     .news-links { margin-top: 8px; }
@@ -643,7 +636,7 @@
     .seg button { padding: 6px 6px; font-size: 12px; }
   }
   @media (max-width: 480px) {
-    .news-item.has-media { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
+    .news-media { grid-template-columns: 100px minmax(0, 1fr); }
     .contact-actions { gap: 8px; }
     .contact-actions a { font-size: 13px; padding: 4px 8px; }
     .coffee-button span { font-size: 16px; }
@@ -651,10 +644,9 @@
   }
   @media (max-width: 380px) {
     .hero { grid-template-columns: minmax(0, 1fr) 88px; gap: 0 12px; }
+    .chip { padding: 0 12px; gap: 6px; font-size: 12.5px; }
     .hero-portrait { width: 88px; border-radius: 17px; }
     .hero-portrait img { border-radius: 13px; }
-    /* the locked tab drops to its own line rather than scrolling sideways */
-    .tabs { flex-wrap: wrap; border-radius: 20px; }
     .section-menu .menu-icon { display: none; }
     .icons { gap: 3px; }
     .icons a { width: 26px; height: 26px; flex-basis: 26px; }
@@ -695,17 +687,12 @@
 
   <header class="hero glass" id="top">
     <div class="hero-text">
-      <p class="eyebrow">Curiouser and curiouser</p>
+      <p class="eyebrow">AI Researcher &amp; Developer</p>
       <p class="hello">Hello, I’m</p>
       <h1 class="name">Ruzcko</h1>
       <p class="fullname">Rogelio Ruzcko Tobias</p>
-      <p class="role">AI Researcher &amp; Developer</p>
       <div class="chips">
-        <span class="chip"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Seoul, South Korea <span class="mono" data-clock>KST</span></span>
-      </div>
-      <div class="cta">
-        <a class="btn primary" href="cv.pdf">Download CV <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></svg></a>
-        <a class="btn" href="mailto:ruzcko@dilab.kr">Email me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Seoul <span role="img" aria-label="South Korea">🇰🇷</span> · Anywhere on Earth <span role="img" aria-label="Globe showing Asia and Australia">🌏</span></span>
       </div>
     </div>
     <div class="hero-portrait glass">
@@ -728,12 +715,11 @@
     <section>
       <div class="sec-head">
         <h2>About</h2>
-        <p class="sec-sub">Seoul <span role="img" aria-label="South Korea">🇰🇷</span> · Anywhere on Earth <span role="img" aria-label="Globe showing Asia and Australia">🌏</span></p>
       </div>
       <div class="glass card">
         <div class="tabs seg" data-seg="about" role="tablist" aria-label="About">
           <button type="button" role="tab" class="tab" data-panel="pro" aria-selected="true">About me</button>
-          <button type="button" role="tab" class="tab" data-panel="fun" aria-selected="false" aria-disabled="true" aria-label="Also about me, locked for now"><svg class="tab-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Also about me <span class="aside">(off the record)</span></button>
+          <button type="button" role="tab" class="tab" data-panel="fun" aria-selected="false" aria-disabled="true" aria-label="Off the record, locked for now"><svg class="tab-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Off the record</button>
         </div>
         <div data-seg-panel="about" data-panel="pro">
           <p class="lede">I like figuring things out, making things work, and finding good ways to communicate them.</p>
@@ -772,27 +758,31 @@
       </div>
       <div class="news-list glass" data-seg-panel="news" data-panel="2026">
           <div class="news-item has-media">
-        <a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" aria-label="View the S2RAIN slides" tabindex="-1"><img src="s2rain.jpg" width="800" height="450" loading="lazy" decoding="async" alt="S2RAIN: a stack of satellite image layers with an arrow to an IMERG rainfall map of East Asia"></a>
-        <div class="news-body">
-          <span class="when">2026/09</span>
-          <a class="news-head" href="https://ruzcko.com/talks/s2rain-ai4sci-2026/">Presented S2RAIN at AI4Sci Korea, Seoul.</a>
-          <p class="news-summary">Exploring how satellite observations and generative AI can support short-term rainfall forecasts where radar coverage is limited.</p>
-          <div class="news-links">
-            <a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" class="news-social" aria-label="S2RAIN slides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8.5 20h7"/></svg></a>
-            <a href="https://www.conftool.org/ai4sci-korea-2026/index.php?page=browseSessions&amp;form_date=2026-09-28&amp;form_session=22" class="news-social" aria-label="View conference session"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0M16 8l1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0" transform="translate(2 -1) scale(.85)"/></svg></a>
-          </div>
-        </div>
+            <span class="when">2026/09</span>
+            <a class="news-head" href="https://ruzcko.com/talks/s2rain-ai4sci-2026/">Presented S2RAIN at AI4Sci Korea, Seoul.</a>
+            <div class="news-media">
+              <a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" aria-label="View the S2RAIN slides" tabindex="-1"><img src="s2rain.jpg" width="800" height="450" loading="lazy" decoding="async" alt="S2RAIN: a stack of satellite image layers with an arrow to an IMERG rainfall map of East Asia"></a>
+              <div>
+                <p class="news-summary">Exploring how satellite observations and generative AI can support short-term rainfall forecasts where radar coverage is limited.</p>
+                <div class="news-links">
+                  <a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" class="news-social" aria-label="S2RAIN slides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8.5 20h7"/></svg></a>
+                  <a href="https://www.conftool.org/ai4sci-korea-2026/index.php?page=browseSessions&amp;form_date=2026-09-28&amp;form_session=22" class="news-social" aria-label="View conference session"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0M16 8l1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0" transform="translate(2 -1) scale(.85)"/></svg></a>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="news-item has-media">
-        <a href="https://lnkd.in/p/gHuXCZ43" aria-label="View DI Lab announcement" tabindex="-1"><img src="di-lab.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Photo from my DI Lab announcement"></a>
-        <div class="news-body">
-          <span class="when">2026/08</span>
-          <a class="news-head" href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/">Joined the Climate Intelligence Lab at DI Lab, Inc. as a researcher.</a>
-          <p class="news-summary">AI and deep learning for space science, including a project with DOST-PAGASA under KOICA’s Creative Technology Solution program.</p>
-          <div class="news-links">
-            <a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-social" aria-label="View announcement on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 17.5v-6.6H6.2v6.6h2.14ZM7.27 9.96a1.24 1.24 0 1 0 0-2.48 1.24 1.24 0 0 0 0 2.48Zm10.53 7.54v-3.770c0-1.96-1.05-2.87-2.44-2.87-1.13 0-1.63.62-1.91 1.05v-.9h-2.14c.03.6 0 6.6 0 6.6h2.14v-3.69c0-.19.01-.38.07-.52.16-.38.5-.78 1.09-.78.77 0 1.08.59 1.08 1.44v3.54h2.11Z"/></svg></a>
-          </div>
-        </div>
+            <span class="when">2026/08</span>
+            <a class="news-head" href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/">Joined the Climate Intelligence Lab at DI Lab, Inc. as a researcher.</a>
+            <div class="news-media">
+              <a href="https://lnkd.in/p/gHuXCZ43" aria-label="View DI Lab announcement" tabindex="-1"><img src="di-lab.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Photo from my DI Lab announcement"></a>
+              <div>
+                <p class="news-summary">AI and deep learning for space science, including a project with DOST-PAGASA under KOICA’s Creative Technology Solution program.</p>
+                <div class="news-links">
+                  <a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-social" aria-label="View announcement on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 17.5v-6.6H6.2v6.6h2.14ZM7.27 9.96a1.24 1.24 0 1 0 0-2.48 1.24 1.24 0 0 0 0 2.48Zm10.53 7.54v-3.770c0-1.96-1.05-2.87-2.44-2.87-1.13 0-1.63.62-1.91 1.05v-.9h-2.14c.03.6 0 6.6 0 6.6h2.14v-3.69c0-.19.01-.38.07-.52.16-.38.5-.78 1.09-.78.77 0 1.08.59 1.08 1.44v3.54h2.11Z"/></svg></a>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="news-item">
             <span class="when">2026/03</span>
@@ -1255,18 +1245,16 @@
         <div class="row"><div class="what">Outstanding Performance Award<div class="sub">National University</div></div><span class="when">2021</span></div>
         <div class="row"><div class="what">Best Design Thinking Project<div class="sub">Asia Pacific College</div></div><span class="when">2019</span></div>
         <div class="row"><div class="what">Best Automation Project<div class="sub">Accenture Automation University</div></div><span class="when">2017</span></div>
-      </div>
-      <details class="more">
-        <summary>Earlier recognitions <span class="tally" data-tally></span></summary>
-        <div class="list glass">
+        <details class="list-more">
+          <summary>Earlier recognitions <span class="tally" data-tally></span></summary>
           <div class="row" data-year="2016"><div class="what">Best Design Project (Thesis) Presenter<div class="sub">Asia Pacific College</div></div><span class="when">2016</span></div>
           <div class="row" data-year="2016"><div class="what">Best Design Project (Thesis) Exhibitor<div class="sub">Asia Pacific College</div></div><span class="when">2016</span></div>
           <div class="row" data-year="2014"><div class="what">Quizzer<div class="sub">Institute of Electronics Engineers of the Philippines</div></div><span class="when">2014 – 2016</span></div>
           <div class="row" data-year="2014"><div class="what">Champion, Inter-College Quiz Bee<div class="sub">Asia Pacific College</div></div><span class="when">2014</span></div>
           <div class="row" data-year="2013"><div class="what">Top 4, Beat the Whiz<div class="sub">Asia Pacific College</div></div><span class="when">2013</span></div>
           <div class="row" data-year="2012"><div class="what">Honor Student<div class="sub">Asia Pacific College</div></div><span class="when">2012 – 2014</span></div>
-        </div>
-      </details>
+        </details>
+      </div>
     </section>
 
     <section>
@@ -1596,16 +1584,6 @@
     }); });
   })();
 
-  /* Seoul clock in the hero */
-  (function () {
-    var clock = document.querySelector('[data-clock]');
-    if (!clock || !window.Intl) { return; }
-    var format = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', hour: 'numeric', minute: '2-digit' });
-    function tick() { clock.textContent = format.format(new Date()) + ' KST'; }
-    tick();
-    setInterval(tick, 20000);
-  })();
-
   /* "More..." tallies count what they fold away, so they never go stale */
   document.querySelectorAll('[data-tally]').forEach(function (tally) {
     var years = Array.prototype.map.call(tally.closest('details').querySelectorAll('[data-year]'), function (item) { return +item.dataset.year; });
@@ -1724,7 +1702,6 @@
       var name;
       if (link.closest('.proj')) name = 'Project opened';
       else if (link.closest('.pub-title')) name = 'Paper opened';
-      else if (link.closest('.hero .cta') && link.getAttribute('href') === 'cv.pdf') name = 'CV downloaded';
       else if (link.href.startsWith('mailto:')) name = 'Email clicked';
       else if (link.href.startsWith('https://cal.com/')) name = 'Book a call clicked';
       else if (link.href.startsWith('https://buymeacoffee.com/')) name = 'Coffee clicked';
