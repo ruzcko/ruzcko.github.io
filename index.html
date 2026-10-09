@@ -60,6 +60,8 @@
     --ind: #A0621A;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
     --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* social icon size; the pill and the bar are both this plus 10px tall */
+    --icon: 32px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -194,7 +196,7 @@
     position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 272px; gap: 8px 44px;
     padding: 40px 44px 0; border-radius: 28px; scroll-margin-top: 20px;
   }
-  .hero-text { min-width: 0; padding-bottom: 32px; }
+  .hero-text { min-width: 0; padding-bottom: 40px; }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 9px; margin: 0 0 22px; white-space: nowrap;
     font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
@@ -211,7 +213,7 @@
     padding-bottom: .06em;
   }
   .fullname { margin: 0 0 20px; font-size: 14.5px; color: var(--muted); }
-  .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
     display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px;
     border-radius: 999px; border: 1px solid var(--card-edge); background: var(--chip);
@@ -220,11 +222,6 @@
   .chip svg { width: 14px; height: 14px; color: var(--muted); flex: none; }
   .hero-portrait { align-self: start; padding: 7px; border-radius: 26px; margin-bottom: 32px; }
   .hero-portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 20px; }
-  /* the location sits on the card's bottom edge */
-  .hero-foot {
-    grid-column: 1 / -1; display: flex; justify-content: center;
-    margin: 0 -44px; padding: 12px 0; border-top: 1px solid var(--card-edge);
-  }
   @media (prefers-reduced-motion: no-preference) {
     .hero { animation: rise .8s cubic-bezier(.22, 1, .36, 1) both; }
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
@@ -245,7 +242,7 @@
      top, the sticky bar takes over at exactly that size and widens; the
      menu and theme switch fade in once it's open. */
   .social-home { display: flex; justify-content: center; margin-top: 16px; }
-  .social-pill { display: inline-flex; padding: 6px 8px; border-radius: 999px; }
+  .social-pill { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid var(--card-edge); background: var(--chip); }
   main section { scroll-margin-top: 84px; }
   .scroll-header {
     position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; z-index: 20;
@@ -256,18 +253,23 @@
   .scroll-header.is-visible { visibility: visible; }
   .scroll-header.is-compact { width: var(--compact-w); }
   .scroll-header.no-anim { transition: none; }
-  .scroll-header::before, .back-top, .section-menu nav, .social-pill {
+  .scroll-header::before, .back-top, .section-menu nav {
     background: var(--pill);
     border: 1px solid var(--card-edge);
     -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
     box-shadow: 0 8px 28px #0000001f, inset 0 1px 0 #ffffff12;
   }
-  .scroll-header::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; }
+  .scroll-header::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+    transition: background .5s ease, box-shadow .5s ease;
+  }
+  /* at pill size the bar still looks like the pill it replaced */
+  .scroll-header.is-compact::before { background: var(--chip); box-shadow: none; }
   @media (prefers-reduced-transparency: reduce) {
-    .scroll-header::before, .back-top, .section-menu nav, .social-pill { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .scroll-header::before, .back-top, .section-menu nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
   .scroll-header-inner {
-    min-height: 46px; padding: 6px 8px;
+    height: calc(var(--icon) + 10px); padding: 0 5px;
     display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center;
   }
   .section-menu { grid-column: 1; justify-self: start; }
@@ -279,8 +281,8 @@
     position: absolute; opacity: 0; visibility: hidden; pointer-events: none;
   }
   .section-menu summary {
-    list-style: none; cursor: pointer; font-weight: 600; font-size: 13.5px; letter-spacing: -.01em;
-    padding: 6px 10px; border-radius: 999px; white-space: nowrap;
+    list-style: none; cursor: pointer; font-weight: 600; font-size: 13.5px; line-height: 1.2; letter-spacing: -.01em;
+    padding: 5px 10px; border-radius: 999px; white-space: nowrap;
     display: flex; align-items: center; gap: 7px; color: var(--ink);
     -webkit-user-select: none; user-select: none;
   }
@@ -299,7 +301,7 @@
   @media (hover: hover) and (pointer: fine) {
     .section-menu nav a:hover, .section-menu summary:hover { background: var(--chip); color: var(--ink); }
   }
-  .scroll-header .theme-toggle { position: static; justify-self: end; background: transparent; border-color: transparent; }
+  .scroll-header .theme-toggle { position: static; justify-self: end; width: var(--icon); height: var(--icon); background: transparent; border-color: transparent; }
   .back-top {
     position: fixed; right: max(18px, env(safe-area-inset-right));
     bottom: max(18px, env(safe-area-inset-bottom)); z-index: 19;
@@ -594,15 +596,14 @@
     .eyebrow { margin-bottom: 14px; font-size: 10.5px; letter-spacing: .1em; }
     .hello { font-size: 18px; }
     .name { font-size: clamp(38px, 12.5vw, 54px); }
-    .hero-foot { margin: 22px -22px 0; padding: 12px 0; }
+    .chips { margin: 4px 0 24px; justify-content: center; }
+    :root { --icon: 28px; }
     .icons { gap: 4px; }
     .icons a { width: 28px; height: 28px; flex-basis: 28px; }
     .icons svg { width: 14px; height: 14px; }
     .scroll-header { width: calc(100vw - 24px); }
-    .scroll-header-inner { padding: 6px; grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px; }
-    .social-pill { padding: 8px 6px; }
+    .scroll-header-inner { grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px; }
     .section-menu summary { padding: 6px 6px; gap: 5px; font-size: 13px; }
-    .scroll-header .theme-toggle { width: 30px; height: 30px; }
     main section { margin-top: 64px; }
     h2 { font-size: 27px; }
     .card, .links-card { padding: 22px 20px; }
@@ -656,11 +657,11 @@
     .hero-portrait img { border-radius: 13px; }
     .section-menu .menu-icon { display: none; }
     .icons { gap: 3px; }
+    :root { --icon: 26px; }
     .icons a { width: 26px; height: 26px; flex-basis: 26px; }
-    .social-pill { padding: 9px 6px; }
   }
   @media (max-width: 350px) {
-    .scroll-header .icons a[aria-label="CV (PDF)"] { display: none; }
+    .masthead-icons a[aria-label="CV (PDF)"] { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -698,14 +699,12 @@
       <p class="hello">Hello, I’m</p>
       <h1 class="name">Ruzcko</h1>
       <p class="fullname">Rogelio Ruzcko Tobias</p>
-    </div>
-    <div class="hero-portrait glass">
-      <img src="portrait.jpg" width="960" height="960" alt="Rogelio Ruzcko Tobias" fetchpriority="high">
-    </div>
-    <div class="hero-foot">
       <div class="chips">
         <span class="chip"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Seoul <span role="img" aria-label="South Korea">🇰🇷</span> · Anywhere on Earth <span role="img" aria-label="Globe showing Asia and Australia">🌏</span></span>
       </div>
+    </div>
+    <div class="hero-portrait glass">
+      <img src="portrait.jpg" width="960" height="960" alt="Rogelio Ruzcko Tobias" fetchpriority="high">
     </div>
   </header>
 
@@ -1442,8 +1441,11 @@
     // The pill's size, worked out from the icons so it stays right after a
     // resize even while they're away in the bar.
     function pillWidth() {
+      // measure the icons themselves: in the bar their row stretches wide
+      var icons = Array.prototype.filter.call(socials.children, function (a) { return a.getClientRects().length; });
+      var span = icons[icons.length - 1].getBoundingClientRect().right - icons[0].getBoundingClientRect().left;
       var style = getComputedStyle(pill);
-      return socials.getBoundingClientRect().width + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + 2;
+      return span + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + 2;
     }
     function settle() { return reducedMotion.matches ? 0 : 480; }
     function dockBar() {
@@ -1484,10 +1486,10 @@
     function positionHeader() {
       framePending = false;
       var row = home.getBoundingClientRect();
-      var height = header.getBoundingClientRect().height;
-      // Where the bar would sit if it were centred on the pill: hand over the
-      // moment the pill reaches the bar's resting offset.
-      var rowTop = row.top + row.height / 2 - height / 2;
+      // The bar is the pill's height, so hand over the moment the pill
+      // reaches the bar's resting offset.
+      var height = row.height;
+      var rowTop = row.top;
       var show = rowTop <= 12;
       if (show !== docked) {
         docked = show;
