@@ -360,17 +360,30 @@
   .seg button[aria-selected="true"], .seg button[aria-pressed="true"], .tab[aria-selected="true"] {
     background: var(--btn-bg); color: var(--btn-ink);
   }
-  /* with the script on, one highlight slides between the options instead
-     of each button lighting up on its own */
   /* About's two tabs sit in a short section; they stay put */
   .seg[data-seg="about"] { position: relative; }
+  /* with the script on, one highlight slides between the options instead
+     of each button lighting up on its own */
+  .seg-track { position: relative; display: flex; gap: 2px; isolation: isolate; }
   .seg-thumb {
-    position: absolute; top: 4px; bottom: 4px; left: 0; z-index: -1; border-radius: 999px;
+    position: absolute; top: 0; bottom: 0; left: 0; z-index: -1; border-radius: 999px;
     background: var(--btn-bg); pointer-events: none;
     transition: transform .4s cubic-bezier(.22, 1, .36, 1), width .4s cubic-bezier(.22, 1, .36, 1);
   }
   .seg.has-thumb button[aria-selected="true"], .seg.has-thumb button[aria-pressed="true"] { background: transparent; }
   .seg-thumb.no-anim { transition: none; }
+  /* once a selector is stuck and its heading has gone under the bar, the pill
+     grows to the left to name its section; the options themselves stay put */
+  .seg { transition: translate .4s cubic-bezier(.22, 1, .36, 1); }
+  .seg-title {
+    display: flex; align-items: center; overflow: hidden; max-width: 0; opacity: 0;
+    transition: max-width .4s cubic-bezier(.22, 1, .36, 1), opacity .25s ease;
+  }
+  .seg-title span {
+    white-space: nowrap; font-size: 13.5px; font-weight: 700; letter-spacing: -.01em; color: var(--ink);
+    padding: 0 12px 0 10px; margin-right: 4px; border-right: 1px solid var(--card-edge);
+  }
+  .seg.is-titled .seg-title { max-width: var(--title-w); opacity: 1; }
   @media (hover: hover) and (pointer: fine) {
     .seg button:not([aria-selected="true"]):not([aria-pressed="true"]):hover, .tab:not([aria-selected="true"]):hover { color: var(--ink); }
   }
@@ -1641,11 +1654,16 @@
       });
     });
 
-    // the sliding highlight
+    // the sliding highlight runs inside its own track, so a section title
+    // growing at the pill's left edge never moves it
+    var track = document.createElement('div');
+    track.className = 'seg-track';
+    buttons.forEach(function (b) { track.appendChild(b); });
+    seg.appendChild(track);
     var thumb = document.createElement('span');
     thumb.className = 'seg-thumb';
     thumb.setAttribute('aria-hidden', 'true');
-    seg.prepend(thumb);
+    track.prepend(thumb);
     seg.classList.add('has-thumb');
     function place(animate) {
       var on = seg.querySelector('button[aria-selected="true"], button[aria-pressed="true"]');
@@ -1658,6 +1676,60 @@
     window.addEventListener('resize', function () { place(false); });
     if (document.fonts) { document.fonts.ready.then(function () { place(false); }); }
   });
+
+  /* Stuck selectors name their section once its heading has scrolled away. */
+  (function () {
+    var narrow = window.matchMedia('(max-width: 760px)');
+    var items = [];
+    document.querySelectorAll('.seg[data-seg]:not([data-seg="about"])').forEach(function (seg) {
+      var section = seg.closest('section');
+      var head = section && section.querySelector('.sec-head');
+      if (!head) { return; }
+      var title = document.createElement('span');
+      title.className = 'seg-title';
+      title.setAttribute('aria-hidden', 'true');
+      title.innerHTML = '<span></span>';
+      title.firstChild.textContent = head.querySelector('h2').textContent;
+      seg.prepend(title);
+      items.push({ seg: seg, head: head, title: title, on: false });
+    });
+    function show(item) {
+      var seg = item.seg;
+      var width = item.title.firstChild.offsetWidth;
+      var box = seg.getBoundingClientRect();
+      // centred pills (phones) widen on both sides; left-aligned ones only to
+      // the right. Slide by whatever keeps the options where they were.
+      var leftMove = narrow.matches ? width / 2 : 0;
+      var shift = -(width - leftMove);
+      var left = box.left - leftMove + shift;
+      if (left < 8) { shift += 8 - left; }
+      var right = box.right + (width - leftMove) + shift;
+      if (right > window.innerWidth - 8) { return false; }
+      seg.style.setProperty('--title-w', width + 'px');
+      seg.style.translate = shift + 'px 0';
+      seg.classList.add('is-titled');
+      return true;
+    }
+    function hide(item) {
+      item.seg.classList.remove('is-titled');
+      item.seg.style.translate = '';
+    }
+    var pending = false;
+    function update() {
+      pending = false;
+      items.forEach(function (item) {
+        // stuck: the heading has scrolled up and away from its selector
+        var stuck = item.seg.getBoundingClientRect().top - item.head.getBoundingClientRect().bottom > 30;
+        if (stuck === item.on) { return; }
+        item.on = stuck && show(item);
+        if (!item.on) { hide(item); }
+      });
+    }
+    function schedule() { if (!pending) { pending = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', function () { items.forEach(function (item) { hide(item); item.on = false; }); schedule(); });
+    update();
+  })();
 
   /* theme switch: remembers the choice, follows the OS until you make one */
   (function () {
