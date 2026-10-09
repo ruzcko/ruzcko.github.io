@@ -371,16 +371,18 @@
   .exploring p { font-size: 16px; }
 
   /* ---------- news ---------- */
-  .news-cards { display: grid; gap: 12px; }
-  .news-card { padding: 18px 22px; border-radius: 18px; }
-  .news-card.has-media { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; align-items: center; padding: 14px; }
-  .news-card.has-media .news-body { padding-right: 8px; }
-  .news-card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; }
+  .news-list { padding: 4px 22px; border-radius: 20px; }
+  .news-item { padding: 16px 0; border-top: 1px solid var(--rule-soft); }
+  .news-item:first-child { border-top: 0; }
+  /* image beside the text at every width, so a story with a picture is
+     only a little taller than one without */
+  .news-item.has-media { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; align-items: center; }
+  .news-item img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; border: 1px solid var(--card-edge); }
   .when { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .news-card .when { display: block; margin-bottom: 4px; }
+  .news-item .when { display: block; margin-bottom: 3px; }
   .news-head { display: block; color: var(--ink); font-size: 16px; font-weight: 600; line-height: 1.45; letter-spacing: -.01em; }
-  .news-text { font-size: 15.5px; line-height: 1.55; }
-  .news-summary { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+  .news-text { font-size: 15px; line-height: 1.55; }
+  .news-summary { margin: 5px 0 0; font-size: 14px; color: var(--muted); }
   .news-links { display: flex; gap: 6px; margin-top: 10px; }
   .news-social {
     display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%;
@@ -391,10 +393,6 @@
     a.news-head:hover { color: var(--link); }
     .news-social:hover { color: var(--ink); }
   }
-  .archive { padding: 4px 22px 14px; margin-top: 12px; border-radius: 18px; }
-  .archive .year-head { margin: 18px 0 6px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; color: var(--muted); }
-  .archive-item { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 12px; padding: 7px 0; font-size: 14.5px; line-height: 1.5; border-top: 1px solid var(--rule-soft); }
-  .archive-item .when { padding-top: 1px; }
 
   /* "More..." disclosures: label plus a mono tally, like a folded drawer */
   .more { margin-top: 12px; }
@@ -585,12 +583,19 @@
   @media (max-width: 760px) {
     .wrap { padding: 68px 16px 48px; }
     .theme-toggle { top: 18px; right: 16px; }
-    .hero { grid-template-columns: minmax(0, 1fr); padding: 24px 22px 0; border-radius: 24px; }
-    .hero-portrait { order: -1; width: 132px; padding: 5px; border-radius: 22px; margin-bottom: 4px; }
-    .hero-portrait img { border-radius: 17px; }
-    .hero-text { padding-bottom: 24px; }
-    .eyebrow { margin-bottom: 16px; }
-    .hello { font-size: 19px; }
+    /* the portrait stays on the right, beside the greeting and name; the
+       text column dissolves into the grid so the rest runs full width */
+    .hero { grid-template-columns: minmax(0, 1fr) 112px; gap: 0 14px; padding: 24px 22px 0; border-radius: 24px; }
+    .hero-text { display: contents; }
+    .hero-text > * { grid-column: 1 / -1; }
+    .hero-text > .eyebrow, .hero-text > .hello, .hero-text > .name, .hero-text > .fullname { grid-column: 1; }
+    .hero-portrait { grid-column: 2; grid-row: 1 / span 4; align-self: start; width: 112px; padding: 4px; border-radius: 20px; margin: 0; }
+    .hero-portrait img { border-radius: 16px; }
+    .cta { margin-bottom: 24px; gap: 8px; }
+    .btn { height: 44px; padding: 0 16px; font-size: 14px; }
+    .eyebrow { margin-bottom: 14px; font-size: 10.5px; letter-spacing: .1em; }
+    .hello { font-size: 18px; }
+    .name { font-size: clamp(38px, 12.5vw, 54px); }
     .role { font-size: 17px; }
     .hero-foot { margin: 0 -22px; padding: 10px 0; }
     .icons { gap: 4px; }
@@ -605,13 +610,16 @@
     .card, .links-card { padding: 22px 20px; }
     .lede { font-size: 19px; }
     .prose { font-size: 16px; }
-    .news-card.has-media { grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 10px 10px 16px; }
-    .news-card.has-media .news-body { padding: 0 8px; }
+    .news-list { padding: 2px 16px; }
+    .news-item.has-media { grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: start; }
+    .news-item.has-media img { border-radius: 9px; margin-top: 3px; }
+    .news-head { font-size: 15px; }
+    .news-summary { font-size: 13.5px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+    .news-links { margin-top: 8px; }
+    .seg button { padding: 6px 11px; font-size: 13px; }
     .proj-grid { grid-template-columns: minmax(0, 1fr); }
     .pubs, .list, .svc-card { padding-left: 18px; padding-right: 18px; }
     .pub { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-    .archive { padding: 4px 16px 12px; }
-    .archive-item { grid-template-columns: minmax(0, 1fr); gap: 0; }
 
     .tl { padding: 18px 16px 14px; }
     .tl[data-view] .tl-body::before { left: 4px; transform: none; }
@@ -628,13 +636,23 @@
     .tl[data-view] .tl-row.tied .tl-item.acad::after { width: 9px; height: 9px; top: 17px; left: 0; background: var(--acad); box-shadow: 0 0 0 3px color-mix(in srgb, var(--acad) 20%, transparent); }
     .tl-more > summary { margin-left: 0; }
   }
+  @media (max-width: 420px) {
+    .seg button { padding: 6px 8px; }
+  }
+  @media (max-width: 350px) {
+    .seg button { padding: 6px 6px; font-size: 12px; }
+  }
   @media (max-width: 480px) {
+    .news-item.has-media { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
     .contact-actions { gap: 8px; }
     .contact-actions a { font-size: 13px; padding: 4px 8px; }
     .coffee-button span { font-size: 16px; }
     .link-list .handle { display: none; }
   }
   @media (max-width: 380px) {
+    .hero { grid-template-columns: minmax(0, 1fr) 88px; gap: 0 12px; }
+    .hero-portrait { width: 88px; border-radius: 17px; }
+    .hero-portrait img { border-radius: 13px; }
     /* the locked tab drops to its own line rather than scrolling sideways */
     .tabs { flex-wrap: wrap; border-radius: 20px; }
     .section-menu .menu-icon { display: none; }
@@ -744,74 +762,150 @@
       <div class="sec-head">
         <h2>News</h2>
       </div>
-      <div class="news-cards">
-        <article class="news-card glass has-media">
-          <a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" aria-label="View the S2RAIN slides" tabindex="-1"><img src="s2rain.jpg" width="800" height="450" loading="lazy" decoding="async" alt="S2RAIN: a stack of satellite image layers with an arrow to an IMERG rainfall map of East Asia"></a>
-          <div class="news-body">
-            <span class="when">2026/09</span>
-            <a class="news-head" href="https://ruzcko.com/talks/s2rain-ai4sci-2026/">Presented S2RAIN at AI4Sci Korea, Seoul.</a>
-            <p class="news-summary">Exploring how satellite observations and generative AI can support short-term rainfall forecasts where radar coverage is limited.</p>
-            <div class="news-links">
-              <a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" class="news-social" aria-label="S2RAIN slides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8.5 20h7"/></svg></a>
-              <a href="https://www.conftool.org/ai4sci-korea-2026/index.php?page=browseSessions&amp;form_date=2026-09-28&amp;form_session=22" class="news-social" aria-label="View conference session"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0M16 8l1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0" transform="translate(2 -1) scale(.85)"/></svg></a>
-            </div>
-          </div>
-        </article>
-        <article class="news-card glass has-media">
-          <a href="https://lnkd.in/p/gHuXCZ43" aria-label="View DI Lab announcement" tabindex="-1"><img src="di-lab.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Photo from my DI Lab announcement"></a>
-          <div class="news-body">
-            <span class="when">2026/08</span>
-            <a class="news-head" href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/">Joined the Climate Intelligence Lab at DI Lab, Inc. as a researcher.</a>
-            <p class="news-summary">AI and deep learning for space science, including a project with DOST-PAGASA under KOICA’s Creative Technology Solution program.</p>
-            <div class="news-links">
-              <a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-social" aria-label="View announcement on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 17.5v-6.6H6.2v6.6h2.14ZM7.27 9.96a1.24 1.24 0 1 0 0-2.48 1.24 1.24 0 0 0 0 2.48Zm10.53 7.54v-3.770c0-1.96-1.05-2.87-2.44-2.87-1.13 0-1.63.62-1.91 1.05v-.9h-2.14c.03.6 0 6.6 0 6.6h2.14v-3.69c0-.19.01-.38.07-.52.16-.38.5-.78 1.09-.78.77 0 1.08.59 1.08 1.44v3.54h2.11Z"/></svg></a>
-            </div>
-          </div>
-        </article>
-        <article class="news-card glass">
-          <span class="when">2026/03</span>
-          <a class="news-head" href="https://doi.org/10.1016/j.jag.2026.105206">ESCAPE published in the International Journal of Applied Earth Observation and Geoinformation.</a>
-          <p class="news-summary">Physics-informed soil moisture and surface roughness from ALOS-2/PALSAR-2.</p>
-        </article>
-        <article class="news-card glass">
-          <span class="when">2026</span>
-          <p class="news-text">Received the <strong>Gilas Award</strong> from the Philippine Embassy in Korea for the third time.</p>
-        </article>
+      <div class="seg" data-seg="news" role="tablist" aria-label="News by year">
+        <button role="tab" data-panel="2026" aria-selected="true">2026</button>
+        <button role="tab" data-panel="2025" aria-selected="false">2025</button>
+        <button role="tab" data-panel="2024" aria-selected="false">2024</button>
+        <button role="tab" data-panel="2023" aria-selected="false">2023</button>
+        <button role="tab" data-panel="2022" aria-selected="false">2022</button>
+        <button role="tab" data-panel="earlier" aria-selected="false">Earlier</button>
       </div>
-
-      <details class="more">
-        <summary>More news <span class="tally" data-tally></span></summary>
-        <div class="archive glass">
-          <div class="year-head">2025</div>
-          <div class="archive-item" data-year="2025"><span class="when">2025/11</span><span>Presented <em>Hybrid Deterministic-Diffusion Framework for Probabilistic Precipitation Nowcasting</em> at the KAGIS Fall Conference and IAGi International Symposium, Jeju.</span></div>
-          <div class="archive-item" data-year="2025"><span class="when">2025/08</span><span>Presented <em>Building Damage Assessment Captioning</em> at <strong>IGARSS 2025</strong>, Brisbane.</span></div>
-          <div class="archive-item" data-year="2025"><span class="when">2025/05</span><span>Presented <strong>HYDRO</strong> at the Korean Meteorological Society Spring Conference, Seoul.</span></div>
-          <div class="archive-item" data-year="2025"><span class="when">2025</span><span>Received the <strong>Outstanding Paper Award</strong> from KAGIS and the International Association of Geo-informatics.</span></div>
-          <div class="archive-item" data-year="2025"><span class="when">2025</span><span>Received the <strong>Gilas Award</strong> for the second time.</span></div>
-          <div class="year-head">2024</div>
-          <div class="archive-item" data-year="2024"><span class="when">2024/12</span><span><strong>SAMBA</strong> published in the <em>Korean Journal of Remote Sensing</em> (40(6-3), 1505–1521).</span></div>
-          <div class="archive-item" data-year="2024"><span class="when">2024</span><span>Won the <strong>Grand Prize</strong> for algorithm development from the Korea Aerospace Administration (KASA), for change detection at the Satellite Information Application Contest.</span></div>
-          <div class="archive-item" data-year="2024"><span class="when">2024</span><span>Joined the IRIS Lab at UNIST as a researcher.</span></div>
-          <div class="year-head">2023</div>
-          <div class="archive-item" data-year="2023"><span class="when">2023</span><span>Started the <strong>PhD program in Artificial Intelligence</strong> at UNIST.</span></div>
-          <div class="archive-item" data-year="2023"><span class="when">2023</span><span>Achieved <strong>TOPIK II Level 3</strong> in Korean language proficiency.</span></div>
-          <div class="archive-item" data-year="2023"><span class="when">2023</span><span>Received the <strong>Gilas Award</strong> from the Philippine Embassy in Korea.</span></div>
-          <div class="year-head">2022</div>
-          <div class="archive-item" data-year="2022"><span class="when">2022</span><span>Awarded the <strong>Global Korea Scholarship</strong>.</span></div>
-          <div class="archive-item" data-year="2022"><span class="when">2022</span><span>Worked as a Data Science and Analytics consultant at <strong>Qadworks Technical Solutions, Inc.</strong></span></div>
-          <div class="year-head">Earlier</div>
-          <div class="archive-item" data-year="2021"><span class="when">2021/12</span><span>Presented a bibliometric study of ASEAN research on NLP and COVID-19 at <strong>IALP 2021</strong>.</span></div>
-          <div class="archive-item" data-year="2021"><span class="when">2021/12</span><span>Presented research mapping AI-based social media analytics in health at <strong>TENCON 2021</strong>.</span></div>
-          <div class="archive-item" data-year="2021"><span class="when">2021/09</span><span>Completed my MS in Electronics and Communications Engineering at <strong>De La Salle University</strong>, with a CGPA of 4.00 / 4.00 and a Research Award.</span></div>
-          <div class="archive-item" data-year="2021"><span class="when">2021/03</span><span>Served as a resource speaker for <strong>Intelligent Green Box Capacity Training</strong> at Eastern Visayas State University.</span></div>
-          <div class="archive-item" data-year="2020"><span class="when">2020/12</span><span>Presented a solar-energy module design for improving energy efficiency at <strong>HNICEM 2020</strong>.</span></div>
-          <div class="archive-item" data-year="2020"><span class="when">2020/11</span><span>Presented a tree–fuzzy logic approach to classifying lettuce growth stages at <strong>TENCON 2020</strong>.</span></div>
-          <div class="archive-item" data-year="2020"><span class="when">2020/04</span><span>Presented CNN-based chest X-ray classification at <strong>RIVF 2020</strong>.</span></div>
-          <div class="archive-item" data-year="2020"><span class="when">2020/03</span><span>Presented chest X-ray and blood-cell classification projects at <strong>LifeTech 2020</strong>.</span></div>
-          <div class="archive-item" data-year="2019"><span class="when">2019/12</span><span>Presented neural-network-based throat detection and health classification at <strong>iC3I 2019</strong>.</span></div>
-          <div class="archive-item" data-year="2019"><span class="when">2019/11</span><span>Presented land-cover classification using LiDAR, aerial imagery, and an SVM at <strong>HNICEM 2019</strong>.</span></div>
+      <div class="news-list glass" data-seg-panel="news" data-panel="2026">
+          <div class="news-item has-media">
+        <a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" aria-label="View the S2RAIN slides" tabindex="-1"><img src="s2rain.jpg" width="800" height="450" loading="lazy" decoding="async" alt="S2RAIN: a stack of satellite image layers with an arrow to an IMERG rainfall map of East Asia"></a>
+        <div class="news-body">
+          <span class="when">2026/09</span>
+          <a class="news-head" href="https://ruzcko.com/talks/s2rain-ai4sci-2026/">Presented S2RAIN at AI4Sci Korea, Seoul.</a>
+          <p class="news-summary">Exploring how satellite observations and generative AI can support short-term rainfall forecasts where radar coverage is limited.</p>
+          <div class="news-links">
+            <a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" class="news-social" aria-label="S2RAIN slides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8.5 20h7"/></svg></a>
+            <a href="https://www.conftool.org/ai4sci-korea-2026/index.php?page=browseSessions&amp;form_date=2026-09-28&amp;form_session=22" class="news-social" aria-label="View conference session"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0M16 8l1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0" transform="translate(2 -1) scale(.85)"/></svg></a>
+          </div>
         </div>
-      </details>
+          </div>
+          <div class="news-item has-media">
+        <a href="https://lnkd.in/p/gHuXCZ43" aria-label="View DI Lab announcement" tabindex="-1"><img src="di-lab.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Photo from my DI Lab announcement"></a>
+        <div class="news-body">
+          <span class="when">2026/08</span>
+          <a class="news-head" href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/">Joined the Climate Intelligence Lab at DI Lab, Inc. as a researcher.</a>
+          <p class="news-summary">AI and deep learning for space science, including a project with DOST-PAGASA under KOICA’s Creative Technology Solution program.</p>
+          <div class="news-links">
+            <a href="https://www.linkedin.com/posts/ruzcko_im-excited-to-share-that-i-recently-joined-ugcPost-7496490925251260417-5EpO/" class="news-social" aria-label="View announcement on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 17.5v-6.6H6.2v6.6h2.14ZM7.27 9.96a1.24 1.24 0 1 0 0-2.48 1.24 1.24 0 0 0 0 2.48Zm10.53 7.54v-3.770c0-1.96-1.05-2.87-2.44-2.87-1.13 0-1.63.62-1.91 1.05v-.9h-2.14c.03.6 0 6.6 0 6.6h2.14v-3.69c0-.19.01-.38.07-.52.16-.38.5-.78 1.09-.78.77 0 1.08.59 1.08 1.44v3.54h2.11Z"/></svg></a>
+          </div>
+        </div>
+          </div>
+          <div class="news-item">
+            <span class="when">2026/03</span>
+            <a class="news-head" href="https://doi.org/10.1016/j.jag.2026.105206">ESCAPE published in the International Journal of Applied Earth Observation and Geoinformation.</a>
+            <p class="news-summary">Physics-informed soil moisture and surface roughness from ALOS-2/PALSAR-2.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2026</span>
+            <p class="news-text">Received the <strong>Gilas Award</strong> from the Philippine Embassy in Korea for the third time.</p>
+          </div>
+      </div>
+      <div class="news-list glass" data-seg-panel="news" data-panel="2025" hidden>
+          <div class="news-item">
+            <span class="when">2025/11</span>
+            <p class="news-text">Presented <em>Hybrid Deterministic-Diffusion Framework for Probabilistic Precipitation Nowcasting</em> at the KAGIS Fall Conference and IAGi International Symposium, Jeju.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2025/08</span>
+            <p class="news-text">Presented <em>Building Damage Assessment Captioning</em> at <strong>IGARSS 2025</strong>, Brisbane.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2025/05</span>
+            <p class="news-text">Presented <strong>HYDRO</strong> at the Korean Meteorological Society Spring Conference, Seoul.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2025</span>
+            <p class="news-text">Received the <strong>Outstanding Paper Award</strong> from KAGIS and the International Association of Geo-informatics.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2025</span>
+            <p class="news-text">Received the <strong>Gilas Award</strong> for the second time.</p>
+          </div>
+      </div>
+      <div class="news-list glass" data-seg-panel="news" data-panel="2024" hidden>
+          <div class="news-item">
+            <span class="when">2024/12</span>
+            <p class="news-text"><strong>SAMBA</strong> published in the <em>Korean Journal of Remote Sensing</em> (40(6-3), 1505–1521).</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2024</span>
+            <p class="news-text">Won the <strong>Grand Prize</strong> for algorithm development from the Korea Aerospace Administration (KASA), for change detection at the Satellite Information Application Contest.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2024</span>
+            <p class="news-text">Joined the IRIS Lab at UNIST as a researcher.</p>
+          </div>
+      </div>
+      <div class="news-list glass" data-seg-panel="news" data-panel="2023" hidden>
+          <div class="news-item">
+            <span class="when">2023</span>
+            <p class="news-text">Started the <strong>PhD program in Artificial Intelligence</strong> at UNIST.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2023</span>
+            <p class="news-text">Achieved <strong>TOPIK II Level 3</strong> in Korean language proficiency.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2023</span>
+            <p class="news-text">Received the <strong>Gilas Award</strong> from the Philippine Embassy in Korea.</p>
+          </div>
+      </div>
+      <div class="news-list glass" data-seg-panel="news" data-panel="2022" hidden>
+          <div class="news-item">
+            <span class="when">2022</span>
+            <p class="news-text">Awarded the <strong>Global Korea Scholarship</strong>.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2022</span>
+            <p class="news-text">Worked as a Data Science and Analytics consultant at <strong>Qadworks Technical Solutions, Inc.</strong></p>
+          </div>
+      </div>
+      <div class="news-list glass" data-seg-panel="news" data-panel="earlier" hidden>
+          <div class="news-item">
+            <span class="when">2021/12</span>
+            <p class="news-text">Presented a bibliometric study of ASEAN research on NLP and COVID-19 at <strong>IALP 2021</strong>.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2021/12</span>
+            <p class="news-text">Presented research mapping AI-based social media analytics in health at <strong>TENCON 2021</strong>.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2021/09</span>
+            <p class="news-text">Completed my MS in Electronics and Communications Engineering at <strong>De La Salle University</strong>, with a CGPA of 4.00 / 4.00 and a Research Award.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2021/03</span>
+            <p class="news-text">Served as a resource speaker for <strong>Intelligent Green Box Capacity Training</strong> at Eastern Visayas State University.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2020/12</span>
+            <p class="news-text">Presented a solar-energy module design for improving energy efficiency at <strong>HNICEM 2020</strong>.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2020/11</span>
+            <p class="news-text">Presented a tree–fuzzy logic approach to classifying lettuce growth stages at <strong>TENCON 2020</strong>.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2020/04</span>
+            <p class="news-text">Presented CNN-based chest X-ray classification at <strong>RIVF 2020</strong>.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2020/03</span>
+            <p class="news-text">Presented chest X-ray and blood-cell classification projects at <strong>LifeTech 2020</strong>.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2019/12</span>
+            <p class="news-text">Presented neural-network-based throat detection and health classification at <strong>iC3I 2019</strong>.</p>
+          </div>
+          <div class="news-item">
+            <span class="when">2019/11</span>
+            <p class="news-text">Presented land-cover classification using LiDAR, aerial imagery, and an SVM at <strong>HNICEM 2019</strong>.</p>
+          </div>
+      </div>
     </section>
 
     <section>
