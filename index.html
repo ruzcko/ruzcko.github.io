@@ -394,22 +394,21 @@
     content: ""; position: absolute; left: 0; top: 20px; width: 9px; height: 9px; border-radius: 50%; box-sizing: border-box;
     background: var(--chip-solid); border: 1.5px solid var(--muted);
   }
-  /* the current year's line runs on past its newest dot, dashed and fading:
-     there's more to come */
-  .news-list[data-panel="2026"]::before { top: 30px; background: linear-gradient(to bottom, var(--rule), var(--rule) calc(100% - 20px), transparent); }
-  .news-list[data-panel="2026"] .news-item:first-child::after {
-    content: ""; position: absolute; left: 4px; top: -6px; width: 1px; height: 26px;
-    background: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--link) 70%, transparent) 0 3px, transparent 3px 6px);
-    -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent);
-  }
+  /* the current year's line also runs on above its newest dot and fades out,
+     the way it does past the last one: there's more to come */
+  .news-list[data-panel="2026"] { padding-top: 30px; }
+  .news-list[data-panel="2026"]::before { top: 0; }
   .news-list[data-panel="2026"] .news-item:first-child::before { background: var(--link); border-color: var(--link); box-shadow: 0 0 0 3px color-mix(in srgb, var(--link) 22%, transparent); }
   /* date and headline on top; the picture sits beside its summary below */
-  .news-media { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 18px; align-items: start; margin-top: 10px; }
+  .news-media { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 18px; align-items: center; margin-top: 10px; }
   .news-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; border: 1px solid var(--card-edge); }
   .news-media .news-summary { margin-top: 0; }
   .when { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .news-item .when { display: block; margin-bottom: 3px; }
-  .news-head { display: block; color: var(--ink); font-size: 16px; font-weight: 600; line-height: 1.45; letter-spacing: -.01em; }
+  .news-head {
+    color: var(--ink); font-size: 16px; font-weight: 600; line-height: 1.45; letter-spacing: -.01em;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  }
   .news-text { font-size: 15px; line-height: 1.55; }
   .news-summary { margin: 5px 0 0; font-size: 14px; color: var(--muted); }
   .news-links { display: flex; gap: 6px; margin-top: 10px; }
@@ -1740,7 +1739,7 @@
       tip.style.top = (box.bottom + size.height + 14 < innerHeight ? box.bottom + 8 : box.top - size.height - 8) + 'px';
     }
     // clamped text only gets a tooltip when something is actually cut off
-    var clamped = '.pub-title a, .news-summary, .proj-body p';
+    var clamped = '.pub-title a, .news-head, .news-summary, .proj-body p';
     document.querySelectorAll('.icons a, .theme-toggle, .back-top, .news-social, .contact-actions a, ' + clamped).forEach(function (control) {
       function cutOff() { return !control.matches(clamped) || (!control.classList.contains('is-open') && control.scrollHeight > control.clientHeight + 1); }
       control.addEventListener('pointerenter', function (event) { if (event.pointerType !== 'touch' && cutOff()) { show(control); } });
