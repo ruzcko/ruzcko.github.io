@@ -408,8 +408,11 @@
   .proj h3 { margin: 0 0 6px; font-size: 19px; font-weight: 700; letter-spacing: -.02em; }
   .proj h3 a { color: var(--ink); }
   .proj p { font-size: 14.5px; color: var(--muted); margin-bottom: 14px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-  .tags span { font-family: var(--mono); font-size: 11px; padding: 3px 9px; border-radius: 999px; background: var(--chip); border: 1px solid var(--card-edge); color: var(--muted); }
+  /* one line that scrolls sideways; the far edge fades while there's more */
+  .tags { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .tags::-webkit-scrollbar { display: none; }
+  .tags.has-more { -webkit-mask-image: linear-gradient(to right, #000 80%, transparent); mask-image: linear-gradient(to right, #000 80%, transparent); }
+  .tags span { flex: none; white-space: nowrap; font-family: var(--mono); font-size: 11px; padding: 3px 9px; border-radius: 999px; background: var(--chip); border: 1px solid var(--card-edge); color: var(--muted); }
   .proj-link { margin-top: auto; font-size: 14px; font-weight: 600; color: var(--ink); }
   .proj-link span { color: var(--muted); }
   @media (hover: hover) and (pointer: fine) {
@@ -418,17 +421,18 @@
   }
 
   /* ---------- publications ---------- */
-  .pubs { padding: 6px 24px; }
-  .pub { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 14px; padding: 16px 0; border-top: 1px solid var(--rule-soft); }
-  .pub:first-child, .pubs[data-view="selected"] .pub.featured:first-of-type { border-top: 0; }
-  .pub .when { padding-top: 2px; }
+  .pubs { padding: 4px 24px 8px; }
+  .year-head { margin: 18px 0 2px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; color: var(--faint); }
+  .pub { padding: 12px 0; border-top: 1px solid var(--rule-soft); }
+  .year-head + .pub { border-top: 0; }
   .pub-title { font-size: 15px; font-weight: 600; line-height: 1.45; letter-spacing: -.005em; }
-  .pub-title a { color: var(--ink); }
+  /* long titles stop at two lines; hovering shows the whole thing */
+  .pub-title a { color: var(--ink); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
   @media (hover: hover) and (pointer: fine) { .pub-title a:hover { color: var(--link); } }
   .pub-authors { font-size: 13px; color: var(--muted); margin-top: 3px; }
   .pub-authors .me { color: var(--ink); font-weight: 600; }
   .pub-venue { font-size: 12.5px; color: var(--faint); margin-top: 2px; }
-  .pubs[data-view="selected"] .pub:not(.featured) { display: none; }
+  .pubs[data-view="selected"] .pub:not(.featured), .pubs[data-view="selected"] .pub-group[data-featured="no"] { display: none; }
 
   /* ---------- experience timeline ---------- */
   .tl { padding: 22px 24px 18px; }
@@ -607,12 +611,13 @@
     .news-media { grid-template-columns: 120px minmax(0, 1fr); gap: 12px; }
     .news-media img { border-radius: 9px; }
     .news-head { font-size: 15px; }
-    .news-summary { font-size: 13.5px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+    .news-summary, .proj-body p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; cursor: pointer; }
+    .news-summary { font-size: 13.5px; }
+    .news-summary.is-open, .proj-body p.is-open { display: block; }
     .news-links { margin-top: 8px; }
     .seg button { padding: 6px 11px; font-size: 13px; }
     .proj-grid { grid-template-columns: minmax(0, 1fr); }
     .pubs, .list, .svc-card { padding-left: 18px; padding-right: 18px; }
-    .pub { grid-template-columns: minmax(0, 1fr); gap: 2px; }
 
     .tl { padding: 18px 16px 14px; }
     .tl[data-view] .tl-body::before { left: 4px; transform: none; }
@@ -663,7 +668,7 @@
 <noscript><style>
   [data-seg], .theme-toggle, .tl-head { display: none; }
   [data-seg-panel][hidden] { display: block !important; }
-  .pubs[data-view="selected"] .pub { display: grid !important; }
+  .pubs[data-view="selected"] .pub, .pubs[data-view="selected"] .pub-group { display: block !important; }
 </style></noscript>
 </head>
 <body>
@@ -942,92 +947,74 @@
         <button role="tab" data-panel="all" aria-selected="false">All (11)</button>
       </div>
       <div class="pubs glass" id="pubs" data-view="selected">
-        <div class="pub featured">
-          <span class="when">2026</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.1016/j.jag.2026.105206">ESCAPE: An ensemble-based self-calibrated autoencoder with physics-informed estimation of high-resolution soil moisture and surface roughness from ALOS-2/PALSAR-2 polarimetric observations</a></div>
-            <div class="pub-authors">Jaese Lee, Haemi Park, Jungho Im, Christian Koyama, <span class="me">Rogelio Ruzcko Tobias</span>, Takeo Tadono</div>
-            <div class="pub-venue"><em>International Journal of Applied Earth Observation and Geoinformation</em>, 147, 105206, 2026</div>
+        <div class="pub-group" data-featured="yes">
+          <div class="year-head">2026</div>
+          <div class="pub featured">
+          <div class="pub-title"><a href="https://doi.org/10.1016/j.jag.2026.105206">ESCAPE: An ensemble-based self-calibrated autoencoder with physics-informed estimation of high-resolution soil moisture and surface roughness from ALOS-2/PALSAR-2 polarimetric observations</a></div>
+          <div class="pub-authors">Jaese Lee, Haemi Park, Jungho Im, Christian Koyama, <span class="me">Rogelio Ruzcko Tobias</span>, Takeo Tadono</div>
+          <div class="pub-venue"><em>International Journal of Applied Earth Observation and Geoinformation</em>, 147, 105206, 2026</div>
           </div>
         </div>
-        <div class="pub featured">
-          <span class="when">2025</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.1109/IGARSS55030.2025.11313908">Building Damage Assessment Captioning: A Vision-Language Dataset Leveraging State Space Models</a></div>
-            <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Hwanhee Cho, Jungho Im</div>
-            <div class="pub-venue"><em>IGARSS 2025: IEEE International Geoscience and Remote Sensing Symposium</em>, 1445–1449, 2025</div>
+        <div class="pub-group" data-featured="yes">
+          <div class="year-head">2025</div>
+          <div class="pub featured">
+          <div class="pub-title"><a href="https://doi.org/10.1109/IGARSS55030.2025.11313908">Building Damage Assessment Captioning: A Vision-Language Dataset Leveraging State Space Models</a></div>
+          <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Hwanhee Cho, Jungho Im</div>
+          <div class="pub-venue"><em>IGARSS 2025: IEEE International Geoscience and Remote Sensing Symposium</em>, 1445–1449, 2025</div>
           </div>
         </div>
-        <div class="pub featured">
-          <span class="when">2024</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.7780/kjrs.2024.40.6.3.11">SAMBA: Synthetic Data-Augmented Mamba-Based Change Detection Algorithm Using KOMPSAT-3A Imagery</a></div>
-            <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Sejeong Bae, Hwanhee Cho, Jungho Im</div>
-            <div class="pub-venue"><em>Korean Journal of Remote Sensing</em>, 40(6), 1505–1521, 2024</div>
+        <div class="pub-group" data-featured="yes">
+          <div class="year-head">2024</div>
+          <div class="pub featured">
+          <div class="pub-title"><a href="https://doi.org/10.7780/kjrs.2024.40.6.3.11">SAMBA: Synthetic Data-Augmented Mamba-Based Change Detection Algorithm Using KOMPSAT-3A Imagery</a></div>
+          <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Sejeong Bae, Hwanhee Cho, Jungho Im</div>
+          <div class="pub-venue"><em>Korean Journal of Remote Sensing</em>, 40(6), 1505–1521, 2024</div>
           </div>
         </div>
-        <div class="pub">
-          <span class="when">2023</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.1007/978-981-19-7663-6_16">Artificial Intelligence Applications in Quality Management Systems of Philippine Higher Education Institutions</a></div>
-            <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Johanna Minglana, Denzel Kelsey Hernandez, Matt Ervin Mital, Rachel Edita Roxas</div>
-            <div class="pub-venue"><em>Intelligent Sustainable Systems</em>, Lecture Notes in Networks and Systems, 159–172, 2023</div>
+        <div class="pub-group" data-featured="no">
+          <div class="year-head">2023</div>
+          <div class="pub">
+          <div class="pub-title"><a href="https://doi.org/10.1007/978-981-19-7663-6_16">Artificial Intelligence Applications in Quality Management Systems of Philippine Higher Education Institutions</a></div>
+          <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Johanna Minglana, Denzel Kelsey Hernandez, Matt Ervin Mital, Rachel Edita Roxas</div>
+          <div class="pub-venue"><em>Intelligent Sustainable Systems</em>, Lecture Notes in Networks and Systems, 159–172, 2023</div>
           </div>
         </div>
-        <div class="pub">
-          <span class="when">2020</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.1109/TENCON50793.2020.9293803">Transfer Learning Approach for the Classification of Conidial Fungi (Genus Aspergillus) Thru Pre-trained Deep Learning Models</a></div>
-            <div class="pub-authors">Matt Ervin Mital, <span class="me">Rogelio Ruzcko Tobias</span>, Herbert Villaruel, Jose Martin Maningo, Robert Kerwin Billones, Ryan Rhay Vicerra, Argel Bandala, Elmer Dadios</div>
-            <div class="pub-venue"><em>2020 IEEE Region 10 Conference (TENCON)</em>, 1069–1074, 2020</div>
+        <div class="pub-group" data-featured="no">
+          <div class="year-head">2020</div>
+          <div class="pub">
+          <div class="pub-title"><a href="https://doi.org/10.1109/TENCON50793.2020.9293803">Transfer Learning Approach for the Classification of Conidial Fungi (Genus Aspergillus) Thru Pre-trained Deep Learning Models</a></div>
+          <div class="pub-authors">Matt Ervin Mital, <span class="me">Rogelio Ruzcko Tobias</span>, Herbert Villaruel, Jose Martin Maningo, Robert Kerwin Billones, Ryan Rhay Vicerra, Argel Bandala, Elmer Dadios</div>
+          <div class="pub-venue"><em>2020 IEEE Region 10 Conference (TENCON)</em>, 1069–1074, 2020</div>
           </div>
-        </div>
-        <div class="pub">
-          <span class="when">2020</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.1109/RIVF48685.2020.9140733">CNN-based Deep Learning Model for Chest X-ray Health Classification Using TensorFlow</a></div>
-            <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Luigi Carlo M. De Jesus, Matt Ervin G. Mital, Sandy C. Lauguico, Marielet A. Guillermo, Edwin Sybingco, Argel A. Bandala, Elmer P. Dadios</div>
-            <div class="pub-venue"><em>2020 RIVF International Conference on Computing and Communication Technologies (RIVF)</em>, 1–6, 2020</div>
+          <div class="pub">
+          <div class="pub-title"><a href="https://doi.org/10.1109/RIVF48685.2020.9140733">CNN-based Deep Learning Model for Chest X-ray Health Classification Using TensorFlow</a></div>
+          <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Luigi Carlo M. De Jesus, Matt Ervin G. Mital, Sandy C. Lauguico, Marielet A. Guillermo, Edwin Sybingco, Argel A. Bandala, Elmer P. Dadios</div>
+          <div class="pub-venue"><em>2020 RIVF International Conference on Computing and Communication Technologies (RIVF)</em>, 1–6, 2020</div>
           </div>
-        </div>
-        <div class="pub">
-          <span class="when">2020</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.1109/ARIS50834.2020.9205787">Estimation of Photosynthetic Growth Signature at the Canopy Scale Using New Genetic Algorithm-Modified Visible Band Triangular Greenness Index</a></div>
-            <div class="pub-authors">Ronnie S. Concepcion, Sandy C. Lauguico, <span class="me">Rogelio Ruzcko Tobias</span>, Elmer P. Dadios, Argel A. Bandala, Edwin Sybingco</div>
-            <div class="pub-venue"><em>2020 International Conference on Advanced Robotics and Intelligent Systems (ARIS)</em>, 1–6, 2020</div>
+          <div class="pub">
+          <div class="pub-title"><a href="https://doi.org/10.1109/ARIS50834.2020.9205787">Estimation of Photosynthetic Growth Signature at the Canopy Scale Using New Genetic Algorithm-Modified Visible Band Triangular Greenness Index</a></div>
+          <div class="pub-authors">Ronnie S. Concepcion, Sandy C. Lauguico, <span class="me">Rogelio Ruzcko Tobias</span>, Elmer P. Dadios, Argel A. Bandala, Edwin Sybingco</div>
+          <div class="pub-venue"><em>2020 International Conference on Advanced Robotics and Intelligent Systems (ARIS)</em>, 1–6, 2020</div>
           </div>
-        </div>
-        <div class="pub">
-          <span class="when">2020</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.26555/ijain.v6i2.466">Lettuce life stage classification from texture attributes using machine learning estimators and feature selection processes</a></div>
-            <div class="pub-authors">Sandy Cruz Lauguico, Ronnie II Sabino Concepcion, Jonnel Dorado Alejandrino, <span class="me">Rogelio Ruzcko Tobias</span>, Elmer Pamisa Dadios</div>
-            <div class="pub-venue"><em>International Journal of Advances in Intelligent Informatics</em>, 6(2), 173, 2020</div>
+          <div class="pub">
+          <div class="pub-title"><a href="https://doi.org/10.26555/ijain.v6i2.466">Lettuce life stage classification from texture attributes using machine learning estimators and feature selection processes</a></div>
+          <div class="pub-authors">Sandy Cruz Lauguico, Ronnie II Sabino Concepcion, Jonnel Dorado Alejandrino, <span class="me">Rogelio Ruzcko Tobias</span>, Elmer Pamisa Dadios</div>
+          <div class="pub-venue"><em>International Journal of Advances in Intelligent Informatics</em>, 6(2), 173, 2020</div>
           </div>
-        </div>
-        <div class="pub">
-          <span class="when">2020</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.18178/ijesd.2020.11.9.1288">A Comparative Analysis of Machine Learning Algorithms Modeled from Machine Vision-Based Lettuce Growth Stage Classification in Smart Aquaponics</a></div>
-            <div class="pub-authors">Sandy C. Lauguico, Ronnie S. Concepcion II, Jonnel D. Alejandrino, <span class="me">Rogelio Ruzcko Tobias</span>, Dailyne D. Macasaet, Elmer P. Dadios</div>
-            <div class="pub-venue"><em>International Journal of Environmental Science and Development</em>, 11(9), 442–449, 2020</div>
+          <div class="pub">
+          <div class="pub-title"><a href="https://doi.org/10.18178/ijesd.2020.11.9.1288">A Comparative Analysis of Machine Learning Algorithms Modeled from Machine Vision-Based Lettuce Growth Stage Classification in Smart Aquaponics</a></div>
+          <div class="pub-authors">Sandy C. Lauguico, Ronnie S. Concepcion II, Jonnel D. Alejandrino, <span class="me">Rogelio Ruzcko Tobias</span>, Dailyne D. Macasaet, Elmer P. Dadios</div>
+          <div class="pub-venue"><em>International Journal of Environmental Science and Development</em>, 11(9), 442–449, 2020</div>
           </div>
-        </div>
-        <div class="pub">
-          <span class="when">2020</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.1109/LifeTech48969.2020.1570619208">Faster R-CNN Model With Momentum Optimizer for RBC and WBC Variants Classification</a></div>
-            <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Luigi Carlo De Jesus, Matt Ervin Mital, Sandy Lauguico, Marielet Guillermo, Ryan Rhay Vicerra, Argel Bandala, Elmer Dadios</div>
-            <div class="pub-venue"><em>2020 IEEE 2nd Global Conference on Life Sciences and Technologies (LifeTech)</em>, 235–239, 2020</div>
+          <div class="pub">
+          <div class="pub-title"><a href="https://doi.org/10.1109/LifeTech48969.2020.1570619208">Faster R-CNN Model With Momentum Optimizer for RBC and WBC Variants Classification</a></div>
+          <div class="pub-authors"><span class="me">Rogelio Ruzcko Tobias</span>, Luigi Carlo De Jesus, Matt Ervin Mital, Sandy Lauguico, Marielet Guillermo, Ryan Rhay Vicerra, Argel Bandala, Elmer Dadios</div>
+          <div class="pub-venue"><em>2020 IEEE 2nd Global Conference on Life Sciences and Technologies (LifeTech)</em>, 235–239, 2020</div>
           </div>
-        </div>
-        <div class="pub">
-          <span class="when">2020</span>
-          <div>
-            <div class="pub-title"><a href="https://doi.org/10.1109/LifeTech48969.2020.1570619075">Detection and Classification of Public Security Threats in the Philippines Using Neural Networks</a></div>
-            <div class="pub-authors">Marielet Guillermo, <span class="me">Rogelio Ruzcko Tobias</span>, Luigi Carlo De Jesus, Robert Kerwin Billones, Edwin Sybingco, Elmer P. Dadios, Alexis Fillone</div>
-            <div class="pub-venue"><em>2020 IEEE 2nd Global Conference on Life Sciences and Technologies (LifeTech)</em>, 320–324, 2020</div>
+          <div class="pub">
+          <div class="pub-title"><a href="https://doi.org/10.1109/LifeTech48969.2020.1570619075">Detection and Classification of Public Security Threats in the Philippines Using Neural Networks</a></div>
+          <div class="pub-authors">Marielet Guillermo, <span class="me">Rogelio Ruzcko Tobias</span>, Luigi Carlo De Jesus, Robert Kerwin Billones, Edwin Sybingco, Elmer P. Dadios, Alexis Fillone</div>
+          <div class="pub-venue"><em>2020 IEEE 2nd Global Conference on Life Sciences and Technologies (LifeTech)</em>, 320–324, 2020</div>
           </div>
         </div>
       </div>
@@ -1202,9 +1189,8 @@
         <div class="row">
           <div class="what">PhD in Artificial Intelligence
             <div class="sub">Ulsan National Institute of Science and Technology (UNIST) · Ulsan, South Korea</div>
-            <div class="note">Global Korea Scholarship</div>
+            <div class="note">2023~ · Global Korea Scholarship</div>
           </div>
-          <span class="when">2023~</span>
         </div>
         <div class="row">
           <div class="what">MS in Electronics and Communications Engineering
@@ -1591,6 +1577,22 @@
     tally.textContent = years.length + ' entries · ' + Math.min.apply(null, years) + ' — ' + Math.max.apply(null, years);
   });
 
+  /* Clamped text: a tap opens or closes it; tags fade only while they overflow. */
+  (function () {
+    document.addEventListener('click', function (event) {
+      var text = event.target.closest && event.target.closest('.news-summary, .proj-body p');
+      if (!text) { return; }
+      if (text.classList.contains('is-open') || text.scrollHeight > text.clientHeight + 1) { text.classList.toggle('is-open'); }
+    });
+    var tagRows = document.querySelectorAll('.tags');
+    function fade(row) { row.classList.toggle('has-more', row.scrollLeft + row.clientWidth < row.scrollWidth - 2); }
+    tagRows.forEach(function (row) { row.addEventListener('scroll', function () { fade(row); }, { passive: true }); });
+    function fadeAll() { tagRows.forEach(fade); }
+    window.addEventListener('resize', fadeAll);
+    fadeAll();
+    if (document.fonts) { document.fonts.ready.then(fadeAll); }
+  })();
+
   /* Experience: the column headers are the filter. Both on by default;
      the last active track locks so you can never blank the section. */
   (function () {
@@ -1661,6 +1663,7 @@
       hide();
       active = control;
       tip.textContent = control.getAttribute('data-tooltip') || control.getAttribute('aria-label') || control.textContent;
+      tip.style.maxWidth = control.matches(clamped) ? 'min(420px, calc(100vw - 16px))' : 'calc(100vw - 16px)';
       tip.hidden = false;
       control.setAttribute('aria-describedby', tip.id);
       var box = control.getBoundingClientRect();
@@ -1668,10 +1671,13 @@
       tip.style.left = Math.max(8, Math.min(innerWidth - size.width - 8, box.left + box.width / 2 - size.width / 2)) + 'px';
       tip.style.top = (box.bottom + size.height + 14 < innerHeight ? box.bottom + 8 : box.top - size.height - 8) + 'px';
     }
-    document.querySelectorAll('.icons a, .theme-toggle, .back-top, .news-social, .contact-actions a').forEach(function (control) {
-      control.addEventListener('pointerenter', function (event) { if (event.pointerType !== 'touch') { show(control); } });
+    // clamped text only gets a tooltip when something is actually cut off
+    var clamped = '.pub-title a, .news-summary, .proj-body p';
+    document.querySelectorAll('.icons a, .theme-toggle, .back-top, .news-social, .contact-actions a, ' + clamped).forEach(function (control) {
+      function cutOff() { return !control.matches(clamped) || (!control.classList.contains('is-open') && control.scrollHeight > control.clientHeight + 1); }
+      control.addEventListener('pointerenter', function (event) { if (event.pointerType !== 'touch' && cutOff()) { show(control); } });
       control.addEventListener('pointerleave', hide);
-      control.addEventListener('focus', function () { show(control); });
+      control.addEventListener('focus', function () { if (control.matches('a, button') && cutOff()) { show(control); } });
       control.addEventListener('blur', hide);
       control.addEventListener('click', hide);
     });
