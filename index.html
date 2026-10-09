@@ -340,6 +340,7 @@
 
   /* ---------- segmented controls ---------- */
   .seg {
+    position: relative; isolation: isolate;
     display: inline-flex; gap: 2px; padding: 4px; margin: 0 0 16px; border-radius: 999px;
     border: 1px solid var(--card-edge); background: var(--chip);
     max-width: 100%; overflow-x: auto; scrollbar-width: none;
@@ -348,11 +349,20 @@
     font: inherit; font-size: 13.5px; font-weight: 600; white-space: nowrap;
     display: inline-flex; align-items: center; gap: 6px;
     padding: 6px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer;
-    transition: background .15s ease, color .15s ease;
+    transition: background .15s ease, color .3s ease;
   }
   .seg button[aria-selected="true"], .seg button[aria-pressed="true"], .tab[aria-selected="true"] {
     background: var(--btn-bg); color: var(--btn-ink);
   }
+  /* with the script on, one highlight slides between the options instead
+     of each button lighting up on its own */
+  .seg-thumb {
+    position: absolute; top: 4px; bottom: 4px; left: 0; z-index: -1; border-radius: 999px;
+    background: var(--btn-bg); pointer-events: none;
+    transition: transform .4s cubic-bezier(.22, 1, .36, 1), width .4s cubic-bezier(.22, 1, .36, 1);
+  }
+  .seg.has-thumb button[aria-selected="true"], .seg.has-thumb button[aria-pressed="true"] { background: transparent; }
+  .seg-thumb.no-anim { transition: none; }
   @media (hover: hover) and (pointer: fine) {
     .seg button:not([aria-selected="true"]):not([aria-pressed="true"]):hover, .tab:not([aria-selected="true"]):hover { color: var(--ink); }
   }
@@ -1583,8 +1593,26 @@
         document.querySelectorAll('[data-seg-panel="' + name + '"]').forEach(function (panel) {
           panel.hidden = panel.dataset.panel !== value;
         });
+        place(true);
       });
     });
+
+    // the sliding highlight
+    var thumb = document.createElement('span');
+    thumb.className = 'seg-thumb';
+    thumb.setAttribute('aria-hidden', 'true');
+    seg.prepend(thumb);
+    seg.classList.add('has-thumb');
+    function place(animate) {
+      var on = seg.querySelector('button[aria-selected="true"], button[aria-pressed="true"]');
+      if (!on) { return; }
+      thumb.classList.toggle('no-anim', !animate);
+      thumb.style.width = on.offsetWidth + 'px';
+      thumb.style.transform = 'translateX(' + on.offsetLeft + 'px)';
+    }
+    place(false);
+    window.addEventListener('resize', function () { place(false); });
+    if (document.fonts) { document.fonts.ready.then(function () { place(false); }); }
   });
 
   /* theme switch: remembers the choice, follows the OS until you make one */
