@@ -341,10 +341,10 @@
   .reveal-on main > section.in { opacity: 1; transform: none; }
 
   /* ---------- segmented controls ---------- */
-  /* selectors ride just below the sticky bar while you're in their section,
-     in the bar's own frosted style so content behind them stays readable */
+  /* on phones, selectors ride just below the sticky bar while you're in their
+     section, in the bar's own frosted style so content behind stays readable */
   .seg {
-    position: sticky; top: calc(max(12px, env(safe-area-inset-top)) + var(--icon) + 18px); z-index: 10; isolation: isolate;
+    position: relative; z-index: 10; isolation: isolate;
     display: inline-flex; gap: 2px; padding: 4px; margin: 0 0 16px; border-radius: 999px;
     border: 1px solid var(--card-edge);
     background: linear-gradient(var(--chip), var(--chip)), var(--pill);
@@ -642,8 +642,8 @@
     .icons a { width: 28px; height: 28px; flex-basis: 28px; }
     .icons svg { width: 14px; height: 14px; }
     .scroll-header { width: calc(100vw - 24px); }
-    /* selectors sit centred on phones */
-    .seg { display: flex; width: fit-content; margin-left: auto; margin-right: auto; }
+    /* selectors sit centred on phones, and stick under the bar */
+    .seg { display: flex; width: fit-content; margin-left: auto; margin-right: auto; position: sticky; top: calc(max(12px, env(safe-area-inset-top)) + var(--icon) + 18px); }
     /* phones drop the rocket; the bar's sides stay equal so the icons never move */
     .section-menu .menu-icon { display: none; }
     .section-menu summary { padding: 5px 6px; font-size: 13px; }
