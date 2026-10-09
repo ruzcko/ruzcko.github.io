@@ -277,7 +277,7 @@
     content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
   }
   @media (prefers-reduced-transparency: reduce) {
-    .scroll-header::before, .social-pill, .back-top, .section-menu nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .scroll-header::before, .social-pill, .seg, .back-top, .section-menu nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
   .scroll-header-inner {
     height: calc(var(--icon) + 10px); padding: 0 5px;
@@ -341,10 +341,14 @@
   .reveal-on main > section.in { opacity: 1; transform: none; }
 
   /* ---------- segmented controls ---------- */
+  /* on phones, selectors ride just below the sticky bar while you're in their
+     section, in the bar's own frosted style so content behind stays readable */
   .seg {
-    position: relative; isolation: isolate;
+    position: relative; z-index: 10; isolation: isolate;
     display: inline-flex; gap: 2px; padding: 4px; margin: 0 0 16px; border-radius: 999px;
-    border: 1px solid var(--card-edge); background: var(--chip);
+    border: 1px solid var(--card-edge);
+    background: linear-gradient(var(--chip), var(--chip)), var(--pill);
+    -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
     max-width: 100%; overflow-x: auto; scrollbar-width: none;
   }
   .seg button, .tab {
@@ -356,15 +360,30 @@
   .seg button[aria-selected="true"], .seg button[aria-pressed="true"], .tab[aria-selected="true"] {
     background: var(--btn-bg); color: var(--btn-ink);
   }
+  /* About's two tabs sit in a short section; they stay put */
+  .seg[data-seg="about"] { position: relative; top: auto; }
   /* with the script on, one highlight slides between the options instead
      of each button lighting up on its own */
+  .seg-track { position: relative; display: flex; gap: 2px; isolation: isolate; }
   .seg-thumb {
-    position: absolute; top: 4px; bottom: 4px; left: 0; z-index: -1; border-radius: 999px;
+    position: absolute; top: 0; bottom: 0; left: 0; z-index: -1; border-radius: 999px;
     background: var(--btn-bg); pointer-events: none;
     transition: transform .4s cubic-bezier(.22, 1, .36, 1), width .4s cubic-bezier(.22, 1, .36, 1);
   }
   .seg.has-thumb button[aria-selected="true"], .seg.has-thumb button[aria-pressed="true"] { background: transparent; }
   .seg-thumb.no-anim { transition: none; }
+  /* once a selector is stuck and its heading has gone under the bar, the pill
+     grows to the left to name its section; the options themselves stay put */
+  .seg { transition: translate .4s cubic-bezier(.22, 1, .36, 1); }
+  .seg-title {
+    display: flex; align-items: center; overflow: hidden; max-width: 0; opacity: 0;
+    transition: max-width .4s cubic-bezier(.22, 1, .36, 1), opacity .25s ease;
+  }
+  .seg-title span { white-space: nowrap; font-size: 13.5px; font-weight: 700; letter-spacing: -.01em; color: var(--ink); padding-left: 12px; }
+  /* a short divider with even room either side (the pill's own 2px gap
+     makes up the rest on the right) */
+  .seg-title::after { content: ""; flex: none; width: 1px; height: 16px; margin: 0 8px 0 10px; background: color-mix(in srgb, var(--ink) 20%, transparent); }
+  .seg.is-titled .seg-title { max-width: var(--title-w); opacity: 1; }
   @media (hover: hover) and (pointer: fine) {
     .seg button:not([aria-selected="true"]):not([aria-pressed="true"]):hover, .tab:not([aria-selected="true"]):hover { color: var(--ink); }
   }
@@ -623,8 +642,8 @@
     .icons a { width: 28px; height: 28px; flex-basis: 28px; }
     .icons svg { width: 14px; height: 14px; }
     .scroll-header { width: calc(100vw - 24px); }
-    /* selectors sit centred on phones */
-    .seg { display: flex; width: fit-content; margin-left: auto; margin-right: auto; }
+    /* selectors sit centred on phones, and stick under the bar */
+    .seg { display: flex; width: fit-content; margin-left: auto; margin-right: auto; position: sticky; top: calc(max(12px, env(safe-area-inset-top)) + var(--icon) + 18px); }
     /* phones drop the rocket; the bar's sides stay equal so the icons never move */
     .section-menu .menu-icon { display: none; }
     .section-menu summary { padding: 5px 6px; font-size: 13px; }
@@ -1635,11 +1654,16 @@
       });
     });
 
-    // the sliding highlight
+    // the sliding highlight runs inside its own track, so a section title
+    // growing at the pill's left edge never moves it
+    var track = document.createElement('div');
+    track.className = 'seg-track';
+    buttons.forEach(function (b) { track.appendChild(b); });
+    seg.appendChild(track);
     var thumb = document.createElement('span');
     thumb.className = 'seg-thumb';
     thumb.setAttribute('aria-hidden', 'true');
-    seg.prepend(thumb);
+    track.prepend(thumb);
     seg.classList.add('has-thumb');
     function place(animate) {
       var on = seg.querySelector('button[aria-selected="true"], button[aria-pressed="true"]');
@@ -1652,6 +1676,60 @@
     window.addEventListener('resize', function () { place(false); });
     if (document.fonts) { document.fonts.ready.then(function () { place(false); }); }
   });
+
+  /* Stuck selectors name their section once its heading has scrolled away. */
+  (function () {
+    var narrow = window.matchMedia('(max-width: 760px)');
+    var items = [];
+    document.querySelectorAll('.seg[data-seg]:not([data-seg="about"])').forEach(function (seg) {
+      var section = seg.closest('section');
+      var head = section && section.querySelector('.sec-head');
+      if (!head) { return; }
+      var title = document.createElement('span');
+      title.className = 'seg-title';
+      title.setAttribute('aria-hidden', 'true');
+      title.innerHTML = '<span></span>';
+      title.firstChild.textContent = head.querySelector('h2').textContent;
+      seg.prepend(title);
+      items.push({ seg: seg, head: head, title: title, on: false });
+    });
+    function show(item) {
+      var seg = item.seg;
+      var width = item.title.scrollWidth;
+      var box = seg.getBoundingClientRect();
+      // centred pills (phones) widen on both sides; left-aligned ones only to
+      // the right. Slide by whatever keeps the options where they were.
+      var leftMove = narrow.matches ? width / 2 : 0;
+      var shift = -(width - leftMove);
+      var left = box.left - leftMove + shift;
+      if (left < 8) { shift += 8 - left; }
+      var right = box.right + (width - leftMove) + shift;
+      if (right > window.innerWidth - 8) { return false; }
+      seg.style.setProperty('--title-w', width + 'px');
+      seg.style.translate = shift + 'px 0';
+      seg.classList.add('is-titled');
+      return true;
+    }
+    function hide(item) {
+      item.seg.classList.remove('is-titled');
+      item.seg.style.translate = '';
+    }
+    var pending = false;
+    function update() {
+      pending = false;
+      items.forEach(function (item) {
+        // stuck: the heading has scrolled up and away from its selector
+        var stuck = item.seg.getBoundingClientRect().top - item.head.getBoundingClientRect().bottom > 30;
+        if (stuck === item.on) { return; }
+        item.on = stuck && show(item);
+        if (!item.on) { hide(item); }
+      });
+    }
+    function schedule() { if (!pending) { pending = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', function () { items.forEach(function (item) { hide(item); item.on = false; }); schedule(); });
+    update();
+  })();
 
   /* theme switch: remembers the choice, follows the OS until you make one */
   (function () {
