@@ -435,6 +435,7 @@
   @media (hover: hover) and (pointer: fine) { .list-more > summary:hover { color: var(--ink); } }
 
   /* ---------- projects ---------- */
+  .proj-grid[hidden] { display: none; }
   .proj-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .proj { overflow: hidden; display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
   .proj-img { display: block; padding: 8px 8px 0; }
@@ -620,6 +621,8 @@
     .icons a { width: 28px; height: 28px; flex-basis: 28px; }
     .icons svg { width: 14px; height: 14px; }
     .scroll-header { width: calc(100vw - 24px); }
+    /* selectors sit centred on phones */
+    .seg { display: flex; width: fit-content; margin-left: auto; margin-right: auto; }
     /* phones drop the rocket; the bar's sides stay equal so the icons never move */
     .section-menu .menu-icon { display: none; }
     .section-menu summary { padding: 5px 6px; font-size: 13px; }
@@ -934,7 +937,11 @@
       <div class="sec-head">
         <h2 id="projects">Projects</h2>
       </div>
-      <div class="proj-grid">
+      <div class="seg" data-seg="projects" role="tablist" aria-label="Project type">
+        <button role="tab" data-panel="featured" aria-selected="true">Featured</button>
+        <button role="tab" data-panel="side" aria-selected="false">Side quests</button>
+      </div>
+      <div class="proj-grid" data-seg-panel="projects" data-panel="featured">
         <article class="proj glass">
           <a class="proj-img" href="https://wo-preview.ruzcko.com/" aria-label="Open Weather Observatory" tabindex="-1"><img src="weather-observatory.jpg" width="1400" height="791" loading="lazy" decoding="async" alt="Weather Observatory interface with an interactive globe, precipitation forecasts, tropical cyclone tracks, and a forecast timeline."></a>
           <div class="proj-body">
@@ -960,6 +967,35 @@
             <p>Adapting SpateGAN and CEDDAR to IFS forecasts, validated on Korean radar data and run over Indonesia, the Philippines, and Ghana.</p>
             <div class="tags"><span>AI</span><span>Weather &amp; Climate</span><span>Generative Models</span></div>
             <a class="proj-link" href="https://ruzcko.com/projects/precipitation-downscaling/">Read the report <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </div>
+      <div class="proj-grid" data-seg-panel="projects" data-panel="side" hidden>
+        <article class="proj glass">
+          <a class="proj-img" href="https://ai-deadlines.ruzcko.com/" aria-label="Open AI Conference Deadlines" tabindex="-1"><img src="ai-deadlines.jpg" width="800" height="450" loading="lazy" decoding="async" alt="AI Conference Deadlines: a countdown to the next paper deadline above a list of upcoming AI and ML venues."></a>
+          <div class="proj-body">
+            <h3><a href="https://ai-deadlines.ruzcko.com/">AI Conference Deadlines</a></h3>
+            <p>Live countdowns for 70+ AI and ML venues, with a map, a calendar, and feeds you can subscribe to.</p>
+            <div class="tags"><span>AI</span><span>Research Tools</span></div>
+            <a class="proj-link" href="https://ai-deadlines.ruzcko.com/">Open the site <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="proj glass">
+          <a class="proj-img" href="https://apelyido.ruzcko.com/" aria-label="Open Apelyido" tabindex="-1"><img src="apelyido.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Apelyido: “Know where your last name comes from.” over a grid of letters."></a>
+          <div class="proj-body">
+            <h3><a href="https://apelyido.ruzcko.com/">Apelyido</a></h3>
+            <p>Type your surname and see where it comes from: the 1849 surname decree, its book of names, and where your name lives today.</p>
+            <div class="tags"><span>Philippine History</span><span>Names</span><span>Maps</span></div>
+            <a class="proj-link" href="https://apelyido.ruzcko.com/">Open the site <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="proj glass">
+          <a class="proj-img" href="https://catalogo-1849.ruzcko.com/" aria-label="Open Catálogo de Apellidos (1849)" tabindex="-1"><img src="catalogo-1849.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Catálogo alfabético de apellidos: the book Filipino families chose their surnames from."></a>
+          <div class="proj-body">
+            <h3><a href="https://catalogo-1849.ruzcko.com/">Catálogo de Apellidos (1849)</a></h3>
+            <p>Leaf through the 1849 book Filipino families chose their surnames from, recreated from an open transcription.</p>
+            <div class="tags"><span>Philippine History</span><span>Digital Humanities</span></div>
+            <a class="proj-link" href="https://catalogo-1849.ruzcko.com/">Open the site <span aria-hidden="true">↗</span></a>
           </div>
         </article>
       </div>
@@ -1656,6 +1692,8 @@
     tagRows.forEach(function (row) { row.addEventListener('scroll', function () { fade(row); }, { passive: true }); });
     function fadeAll() { tagRows.forEach(fade); }
     window.addEventListener('resize', fadeAll);
+    // rows in a tab that was hidden have no size until it opens
+    document.addEventListener('click', function (event) { if (event.target.closest && event.target.closest('[data-seg]')) { requestAnimationFrame(fadeAll); } });
     fadeAll();
     if (document.fonts) { document.fonts.ready.then(fadeAll); }
   })();
