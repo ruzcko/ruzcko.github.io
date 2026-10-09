@@ -62,6 +62,8 @@
     --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     /* social icon size; the pill and the bar are both this plus 10px tall */
     --icon: 32px;
+    --sec-gap: 84px;
+    --pill-gap: 14px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -241,8 +243,10 @@
      The socials wait under the hero as a small pill. When it reaches the
      top, the sticky bar takes over at exactly that size and widens; the
      menu and theme switch fade in once it's open. */
-  .social-home { display: flex; justify-content: center; margin-top: 16px; }
-  .social-pill { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid var(--card-edge); background: var(--chip); }
+  .social-home { display: flex; justify-content: center; margin-top: var(--pill-gap); }
+  /* the pill sits inside the usual gap, so hero and About keep their spacing */
+  .social-home + main > section:first-child { margin-top: calc(var(--sec-gap) - var(--pill-gap) - var(--icon) - 10px); }
+  .social-pill { display: inline-flex; padding: 4px; border-radius: 999px; }
   main section { scroll-margin-top: 84px; }
   .scroll-header {
     position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; z-index: 20;
@@ -253,7 +257,15 @@
   .scroll-header.is-visible { visibility: visible; }
   .scroll-header.is-compact { width: var(--compact-w); }
   .scroll-header.no-anim { transition: none; }
-  .scroll-header::before, .back-top, .section-menu nav {
+  /* one look for the pill and the bar it becomes: the same soft tint and
+     edge as the other pills, over a frosted layer that keeps the bar
+     readable above content (on the plain page it reads as the flat pill) */
+  .scroll-header::before, .social-pill {
+    background: linear-gradient(var(--chip), var(--chip)), var(--pill);
+    border: 1px solid var(--card-edge);
+    -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
+  }
+  .back-top, .section-menu nav {
     background: var(--pill);
     border: 1px solid var(--card-edge);
     -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
@@ -261,12 +273,9 @@
   }
   .scroll-header::before {
     content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
-    transition: background .5s ease, box-shadow .5s ease;
   }
-  /* at pill size the bar still looks like the pill it replaced */
-  .scroll-header.is-compact::before { background: var(--chip); box-shadow: none; }
   @media (prefers-reduced-transparency: reduce) {
-    .scroll-header::before, .back-top, .section-menu nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .scroll-header::before, .social-pill, .back-top, .section-menu nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
   .scroll-header-inner {
     height: calc(var(--icon) + 10px); padding: 0 5px;
@@ -314,7 +323,7 @@
   @media (hover: hover) and (pointer: fine) { .back-top:hover { color: var(--ink); } }
 
   /* ---------- sections ---------- */
-  main section { margin-top: 84px; }
+  main section { margin-top: var(--sec-gap); }
   .sec-head { margin: 0 0 22px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
   h2 { margin: 0; font-size: 32px; line-height: 1.15; font-weight: 700; letter-spacing: -.03em; }
   .sec-sub { margin: 8px 0 0; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
@@ -602,9 +611,10 @@
     .icons a { width: 28px; height: 28px; flex-basis: 28px; }
     .icons svg { width: 14px; height: 14px; }
     .scroll-header { width: calc(100vw - 24px); }
-    .scroll-header-inner { grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px; }
-    .section-menu summary { padding: 6px 6px; gap: 5px; font-size: 13px; }
-    main section { margin-top: 64px; }
+    /* phones drop the rocket; the bar's sides stay equal so the icons never move */
+    .section-menu .menu-icon { display: none; }
+    .section-menu summary { padding: 5px 6px; font-size: 13px; }
+    :root { --sec-gap: 64px; --pill-gap: 12px; }
     h2 { font-size: 27px; }
     .card, .links-card { padding: 22px 20px; }
     .lede { font-size: 19px; }
@@ -643,6 +653,7 @@
   }
   @media (max-width: 350px) {
     .seg button { padding: 6px 6px; font-size: 12px; }
+    .section-menu summary { padding: 5px 3px; font-size: 12px; }
   }
   @media (max-width: 480px) {
     .news-media { grid-template-columns: 100px minmax(0, 1fr); }
@@ -655,7 +666,6 @@
     .chip { padding: 0 12px; gap: 6px; font-size: 12.5px; }
     .hero-portrait { width: 88px; border-radius: 17px; }
     .hero-portrait img { border-radius: 13px; }
-    .section-menu .menu-icon { display: none; }
     .icons { gap: 3px; }
     :root { --icon: 26px; }
     .icons a { width: 26px; height: 26px; flex-basis: 26px; }
