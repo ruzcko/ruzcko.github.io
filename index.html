@@ -277,7 +277,7 @@
     content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
   }
   @media (prefers-reduced-transparency: reduce) {
-    .scroll-header::before, .social-pill, .back-top, .section-menu nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .scroll-header::before, .social-pill, .seg, .back-top, .section-menu nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
   .scroll-header-inner {
     height: calc(var(--icon) + 10px); padding: 0 5px;
@@ -341,10 +341,14 @@
   .reveal-on main > section.in { opacity: 1; transform: none; }
 
   /* ---------- segmented controls ---------- */
+  /* selectors ride just below the sticky bar while you're in their section,
+     in the bar's own frosted style so content behind them stays readable */
   .seg {
-    position: relative; isolation: isolate;
+    position: sticky; top: calc(max(12px, env(safe-area-inset-top)) + var(--icon) + 18px); z-index: 10; isolation: isolate;
     display: inline-flex; gap: 2px; padding: 4px; margin: 0 0 16px; border-radius: 999px;
-    border: 1px solid var(--card-edge); background: var(--chip);
+    border: 1px solid var(--card-edge);
+    background: linear-gradient(var(--chip), var(--chip)), var(--pill);
+    -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
     max-width: 100%; overflow-x: auto; scrollbar-width: none;
   }
   .seg button, .tab {
@@ -358,6 +362,8 @@
   }
   /* with the script on, one highlight slides between the options instead
      of each button lighting up on its own */
+  /* About's two tabs sit in a short section; they stay put */
+  .seg[data-seg="about"] { position: relative; }
   .seg-thumb {
     position: absolute; top: 4px; bottom: 4px; left: 0; z-index: -1; border-radius: 999px;
     background: var(--btn-bg); pointer-events: none;
