@@ -63,12 +63,6 @@
     --wip-ink: #8A5D00;
     --wip-bg: #F5C2421f;
     --wip-edge: #D9A0214d;
-    /* liquid glass for the pill family: a thin fill, a diagonal glare, lit
-       top and left edges, a hairline ring and a deep soft shadow */
-    --glass-fill: #ffffff80;
-    --glass-glare: linear-gradient(135deg, #ffffff99 0%, #ffffff00 38%, #ffffff00 62%, #ffffff1a 100%);
-    --glass-shade: inset 0 1px 0 #ffffffe6, inset 0 -1px 0 #1d1d1f12, inset 1px 0 0 #ffffff2e, 0 0 0 1px #1d1d1f12, 0 20px 50px -22px #1d1d1f38;
-    --glass-lift: inset 0 1px 0 #ffffffe6, 0 4px 14px -6px #0d122059;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
     --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     /* social icon size; the pill and the bar are both this plus 10px tall */
@@ -109,10 +103,6 @@
       --wip-ink: #F2C65E;
       --wip-bg: #F2C65E1a;
       --wip-edge: #F2C65E47;
-      --glass-fill: #ffffff12;
-      --glass-glare: linear-gradient(135deg, #ffffff2e 0%, #ffffff00 38%, #ffffff00 62%, #ffffff1a 100%);
-      --glass-shade: inset 0 1px 0 #ffffff2e, inset 0 -1px 0 #ffffff0f, inset 1px 0 0 #ffffff2e, 0 0 0 1px #ffffff0f, 0 28px 70px -28px #000000bf;
-      --glass-lift: inset 0 1px 0 #ffffff2e, 0 4px 14px -6px #0d122059;
     }
   }
   :root[data-theme="dark"] {
@@ -147,10 +137,6 @@
     --wip-ink: #F2C65E;
     --wip-bg: #F2C65E1a;
     --wip-edge: #F2C65E47;
-    --glass-fill: #ffffff12;
-    --glass-glare: linear-gradient(135deg, #ffffff2e 0%, #ffffff00 38%, #ffffff00 62%, #ffffff1a 100%);
-    --glass-shade: inset 0 1px 0 #ffffff2e, inset 0 -1px 0 #ffffff0f, inset 1px 0 0 #ffffff2e, 0 0 0 1px #ffffff0f, 0 28px 70px -28px #000000bf;
-    --glass-lift: inset 0 1px 0 #ffffff2e, 0 4px 14px -6px #0d122059;
   }
 
   * { box-sizing: border-box; }
@@ -293,18 +279,14 @@
   /* one look for the pill and the bar it becomes: the same soft tint and
      edge as the other pills, over a frosted layer that keeps the bar
      readable above content (on the plain page it reads as the flat pill) */
-  .scroll-header::before, .social-pill, .seg, .back-top {
-    background: var(--glass-glare), var(--glass-fill);
-    border: 1px solid transparent;
-    -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);
-    box-shadow: var(--glass-shade);
-  }
-  /* the dropdown carries a list, so it keeps a denser fill under the same glass */
-  .section-menu nav {
-    background: var(--glass-glare), var(--pill);
-    border: 1px solid transparent;
-    -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);
-    box-shadow: var(--glass-shade);
+  /* the pills are cut from the same glass as the cards: same sheen, edge,
+     shadow and blur. A denser layer underneath keeps them readable over
+     content; on the plain page it matches the background and disappears */
+  .scroll-header::before, .social-pill, .seg, .back-top, .section-menu nav {
+    background: linear-gradient(180deg, var(--card-sheen), transparent 38%), linear-gradient(var(--card), var(--card)), var(--pill);
+    border: 1px solid var(--card-edge);
+    -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: var(--card-shadow);
   }
   .scroll-header::before {
     content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
@@ -397,7 +379,7 @@
   .seg-track { position: relative; display: flex; gap: 2px; isolation: isolate; }
   .seg-thumb {
     position: absolute; top: 0; bottom: 0; left: 0; z-index: -1; border-radius: 999px;
-    background: var(--btn-bg); box-shadow: var(--glass-lift); pointer-events: none;
+    background: var(--btn-bg); pointer-events: none;
     transition: transform .4s cubic-bezier(.22, 1, .36, 1), width .4s cubic-bezier(.22, 1, .36, 1);
   }
   .seg.has-thumb button[aria-selected="true"], .seg.has-thumb button[aria-pressed="true"] { background: transparent; }
