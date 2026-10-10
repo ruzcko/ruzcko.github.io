@@ -60,6 +60,15 @@
        red/green colour blindness. Position still encodes track as well. */
     --acad: #1A6B58;
     --ind: #A0621A;
+    --wip-ink: #8A5D00;
+    --wip-bg: #F5C2421f;
+    --wip-edge: #D9A0214d;
+    /* liquid glass for the pill family: a thin fill, a diagonal glare, lit
+       top and left edges, a hairline ring and a deep soft shadow */
+    --glass-fill: #ffffff80;
+    --glass-glare: linear-gradient(135deg, #ffffff99 0%, #ffffff00 38%, #ffffff00 62%, #ffffff1a 100%);
+    --glass-shade: inset 0 1px 0 #ffffffe6, inset 0 -1px 0 #1d1d1f12, inset 1px 0 0 #ffffff2e, 0 0 0 1px #1d1d1f12, 0 20px 50px -22px #1d1d1f38;
+    --glass-lift: inset 0 1px 0 #ffffffe6, 0 4px 14px -6px #0d122059;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
     --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     /* social icon size; the pill and the bar are both this plus 10px tall */
@@ -97,6 +106,13 @@
       --contact-coffee-hover: color-mix(in srgb, #FFDD00 85%, transparent);
       --acad: #5FB79C;
       --ind: #D9A05B;
+      --wip-ink: #F2C65E;
+      --wip-bg: #F2C65E1a;
+      --wip-edge: #F2C65E47;
+      --glass-fill: #ffffff12;
+      --glass-glare: linear-gradient(135deg, #ffffff2e 0%, #ffffff00 38%, #ffffff00 62%, #ffffff1a 100%);
+      --glass-shade: inset 0 1px 0 #ffffff2e, inset 0 -1px 0 #ffffff0f, inset 1px 0 0 #ffffff2e, 0 0 0 1px #ffffff0f, 0 28px 70px -28px #000000bf;
+      --glass-lift: inset 0 1px 0 #ffffff2e, 0 4px 14px -6px #0d122059;
     }
   }
   :root[data-theme="dark"] {
@@ -128,6 +144,13 @@
     --contact-coffee-hover: color-mix(in srgb, #FFDD00 85%, transparent);
     --acad: #5FB79C;
     --ind: #D9A05B;
+    --wip-ink: #F2C65E;
+    --wip-bg: #F2C65E1a;
+    --wip-edge: #F2C65E47;
+    --glass-fill: #ffffff12;
+    --glass-glare: linear-gradient(135deg, #ffffff2e 0%, #ffffff00 38%, #ffffff00 62%, #ffffff1a 100%);
+    --glass-shade: inset 0 1px 0 #ffffff2e, inset 0 -1px 0 #ffffff0f, inset 1px 0 0 #ffffff2e, 0 0 0 1px #ffffff0f, 0 28px 70px -28px #000000bf;
+    --glass-lift: inset 0 1px 0 #ffffff2e, 0 4px 14px -6px #0d122059;
   }
 
   * { box-sizing: border-box; }
@@ -270,16 +293,18 @@
   /* one look for the pill and the bar it becomes: the same soft tint and
      edge as the other pills, over a frosted layer that keeps the bar
      readable above content (on the plain page it reads as the flat pill) */
-  .scroll-header::before, .social-pill {
-    background: linear-gradient(var(--chip), var(--chip)), var(--pill);
-    border: 1px solid var(--card-edge);
-    -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
+  .scroll-header::before, .social-pill, .seg, .back-top {
+    background: var(--glass-glare), var(--glass-fill);
+    border: 1px solid transparent;
+    -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);
+    box-shadow: var(--glass-shade);
   }
-  .back-top, .section-menu nav {
-    background: var(--pill);
-    border: 1px solid var(--card-edge);
-    -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
-    box-shadow: 0 8px 28px #0000001f, inset 0 1px 0 #ffffff12;
+  /* the dropdown carries a list, so it keeps a denser fill under the same glass */
+  .section-menu nav {
+    background: var(--glass-glare), var(--pill);
+    border: 1px solid transparent;
+    -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);
+    box-shadow: var(--glass-shade);
   }
   .scroll-header::before {
     content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
@@ -340,7 +365,7 @@
   p { margin: 0 0 12px; }
   p:last-child { margin-bottom: 0; }
   .card { padding: 26px 28px; }
-  .lede { font-size: 22px; line-height: 1.5; font-weight: 500; letter-spacing: -.015em; }
+  .lede { font-size: 19px; line-height: 1.55; font-weight: 500; letter-spacing: -.012em; }
   .prose { font-size: 17px; line-height: 1.65; }
 
   /* reveal on scroll: only switched on by the script, so content never
@@ -354,9 +379,6 @@
   .seg {
     position: relative; z-index: 10; isolation: isolate;
     display: inline-flex; gap: 2px; padding: 4px; margin: 0 0 16px; border-radius: 999px;
-    border: 1px solid var(--card-edge);
-    background: linear-gradient(var(--chip), var(--chip)), var(--pill);
-    -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
     max-width: 100%; overflow-x: auto; scrollbar-width: none;
   }
   .seg button, .tab {
@@ -375,7 +397,7 @@
   .seg-track { position: relative; display: flex; gap: 2px; isolation: isolate; }
   .seg-thumb {
     position: absolute; top: 0; bottom: 0; left: 0; z-index: -1; border-radius: 999px;
-    background: var(--btn-bg); pointer-events: none;
+    background: var(--btn-bg); box-shadow: var(--glass-lift); pointer-events: none;
     transition: transform .4s cubic-bezier(.22, 1, .36, 1), width .4s cubic-bezier(.22, 1, .36, 1);
   }
   .seg.has-thumb button[aria-selected="true"], .seg.has-thumb button[aria-pressed="true"] { background: transparent; }
@@ -489,7 +511,7 @@
   .wip {
     display: inline-block; vertical-align: 3px; margin-left: 8px; padding: 2px 8px; border-radius: 999px;
     font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .08em; line-height: 1.5;
-    color: var(--muted); background: var(--chip); border: 1px solid var(--card-edge);
+    color: var(--wip-ink); background: var(--wip-bg); border: 1px solid var(--wip-edge);
   }
   .proj p { font-size: 14.5px; color: var(--muted); margin-bottom: 14px; }
   /* one line that scrolls sideways; the far edge fades while there's more */
@@ -683,7 +705,7 @@
     .social-home + main > section:first-child { margin-top: 28px; }
     h2 { font-size: 27px; }
     .card, .links-card { padding: 22px 20px; }
-    .lede { font-size: 19px; }
+    .lede { font-size: 17px; }
     .prose { font-size: 16px; }
     .news-list { padding: 2px 16px; }
     .news-list::before { left: 20px; }
