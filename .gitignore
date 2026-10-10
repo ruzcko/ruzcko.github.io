@@ -1,40 +1,7 @@
-# ============================================================================
-# Hugo Site .gitignore
-# ============================================================================
-
-# ============================================================================
-# Hugo Build Artifacts
-# ============================================================================
-
-# Generated site output
-public/
+# Assembled output of scripts/build.py — regenerate it, never commit it
 _site/
 
-# Hugo resources (processed assets)
-resources/
-
-# Hugo build lock
-.hugo_build.lock
-
-# Hugo stats
-hugo_stats.json
-
-# Auto-generated JS config
-**/assets/jsconfig.json
-
-# ============================================================================
-# Node.js & Package Managers
-# ============================================================================
-
-# Dependencies
-node_modules/
-.pnpm-store/
-
-# ============================================================================
-# Environment & Configuration
-# ============================================================================
-
-# Local-only Codex guidance (keep personal strategy out of the public repo)
+# Local-only agent guidance (keeps personal strategy out of the public repo)
 /AGENTS.md
 
 # Environment variables
@@ -42,33 +9,12 @@ node_modules/
 .env.local
 .env.*.local
 
-# ============================================================================
-# Generated Content
-# ============================================================================
-
-# Pagefind search index
-pagefind/
-static/pagefind/
-
-# ============================================================================
-# Operating System
-# ============================================================================
-
 # macOS
 .DS_Store
-.DS_Store?
 ._*
 
-# Windows
-Thumbs.db
-Desktop.ini
-
-# Linux
-*~
-
-# ============================================================================
-# Logs & Temporary Files
-# ============================================================================
-
+# Logs
 *.log
-npm-debug.log*
+
+# Local editor/agent settings
+.claude/

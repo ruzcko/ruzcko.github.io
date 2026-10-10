@@ -146,6 +146,19 @@
   :root[data-theme="light"] { color-scheme: only light; }
   :root[data-theme="dark"] { color-scheme: only dark; }
   html { scroll-behavior: smooth; }
+  /* no rubber-band stretch at the top and bottom on phones: the cards would
+     warp while the fixed sky behind them stays put. Turning it off also
+     turns off the browser's pull-to-refresh, so the page brings its own */
+  html, body { overscroll-behavior-y: none; }
+  .ptr {
+    position: fixed; left: 50%; top: 0; z-index: 30; width: 40px; height: 40px; margin-left: -20px; border-radius: 50%;
+    display: grid; place-items: center; color: var(--ink); pointer-events: none; opacity: 0;
+    transform: translateY(-48px);
+  }
+  .ptr svg { width: 18px; height: 18px; }
+  .ptr.is-back { transition: transform .3s cubic-bezier(.22, 1, .36, 1), opacity .3s ease; }
+  .ptr.is-loading svg { animation: ptr-spin .8s linear infinite; }
+  @keyframes ptr-spin { to { transform: rotate(360deg); } }
   body {
     margin: 0; color: var(--ink);
     background: radial-gradient(1100px 620px at 50% -12%, var(--bg-glow), transparent 72%), var(--bg);
@@ -285,7 +298,7 @@
   /* the pills are cut from the same glass as the cards: same sheen, edge,
      shadow and blur. A denser layer underneath keeps them readable over
      content; on the plain page it matches the background and disappears */
-  .scroll-header::before, .social-pill, .seg, .back-top, .section-menu nav {
+  .scroll-header::before, .social-pill, .seg, .back-top, .section-menu nav, .ptr {
     background: linear-gradient(180deg, var(--card-sheen), transparent 38%), linear-gradient(var(--card), var(--card)), var(--pill);
     border: 1px solid var(--card-edge);
     -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
@@ -295,7 +308,7 @@
     content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
   }
   @media (prefers-reduced-transparency: reduce) {
-    .scroll-header::before, .social-pill, .seg, .back-top, .section-menu nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .scroll-header::before, .social-pill, .seg, .back-top, .section-menu nav, .ptr { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
   .scroll-header-inner {
     height: calc(var(--icon) + 10px); padding: 0 5px;
@@ -1842,6 +1855,50 @@
     window.addEventListener('resize', function () { clearTimeout(pending); pending = setTimeout(draw, 120); });
     new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     setInterval(draw, 60000);
+  })();
+
+  /* Pull to refresh on touch screens: the browser's own goes away with the
+     overscroll stretch, so pulling down at the top of the page brings in a
+     small glass button that turns as you pull and reloads past the line. */
+  (function () {
+    if (!window.matchMedia('(pointer: coarse)').matches) { return; }
+    var ptr = document.createElement('div');
+    ptr.className = 'ptr';
+    ptr.setAttribute('aria-hidden', 'true');
+    ptr.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>';
+    document.body.appendChild(ptr);
+    var icon = ptr.firstChild, startY = null, pull = 0, LINE = 70, MAX = 110;
+    var top = function () { return (window.visualViewport ? window.visualViewport.offsetTop : 0) + 12; };
+    function set(d) {
+      var travel = Math.min(d, MAX);
+      ptr.style.transform = 'translateY(' + (top() - 48 + travel) + 'px)';
+      ptr.style.opacity = String(Math.min(1, d / LINE));
+      icon.style.transform = 'rotate(' + (d / LINE) * 270 + 'deg)';
+    }
+    window.addEventListener('touchstart', function (e) {
+      if (window.scrollY > 0 || e.touches.length !== 1 || ptr.classList.contains('is-loading')) { startY = null; return; }
+      startY = e.touches[0].clientY; pull = 0; ptr.classList.remove('is-back');
+    }, { passive: true });
+    window.addEventListener('touchmove', function (e) {
+      if (startY === null) { return; }
+      var d = e.touches[0].clientY - startY;
+      if (d <= 0 || window.scrollY > 0) { pull = 0; set(0); return; }
+      pull = d * 0.55; // resistance, so it feels like pulling rather than dragging
+      set(pull);
+    }, { passive: true });
+    window.addEventListener('touchend', function () {
+      if (startY === null) { return; }
+      startY = null;
+      ptr.classList.add('is-back');
+      if (pull >= LINE) {
+        ptr.classList.add('is-loading');
+        icon.style.transform = '';
+        ptr.style.transform = 'translateY(' + (top() - 48 + LINE) + 'px)';
+        ptr.style.opacity = '1';
+        setTimeout(function () { location.reload(); }, 250);
+      } else { set(0); }
+      pull = 0;
+    }, { passive: true });
   })();
 
   /* theme switch: remembers the choice, follows the OS until you make one */
