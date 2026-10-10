@@ -48,7 +48,7 @@
     --dot: #0f121814;
     --btn-bg: #15171B;
     --btn-ink: #FFFFFF;
-    --focus: var(--link);
+    --focus: color-mix(in srgb, var(--ink) 55%, transparent);
     --contact-booking-bg: #984B3D;
     --contact-booking-ink: #fff;
     --contact-booking-hover: #864234;
@@ -149,8 +149,10 @@
   }
   .mono { font-family: var(--mono); font-feature-settings: "zero" 0; }
 
-  a { color: var(--link); text-decoration: none; }
-  @media (hover: hover) and (pointer: fine) { a:hover { color: var(--link-hover); } }
+  /* links answer in ink, not blue: an underline draws in on hover */
+  a { color: var(--ink); text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 1px; text-underline-offset: 3px; transition: text-decoration-color .2s ease; }
+  .icons a, .news-social, .section-menu a, .back-top, .contact-actions a, .proj-img, .news-media > a, .skip-link { text-decoration: none; }
+  @media (hover: hover) and (pointer: fine) { a:hover { text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); } }
   a, button, summary { -webkit-tap-highlight-color: transparent; }
   :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
 
@@ -422,7 +424,15 @@
   .news-list[data-panel="2026"] .news-item:first-child::before { background: var(--link); border-color: var(--link); box-shadow: 0 0 0 3px color-mix(in srgb, var(--link) 22%, transparent); }
   /* date and headline on top; the picture sits beside its summary below */
   .news-media { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 18px; align-items: center; margin-top: 10px; }
-  .news-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; border: 1px solid var(--card-edge); }
+  .news-media > a { display: block; overflow: hidden; border-radius: 12px; border: 1px solid var(--card-edge); }
+  .news-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+  .news-item::before { transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+  @media (hover: hover) and (pointer: fine) {
+    /* hovering a story lights its dot, underlines the headline, nudges the picture */
+    .news-item:hover::before { background: var(--ink); border-color: var(--ink); transform: scale(1.2); }
+    .news-item:hover .news-head { text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+    .news-item:hover .news-media img { transform: scale(1.04); }
+  }
   .news-media .news-summary { margin-top: 0; }
   .when { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .news-item .when { display: block; margin-bottom: 3px; }
@@ -439,7 +449,6 @@
   }
   .news-social svg { width: 14px; height: 14px; }
   @media (hover: hover) and (pointer: fine) {
-    a.news-head:hover { color: var(--link); }
     .news-social:hover { color: var(--ink); }
   }
 
@@ -460,10 +469,17 @@
   .proj-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .proj { overflow: hidden; display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
   .proj-img { display: block; padding: 8px 8px 0; }
-  .proj-img img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 15px; }
+  .proj-frame { display: block; overflow: hidden; border-radius: 15px; }
+  .proj-img img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
   .proj-body { padding: 16px 20px 20px; display: flex; flex-direction: column; flex: 1; }
   .proj h3 { margin: 0 0 6px; font-size: 19px; font-weight: 700; letter-spacing: -.02em; }
   .proj h3 a { color: var(--ink); }
+  /* work in progress: add <span class="wip">WIP</span> after a project's title */
+  .wip {
+    display: inline-block; vertical-align: 3px; margin-left: 8px; padding: 2px 8px; border-radius: 999px;
+    font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .08em; line-height: 1.5;
+    color: var(--muted); background: var(--chip); border: 1px solid var(--card-edge);
+  }
   .proj p { font-size: 14.5px; color: var(--muted); margin-bottom: 14px; }
   /* one line that scrolls sideways; the far edge fades while there's more */
   .tags { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
@@ -474,7 +490,8 @@
   .proj-link span { color: var(--muted); }
   @media (hover: hover) and (pointer: fine) {
     .proj:hover, .proj:focus-within { transform: translateY(-2px); }
-    .proj h3 a:hover, .proj-link:hover { color: var(--link); }
+    .proj:hover .proj-img img, .proj:focus-within .proj-img img { transform: scale(1.04); }
+    .proj:hover h3 a, .proj-link:hover { text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
   }
 
   /* ---------- publications ---------- */
@@ -485,7 +502,6 @@
   .pub-title { font-size: 15px; font-weight: 600; line-height: 1.45; letter-spacing: -.005em; }
   /* long titles stop at two lines; hovering shows the whole thing */
   .pub-title a { color: var(--ink); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
-  @media (hover: hover) and (pointer: fine) { .pub-title a:hover { color: var(--link); } }
   .pub-authors { font-size: 13px; color: var(--muted); margin-top: 3px; }
   .pub-authors .me { color: var(--ink); font-weight: 600; }
   .pub-venue { font-size: 12.5px; color: var(--faint); margin-top: 2px; }
@@ -657,7 +673,7 @@
     .news-list::before { left: 20px; }
     .news-item { padding-left: 22px; }
     .news-media { grid-template-columns: 120px minmax(0, 1fr); gap: 12px; }
-    .news-media img { border-radius: 9px; }
+    .news-media > a { border-radius: 9px; }
     .news-head { font-size: 15px; }
     .news-summary, .proj-body p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; cursor: pointer; }
     .news-summary { font-size: 13.5px; }
@@ -964,7 +980,7 @@
       </div>
       <div class="proj-grid" data-seg-panel="projects" data-panel="featured">
         <article class="proj glass">
-          <a class="proj-img" href="https://wo-preview.ruzcko.com/" aria-label="Open Weather Observatory" tabindex="-1"><img src="weather-observatory.jpg" width="1400" height="791" loading="lazy" decoding="async" alt="Weather Observatory interface with an interactive globe, precipitation forecasts, tropical cyclone tracks, and a forecast timeline."></a>
+          <a class="proj-img" href="https://wo-preview.ruzcko.com/" aria-label="Open Weather Observatory" tabindex="-1"><span class="proj-frame"><img src="weather-observatory.jpg" width="1400" height="791" loading="lazy" decoding="async" alt="Weather Observatory interface with an interactive globe, precipitation forecasts, tropical cyclone tracks, and a forecast timeline."></span></a>
           <div class="proj-body">
             <h3><a href="https://wo-preview.ruzcko.com/">Weather Observatory</a></h3>
             <p>Explore and compare weather forecasts.</p>
@@ -973,7 +989,7 @@
           </div>
         </article>
         <article class="proj glass">
-          <a class="proj-img" href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" aria-label="Open the S2RAIN talk" tabindex="-1"><img src="s2rain.jpg" width="800" height="450" loading="lazy" decoding="async" alt="S2RAIN: a stack of satellite image layers with an arrow to an IMERG rainfall map of East Asia"></a>
+          <a class="proj-img" href="https://ruzcko.com/talks/s2rain-ai4sci-2026/" aria-label="Open the S2RAIN talk" tabindex="-1"><span class="proj-frame"><img src="s2rain.jpg" width="800" height="450" loading="lazy" decoding="async" alt="S2RAIN: a stack of satellite image layers with an arrow to an IMERG rainfall map of East Asia"></span></a>
           <div class="proj-body">
             <h3><a href="https://ruzcko.com/talks/s2rain-ai4sci-2026/">S2RAIN</a></h3>
             <p>Hybrid generative modeling for precipitation nowcasting, estimating rainfall from geostationary satellite imagery.</p>
@@ -982,7 +998,7 @@
           </div>
         </article>
         <article class="proj glass">
-          <a class="proj-img" href="https://ruzcko.com/projects/precipitation-downscaling/" aria-label="Open the Precipitation Downscaling report" tabindex="-1"><img src="precipitation-downscaling.jpg" width="800" height="450" loading="lazy" decoding="async" alt="A coarse 24 km IFS rainfall field over Korea beside the same field downscaled to 2 km."></a>
+          <a class="proj-img" href="https://ruzcko.com/projects/precipitation-downscaling/" aria-label="Open the Precipitation Downscaling report" tabindex="-1"><span class="proj-frame"><img src="precipitation-downscaling.jpg" width="800" height="450" loading="lazy" decoding="async" alt="A coarse 24 km IFS rainfall field over Korea beside the same field downscaled to 2 km."></span></a>
           <div class="proj-body">
             <h3><a href="https://ruzcko.com/projects/precipitation-downscaling/">Precipitation Downscaling</a></h3>
             <p>Adapting SpateGAN and CEDDAR to IFS forecasts, validated on Korean radar data and run over Indonesia, the Philippines, and Ghana.</p>
@@ -993,7 +1009,7 @@
       </div>
       <div class="proj-grid" data-seg-panel="projects" data-panel="side" hidden>
         <article class="proj glass">
-          <a class="proj-img" href="https://ai-deadlines.ruzcko.com/" aria-label="Open AI Conference Deadlines" tabindex="-1"><img src="ai-deadlines.jpg" width="800" height="450" loading="lazy" decoding="async" alt="AI Conference Deadlines: a countdown to the next paper deadline above a list of upcoming AI and ML venues."></a>
+          <a class="proj-img" href="https://ai-deadlines.ruzcko.com/" aria-label="Open AI Conference Deadlines" tabindex="-1"><span class="proj-frame"><img src="ai-deadlines.jpg" width="800" height="450" loading="lazy" decoding="async" alt="AI Conference Deadlines: “70+ AI and ML venues, counting down.” above a timeline from submission to camera-ready."></span></a>
           <div class="proj-body">
             <h3><a href="https://ai-deadlines.ruzcko.com/">AI Conference Deadlines</a></h3>
             <p>Live countdowns for 70+ AI and ML venues, with a map, a calendar, and feeds you can subscribe to.</p>
@@ -1002,18 +1018,18 @@
           </div>
         </article>
         <article class="proj glass">
-          <a class="proj-img" href="https://apelyido.ruzcko.com/" aria-label="Open Apelyido" tabindex="-1"><img src="apelyido.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Apelyido: “Know where your last name comes from.” over a grid of letters."></a>
+          <a class="proj-img" href="https://apelyido.ruzcko.com/" aria-label="Open Apelyido" tabindex="-1"><span class="proj-frame"><img src="apelyido.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Apelyido: “Know where your last name comes from.” over a grid of letters."></span></a>
           <div class="proj-body">
-            <h3><a href="https://apelyido.ruzcko.com/">Apelyido</a></h3>
+            <h3><a href="https://apelyido.ruzcko.com/">Apelyido</a><span class="wip" title="Work in progress">WIP</span></h3>
             <p>Type your surname and see where it comes from: the 1849 surname decree, its book of names, and where your name lives today.</p>
             <div class="tags"><span>Philippine History</span><span>Names</span><span>Maps</span></div>
             <a class="proj-link" href="https://apelyido.ruzcko.com/">Open the site <span aria-hidden="true">↗</span></a>
           </div>
         </article>
         <article class="proj glass">
-          <a class="proj-img" href="https://catalogo-1849.ruzcko.com/" aria-label="Open Catálogo de Apellidos (1849)" tabindex="-1"><img src="catalogo-1849.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Catálogo alfabético de apellidos: the book Filipino families chose their surnames from."></a>
+          <a class="proj-img" href="https://catalogo-1849.ruzcko.com/" aria-label="Open Catálogo de Apellidos (1849)" tabindex="-1"><span class="proj-frame"><img src="catalogo-1849.jpg" width="800" height="450" loading="lazy" decoding="async" alt="Catálogo alfabético de apellidos: the book Filipino families chose their surnames from."></span></a>
           <div class="proj-body">
-            <h3><a href="https://catalogo-1849.ruzcko.com/">Catálogo de Apellidos (1849)</a></h3>
+            <h3><a href="https://catalogo-1849.ruzcko.com/">Catálogo de Apellidos (1849)</a><span class="wip" title="Work in progress">WIP</span></h3>
             <p>Leaf through the 1849 book Filipino families chose their surnames from, recreated from an open transcription.</p>
             <div class="tags"><span>Philippine History</span><span>Digital Humanities</span></div>
             <a class="proj-link" href="https://catalogo-1849.ruzcko.com/">Open the site <span aria-hidden="true">↗</span></a>
