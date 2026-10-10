@@ -154,13 +154,17 @@
     -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   }
   /* a still sky of scattered specks: two layers on different spacings so
-     the pattern never visibly repeats */
+     the pattern never visibly repeats. With the script on, the real sky
+     above the visitor (.sky) replaces it */
   body::before {
     content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .55;
     background-image: radial-gradient(1.3px 1.3px at 12% 18%, var(--star), transparent), radial-gradient(1px 1px at 33% 72%, var(--star), transparent), radial-gradient(1.5px 1.5px at 58% 26%, var(--star), transparent), radial-gradient(1px 1px at 77% 61%, var(--star), transparent), radial-gradient(1.2px 1.2px at 91% 12%, var(--star), transparent), radial-gradient(1px 1px at 46% 48%, var(--star), transparent), radial-gradient(1px 1px at 22% 88%, var(--star), transparent), radial-gradient(1.3px 1.3px at 68% 90%, var(--star), transparent), radial-gradient(1px 1px at 5% 50%, var(--star), transparent), radial-gradient(1.2px 1.2px at 84% 40%, var(--star), transparent),
       radial-gradient(1px 1px at 8% 8%, var(--star), transparent), radial-gradient(1.2px 1.2px at 27% 41%, var(--star), transparent), radial-gradient(1px 1px at 49% 79%, var(--star), transparent), radial-gradient(1px 1px at 63% 14%, var(--star), transparent), radial-gradient(1.4px 1.4px at 88% 67%, var(--star), transparent), radial-gradient(1px 1px at 39% 23%, var(--star), transparent), radial-gradient(1px 1px at 71% 47%, var(--star), transparent), radial-gradient(1.2px 1.2px at 16% 63%, var(--star), transparent);
     background-size: 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 470px 390px, 470px 390px, 470px 390px, 470px 390px, 470px 390px, 470px 390px, 470px 390px, 470px 390px;
   }
+  .sky { position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+  .sky-on body::before { display: none; }
+  .sky-note { margin: 6px 0 0; font-family: var(--mono); font-size: 11.5px; color: var(--faint); text-align: center; }
   .mono { font-family: var(--mono); font-feature-settings: "zero" 0; }
 
   a { color: var(--ink); text-decoration: none; }
@@ -1441,7 +1445,7 @@
         <cite>Marie Curie</cite>
       </blockquote>
     </div>
-    <footer>© 2026 Rogelio Ruzcko Tobias</footer>
+    <footer>© 2026 Rogelio Ruzcko Tobias<p class="sky-note" hidden></p></footer>
   </main>
 </div>
 
@@ -1765,6 +1769,83 @@
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', function () { items.forEach(function (item) { hide(item); item.on = false; }); schedule(); });
     update();
+  })();
+
+  /* The real sky behind the page: the ~900 brightest stars as they stand
+     above the visitor right now. Location is a guess from the device's
+     time zone, so there's no permission prompt and nothing leaves the
+     browser. Star data: d3-celestial (BSD-3), from the Hipparcos catalogue. */
+  (function () {
+    var canvas = document.createElement('canvas');
+    if (!canvas.getContext) { return; }
+    var STARS = '0s50kd060qo0ad0e1nf0uc0k1p30840k25k0zs0k0m011s0l0lu0mq0m0vw0qg0o06s0940o0oo0r20o1mm0880q2ap0rh0s1fu07h0s0j60tl0t1jx0lw0u1wq0ho0v0wb0ws0w2no0gs0w1hb08f0w2e811l0w1p30840y1690sc0y0t30gy0z0vk0xv101g6095102160ep100ml0qr100mo0wy1012f05n110nd0oo112k90by110no0oh110y00bv121hr14k120e712v1224o0fg121a3166120tr0ho121lh12p120yw08h1321f0d2130oz11h131y205u130rm0tk1310g09t132d4099130ak1dt140ql0k01413f0ml1408u0vj141720ui140310k01426u0hp141mt0ew1500l0x31504u0yw150o50mb151pv19m152mn0bz152190si150d210e1508m10r151d90t21503y15v161gw0be160xl0dw1612p08j161sx0wf161220cy161ju149162cw1071602t14p1622s13b160n20ox1600n15f171ky0a5171up0iq171y50fh171p90bu171ot0da1719z14o171pg0wj182ik0rr1821s0e61801u0d9181dl13x181zk0kn182o30wt180uu0gv182gs16e1813109q192ek0yg192o60t8190co0q5191x90m2191m10bv1a1at0up1a1v20ji1a0n40k21a1el0ax1a1f40k51a27d0gp1a1rp0me1a1tl0qs1a07z0us1a0nl0fj1a0oz0zc1a1ge0ii1a05z15q1b1lz0u41b1qe0d11b0km0y81b18x0ba1b1gl05t1b20z0en1b0ud0ep1b24g0gq1b2ae0ry1b1vo0nz1b1wc1631b18n0741b1gw0om1b0nb0nd1c1jl0et1c1pv0kk1c21v0qa1c0le0nl1c1ws0uz1c1zv0t01c1f208p1c20y13j1c1sy0dk1c0mt0j81c1xj0xs1c01s03j1c1x60h61c24y0hy1c00x0t81c0xv0i91c1uc07e1c0g90xv1c20l09l1c2120b51c0ft0vp1c1ib0s21c2is0kj1c08907w1d2aa11j1d0ql0v91d1rt05x1d2ky0891d0ce0dt1d27u0j61d0v20rb1d1hw0zn1d1ul0hr1d0gj1041d1w50hw1d2hp0ng1d0cu13v1d14s06x1d2mo0xe1d0sh0ay1d1g30kf1d2k20ox1e0gj0l91e0ng0uv1e14p0vm1e23f0gk1e1jh0ik1e2250dv1e27k0sv1e0900yq1e1ai11d1e1ry18y1e1ya0eg1e2j90em1e0fh12a1e0qf0gn1e0te0ie1e1ep0iq1e0kz1161e1h80631e1ok0zn1e29b0ws1e2ct0kw1e0s20vz1f17810j1f28117t1f2480es1f1160qn1f1940ki1f1cb07i1f2dy0bv1f0od0f21f11g12c1f1yr09g1f1zw0vw1f1qg0db1f12z0yk1f13o0961g1zw0z81g0rm0d01g13s13d1g1zg1791g2660hi1g0la10g1g1pa06y1g0k50qy1g0l80is1g1yo0rm1g22b0eq1g2ge0xe1g2qk1ak1g1rz0dq1g1vy0np1g24h0o71g2hi18m1g0sc07t1g2c40os1g0v70cz1g1ms0hl1g1qs0hz1g2730y31g0fs04e1h02q0xl1h20d0i21h2nh0km1h0lq0ki1h16m05k1h1s815e1h0j109q1h17w07v1h0q10v91h20l09c1h04l0c11h0cv0zs1h1f314u1h1zo0d01h22y0ma1h27n0hb1h0ho07n1h1au0ta1h0wl0i31h07y16p1i0mj0oc1i0s50sl1i0zg15v1i28y0pv1i1s30cl1i10l0qs1i1kl0ou1i0na0rr1i16v07z1i1hv0py1i2kf1561i0io0tf1i0650cz1i0gq0sh1i1lm0df1i1rd0aj1i2eh1661i2mk0s01i07v0x81i1uo0ec1i2220wp1i2eg06m1i12908m1i16u0vi1i27m0nn1i16v10x1i03f1521j04r0m61j0x40aa1j1rl0y91j0bc0pw1j1lm0d71j1660to1j1xn0zt1j0780kl1j0ta0h91j1b40y71j1qn1081j24v0c81j2n10ar1j0sh0fz1j0uk0v41j2n417e1j2b90uf1j2n50vu1j0fi0ma1j14d0rr1j15g09u1j26h0ya1j2700j51j2kd0qq1j0io0uc1j0yh0rk1j1c50g51j1ty0o21j21g0kq1j0hx0fm1k0o30kw1k1np0c71k24h1971k2by06m1k01d0mk1k09h0ap1k1b60kw1k1yb0eg1k0w90vs1k11r1241k1ok0xg1k1s10ex1k0uf0tl1k2cl0lj1k06t12i1k0m20n41k0nx0is1k1dd0pi1k1fh0881k05u0mq1k0so0yg1k1050ab1k13n0dr1k1t30h71k2100851k0bt0wl1k0e80ri1k16e0lk1k1ic0551k2200711k06d0t91k0fx0vp1k0wb0eg1k1yg0d81k2nz10r1k1d006h1k2dy0t21k0i10tc1k13p16j1k1tp0ta1k23h0b31k2lo0p01k1sg0x31l1t70gq1l1mn16w1l2f508r1l0k80qk1l10d0fs1l2ag0u51l2oi0j41l02k13z1l0820ao1l0l010f1l14n07n1l1d112a1l2ia0kd1l0dv0iy1l22u0x41l2p10px1l0kg0po1l0or0l21l0wt0dq1l1u10q91l23i0ro1l2b00qs1l0es0md1l0fm0vp1l0oz1431l2fu1171l0ee0rp1l1pk0pj1l22k14t1l2ie03i1l2nc0mw1l07r0m51l1w70uc1l2gj0zk1l11s0bx1m2260pr1m0n607n1m0oe0j71m0r00n21m27i0iz1m29813d1m2lu12z1m0bv14j1m0fn10u1m0i90tv1m0nj0oa1m0z406n1m1060c21m1y408m1m2e30tf1m2hd0is1m2k60w11m0ts05f1m0uy0wq1m15115e1m19e08n1m1p70st1m2en0md1m0d611h1m19d0yi1m1b30xr1m0dc0gy1m0vv0hk1m1sx0rx1m28d13u1m2ca11z1m0j50gi1m17m08p1m1th0wb1m2qg11x1m08h0ps1m12t0z81m1c11891m1wt0pk1m21l11s1m17h0kc1m1m80db1m1po0321m0fk0701m0fl0xz1m0in0tg1m1160861m17y0rl1m1890bm1m1g904z1m23j0x01m23y0j51m2ai18j1m0hn0d91m0o40at1m0qj0fq1m16p0db1m1gc18e1m1gm0bj1m1uf0td1m24n0v21m25g0mq1m03y0zp1n0jb0l11n0n00f51n1vr07b1n1x00331n22r0zd1n2l60om1n0fp0vs1n10j0c81n1m90ck1n1pc0nf1n1ug0gw1n2at0pa1n00o0cb1n07w0ud1n1560w81n1rc0bh1n2ok0cg1n0c90mj1n0sr0ia1n12i0pn1n1fe0ot1n2b30yr1n14a0op1n1bb09v1n1kc0e21n0gw0qo1n0z40nx1n1fy0b21n1qv0bx1n1sz0kw1n1w111v1n1yv0xl1n28o0k21n2gm0qg1n01u0cv1n06c0bd1n0c413o1n0j70o21n0w304u1n1af08m1n1v50j91n2320pt1n04r09o1n0w10mc1n0w80gy1n10g0u21n2fb10g1n08l1941o0rk0jn1o0ha1291o0oy0d41o11k10m1o12a07p1o28r0cn1o28u0dq1o2cf1291o2pf0jf1o0ic0fk1o0of0zv1o0uc0641o1040f71o1et0ag1o1u10fo1o2bd04r1o2lp0cx1o2mw0vk1o0gl0yy1o2hv11o1o08c0j51o0q10n91o17d04g1o1jx14a1o2p208u1o11o06k1o1bi0rx1o1vi0jl1o0771331o0ju0o31o0tg0uq1o0u70hk1o1p90ei1o1ut15a1o1w20b21o2600561o2dd0xg1o10u0hb1o1el0i51o2750t71o27a0nf1o09j0ye1o0l315s1o10l0x01o1hs0941o23e0pp1o2dn0s51o2ry0qx1o0hi0n41o1d10qt1o1o313f1o2m40oz1o0d512s1o0ym03n1o10f0d61o1bb0qo1o1lm0te1o1nr0eh1o1oz0ba1o2n40l81o0kl0sr1p0vo0wh1p1bk0k31p1f80641p1fa0781p1pd0f81p1yt0a81p1ng0nc1p1r40cf1p1rq08o1p2lp1581p03a0vr1p09u05x1p0b30p31p0co0ig1p0sr0lo1p13w08k1p19t0jx1p26u1171p2fx0k81p2h10ui1p0ne0rl1p1tw0u11p06q10i1p0be12o1p0wl0c41p2500bd1p27v0e31p0b60dx1p0tf0ko1p0zy0d21p1530kw1p1850361p1d20801p1t206l1p27u0eh1p2nw0ac1p0b30611p0hp12g1p0p60ro1p1ed0rf1p2b00dd1p2ey0hj1p2lq0cv1p0mi0mu1p0r00um1p1u90kd1p2ej0hz1p2mv02e1p2qm0qk1p0en0sl1p0fq0vn1p0zy0ql1p1eh0721p1ss0xq1p1ui0wh1p2im0w41p2ks0zh1p0u00ov1q20h0zb1q2qn11b1q0pa0vh1q0v70xu1q1uz0lu1q20o0ia1q02a16h1q0fy0ey1q2ku0mu1q1n80m51q1nh11t1q1x70f71q2kq14u1q2mi0hi1q1lm0ff1q2660up1q0mz0qn1q0x40in1q17m0z71q1x110s1q2mx0se1q2nk0fz1q0ej15n1q0if0v71q1xv1bs1q2de16i1q2hc06u1q0bu0zn1q0fr0ik1q0wv0bn1q1v40es1q1wk0jv1q24g18t1q26a0np1q26n07q1q26s0z91q2ei0xj1q2gq0zy1q2ou0nc1q01e06z1q0w60x11q1j00wr1q1lc0fu1q1mg0pf1q1va11h1q1xo03h1q27m0ep1q2ij15c1q2ir12p1q04s1cz1q0a70br1q0be0l51q1fa02z1q1gc10i1q1wu0fd1q21q0lf1q2oy0mh1q05905v1q0h41301q0j50ru1q0j810h1q0lh0mk1q0yx1101q1hq0du1q1o91a11q2io15z1q04u1241r07b0rk1r0dw0d11r0eu0j01r0hs0ap1r0kf17f1r11e0sb1r21d0ea1r2340v01r2jx16y1r04d0r71r0bg0rt1r0hr0rh1r0jb0sh1r0jm0ve1r1in0b51r1rs0bp1r28s0ck1r2el0th1r2ps0qs1r0ii0vc1r1431bl1r17k0gd1r20q0gp1r2c914q1r2h20kc1r2kd0y81r2ob0cx1r0f20p41r0m70lc1r18e09k1r1di0fl1r1tk1am1r1wu0ke1r2k40l51r2lv0g11r2qh1111r0430gu1r0aa0rd1r0fn0vt1r0fv0ek1r0ig0tz1r0p011r1r10c0py1r19j0vv1r1ce0os1r1da07a1r1g80ki1r1nr09c1r2ck0lj1r10608e1r1o701r1r1s70ze1r1v70j71r2e00op1r0f112e1r0jh0jj1r0n30u61r0q20x71r10k0l91r13p0ve1r1e807f1r1iv0tv1r1ls0fu1r1px0cw1r20a0lg1r0v40rh1r1hp0bf1r1o50ce1r1zw0hm1r23l07b1r24e0z11r02k0yd1r02o0x51r04y14b1r0ny06r1r0r80ii1r0ys03h1r12n0911r1420ba1r1mg0cc1r1t50d61r20o0q51r2640zg1r26a0u21r2il0tu1r2lq1291r0db0uh1s0k70rh1s0rf0aa1s0sz1581s0xw05y1s10p0qm1s1fv0wv1s1rr0gn1s2131d21s24m07x1s28b0zl1s2im0fu1s02707i1s0300911s0980rg1s0em12c1s0h00v51s0kc0nh1s0lr0lf1s0ou0f71s0sw0k91s0xx0o61s1mr0dk1s29q0on1s0050nc1s0q50f91s0uh0i21s19u0da1s23m0us1s2bb0f71s1iv0nh1s2by1al1s2pn0ja1s2q40ei1s07w0c51s0fy1771s0n90rn1s0om0un1s0qn0qa1s0xi0pn1s1680rs1s1qp0pl1s1yf0ru1s20b0j51s29y0u01s2a10tv1s2gw0a61s03z0vi1s0wi0ht1s0xz0jo1s26y06c1s2jj09q1s0sh0a41s0ty0xe1s1ny0e11s20z0w91s22w0xe1s2gr0yp1s2oe19y1s2p30mg1s2p50fz1s0pj0t41s0rn0jy1s0u40cm1s0u60ho1s0yb0dt1s1a00um1s1pu0h81s1tq0r21s2340pd1s2lb13i1s2pl0vi1s0fp0ln1s0hq0mv1s0kn13y1s2840zv1s2bj0hb1s2d00xy1s2ed0t71s2en0nm1s0110jr1s03e0r41s0ht08j1s0jh0dd1s0qd15e1s0vj0it1s0y40e01s0ym0et1s1om0az1s2960vv1s0720qj1s0br0g01s0lp0lp1s0pu0sy1s1010px1s11i0dj1s1850901s18u02n1s1b00nz1s1ww0j11s28919e1s29j0r21s0ad17q1t0ga0o61t0lr0pt1t12413c1t1an0io1t1ek0ax1t1wk0bs1t2nb0fv1t0bh0ju1t0dx0x21t0kq0ph1t0qy0fy1t0ra0r11t0x80bc1t11v04u1t1380wa1t13x13h1t1de0cg1t1or0x91t1qb0nt1t2gi0rs1t2k30e11t03412f1t0gq07q1t0ii0tc1t0sc0po1t1680ow1t1s408j1t1wc0jg1t2o40q21t2ob0if1t08h18p1t0j00gq1t0s20so1t0u10c01t0wu0e71t1670ys1t1p60tk1t29p12y1t2g00i21t2ik0wz1t2qr0pi1t2qt0kz1t2s006s1t0nk0q51t0ob09e1t10l0981t17409g1t1d60um1t1lg0tv1t2cf0wq1t2g60lu1t2hi0iy1t2k90fu1t2kn1011t2mh11b1t';
+    var ZONES = 'Asia/Seoul:37.57,126.98;Asia/Tokyo:35.68,139.69;Asia/Shanghai:31.23,121.47;Asia/Hong_Kong:22.32,114.17;Asia/Taipei:25.03,121.57;Asia/Manila:14.6,120.98;Asia/Singapore:1.35,103.82;Asia/Kuala_Lumpur:3.14,101.69;Asia/Jakarta:-6.2,106.85;Asia/Bangkok:13.76,100.5;Asia/Ho_Chi_Minh:10.82,106.63;Asia/Saigon:10.82,106.63;Asia/Kolkata:22.57,88.36;Asia/Calcutta:22.57,88.36;Asia/Dhaka:23.81,90.41;Asia/Karachi:24.86,67.0;Asia/Dubai:25.2,55.27;Asia/Riyadh:24.71,46.68;Asia/Tehran:35.69,51.39;Asia/Jerusalem:31.77,35.21;Asia/Kathmandu:27.72,85.32;Asia/Colombo:6.93,79.86;Asia/Ulaanbaatar:47.89,106.91;Asia/Almaty:43.24,76.89;Asia/Tashkent:41.3,69.24;Asia/Yangon:16.87,96.2;Australia/Sydney:-33.87,151.21;Australia/Melbourne:-37.81,144.96;Australia/Brisbane:-27.47,153.03;Australia/Perth:-31.95,115.86;Australia/Adelaide:-34.93,138.6;Pacific/Auckland:-36.85,174.76;Pacific/Honolulu:21.31,-157.86;Pacific/Guam:13.44,144.79;Pacific/Fiji:-18.14,178.44;Europe/London:51.51,-0.13;Europe/Dublin:53.35,-6.26;Europe/Lisbon:38.72,-9.14;Europe/Madrid:40.42,-3.7;Europe/Paris:48.86,2.35;Europe/Brussels:50.85,4.35;Europe/Amsterdam:52.37,4.9;Europe/Berlin:52.52,13.4;Europe/Zurich:47.38,8.54;Europe/Rome:41.9,12.5;Europe/Vienna:48.21,16.37;Europe/Prague:50.08,14.44;Europe/Warsaw:52.23,21.01;Europe/Stockholm:59.33,18.07;Europe/Oslo:59.91,10.75;Europe/Copenhagen:55.68,12.57;Europe/Helsinki:60.17,24.94;Europe/Athens:37.98,23.73;Europe/Istanbul:41.01,28.98;Europe/Kyiv:50.45,30.52;Europe/Kiev:50.45,30.52;Europe/Moscow:55.76,37.62;Africa/Cairo:30.04,31.24;Africa/Lagos:6.52,3.38;Africa/Accra:5.6,-0.19;Africa/Nairobi:-1.29,36.82;Africa/Johannesburg:-26.2,28.05;Africa/Casablanca:33.57,-7.59;America/New_York:40.71,-74.01;America/Toronto:43.65,-79.38;America/Chicago:41.88,-87.63;America/Denver:39.74,-104.99;America/Phoenix:33.45,-112.07;America/Los_Angeles:34.05,-118.24;America/Vancouver:49.28,-123.12;America/Anchorage:61.22,-149.9;America/Mexico_City:19.43,-99.13;America/Bogota:4.71,-74.07;America/Lima:-12.05,-77.04;America/Santiago:-33.45,-70.67;America/Sao_Paulo:-23.55,-46.63;America/Argentina/Buenos_Aires:-34.6,-58.38;America/Halifax:44.65,-63.58';
+    var place = (function () {
+      var zone = '', lat = 37.57, lon = 126.98;
+      try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+      var hit = ZONES.split(';').filter(function (z) { return z.split(':')[0] === zone; })[0];
+      if (hit) {
+        var ll = hit.split(':')[1].split(','); lat = +ll[0]; lon = +ll[1];
+      } else if (zone) {
+        // unknown zone: longitude from the clock's offset, latitude from the region
+        lon = -new Date().getTimezoneOffset() / 4;
+        var region = { Europe: 50, Asia: 30, Africa: 5, America: 25, Australia: -30, Pacific: -15, Atlantic: 35, Indian: -10, Antarctica: -75 }[zone.split('/')[0]];
+        if (region !== undefined) { lat = region; }
+      }
+      var where = hit ? 'over ' + zone.split('/').pop().replace(/_/g, ' ') : (zone ? 'above you' : 'over Seoul');
+      return { lat: lat, lon: lon, where: where };
+    })();
+    var rad = Math.PI / 180, stars = [];
+    function num(s) { return parseInt(s, 36); }
+    for (var i = 0; i < STARS.length; i += 8) {
+      stars.push([num(STARS.substr(i, 3)) / 10, (num(STARS.substr(i + 3, 3)) - 900) / 10, (num(STARS.substr(i + 6, 2)) - 20) / 10]);
+    }
+    canvas.className = 'sky';
+    canvas.setAttribute('aria-hidden', 'true');
+    document.body.prepend(canvas);
+    var ctx = canvas.getContext('2d');
+    function draw() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2), w = window.innerWidth, h = window.innerHeight;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      var color = getComputedStyle(document.documentElement).getPropertyValue('--star').trim() || '#A9AEB6';
+      var dark = document.documentElement.classList.contains('is-dark');
+      // sidereal time: where the sky has turned to at this moment and longitude
+      var jd = Date.now() / 86400000 + 2440587.5;
+      var lst = (280.46061837 + 360.98564736629 * (jd - 2451545) + place.lon) % 360;
+      var phi = place.lat * rad, sinPhi = Math.sin(phi), cosPhi = Math.cos(phi);
+      // looking straight up: zenith a little above centre, the horizon just past the corners
+      var cx = w / 2, cy = h * 0.42, R = Math.hypot(w / 2, Math.max(cy, h - cy)) * 1.04;
+      ctx.fillStyle = color;
+      for (var k = 0; k < stars.length; k++) {
+        var s = stars[k], dec = s[1] * rad, ha = (lst - s[0]) * rad;
+        var sinAlt = sinPhi * Math.sin(dec) + cosPhi * Math.cos(dec) * Math.cos(ha);
+        if (sinAlt <= 0) { continue; }
+        var alt = Math.asin(sinAlt);
+        var az = Math.atan2(-Math.cos(dec) * Math.sin(ha), Math.sin(dec) * cosPhi - Math.cos(dec) * sinPhi * Math.cos(ha));
+        var r = Math.tan((Math.PI / 2 - alt) / 2) * R;
+        var x = cx - r * Math.sin(az), y = cy - r * Math.cos(az);
+        if (x < -4 || y < -4 || x > w + 4 || y > h + 4) { continue; }
+        var mag = s[2], size = Math.max(0.55, 1.9 - 0.33 * mag);
+        var alpha = Math.min(1, Math.max(0.16, 0.95 - 0.17 * mag)) * (dark ? 0.75 : 0.5);
+        if (mag < 1.2) {
+          ctx.globalAlpha = alpha * 0.18;
+          ctx.beginPath(); ctx.arc(x, y, size * 2.6, 0, 2 * Math.PI); ctx.fill();
+        }
+        ctx.globalAlpha = alpha;
+        ctx.beginPath(); ctx.arc(x, y, size, 0, 2 * Math.PI); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    draw();
+    document.documentElement.classList.add('sky-on');
+    var note = document.querySelector('.sky-note');
+    if (note) { note.textContent = 'The stars behind this page are the sky ' + place.where + ' right now.'; note.hidden = false; }
+    var pending;
+    window.addEventListener('resize', function () { clearTimeout(pending); pending = setTimeout(draw, 120); });
+    new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    setInterval(draw, 60000);
   })();
 
   /* theme switch: remembers the choice, follows the OS until you make one */
