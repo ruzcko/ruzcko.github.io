@@ -4,19 +4,21 @@ Minimal personal website hosted at https://ruzcko.com/ with GitHub Pages.
 
 ## Editing
 
-The active page is `index.html`, with its portrait in `me.jpg`.
-The page includes its styles and small interaction scripts. No Hugo, Node.js,
-or package installation is required. Open `index.html` in a browser to preview.
+The whole site is `index.html`, with its portrait in `portrait.jpg`. The page
+carries its own styles and small interaction scripts — no framework, no web
+fonts beyond `coffee-script.ttf`, no CDN, and nothing to install. Open
+`index.html` in a browser to preview.
 
 ## Publishing
 
 Run `python3 scripts/build.py` to assemble `_site/`. Push to `main` to deploy
-through GitHub Actions. The build includes redirects for the former publication
-and experience pages, a sitemap, and robots.txt. The CV button opens
-`cv.pdf`, which is included in the published site.
+through GitHub Actions. The build copies the published assets, writes a sitemap
+and robots.txt, and generates redirect stubs for the former publication and
+experience URLs. Add a new image to the `ASSETS` list in the script or it will
+not be published; the old URLs kept alive live in `PUBLICATIONS`.
 
-The old Hugo content and configuration remain as reference material and are
-not published. Publication folder names are used to preserve old URLs.
+The site was previously generated with Hugo Blox. That scaffolding has been
+removed — it is still in the git history if an old page is ever needed.
 
 ## Domain and recovery
 

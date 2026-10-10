@@ -5,8 +5,31 @@ import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / '_site'
+
+ASSETS = (
+    'index.html', 'coffee-script.ttf', 'coffee-font-license.txt', 'portrait.jpg',
+    'share.jpg', 'favicon.svg', 'weather-observatory.jpg', 's2rain.jpg',
+    'precipitation-downscaling.jpg', 'di-lab.jpg', 'ai-deadlines.jpg',
+    'apelyido.jpg', 'catalogo-1849.jpg',
+)
+
+# Slugs of the publication pages the old Hugo site published. They no longer
+# exist as content folders, but the URLs are indexed, so each one still needs a
+# redirect stub. Add a slug here only to keep an old URL alive.
+PUBLICATIONS = (
+    'ai-quality-management',
+    'chest-xray-classification',
+    'conidial-fungi-transfer-learning',
+    'faster-rcnn-blood-cell-classification',
+    'lettuce-life-stage-classification',
+    'photosynthetic-growth-signature',
+    'public-security-threat-detection',
+    'samba',
+    'smart-aquaponics-machine-learning',
+)
+
 OUT.mkdir(exist_ok=True)
-for name in ('index.html', 'coffee-script.ttf', 'coffee-font-license.txt', 'me.jpg', 'portrait.jpg', 'share.jpg', 'favicon.svg', 'buy-me-a-coffee.png', 'weather-observatory.jpg', 's2rain.jpg', 'precipitation-downscaling.jpg', 'di-lab.jpg', 'ai-deadlines.jpg', 'apelyido.jpg', 'catalogo-1849.jpg'):
+for name in ASSETS:
     shutil.copy2(ROOT / name, OUT / name)
 if (ROOT / 'cv.pdf').is_file():
     shutil.copy2(ROOT / 'cv.pdf', OUT / 'cv.pdf')
@@ -29,8 +52,8 @@ def redirect(route, target):
 
 redirect('publications', '/#publications')
 redirect('experience', '/#experience')
-for publication in (ROOT / 'content/publications').glob('*/index.md'):
-    redirect('publications/' + publication.parent.name, '/#publications')
+for slug in PUBLICATIONS:
+    redirect('publications/' + slug, '/#publications')
 (OUT / '.nojekyll').touch()
 (OUT / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://ruzcko.com/sitemap.xml\n')
 (OUT / 'sitemap.xml').write_text(
