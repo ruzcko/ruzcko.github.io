@@ -131,6 +131,11 @@
   }
 
   * { box-sizing: border-box; }
+  /* say which scheme is on screen: browsers with their own dark mode
+     (Samsung Internet, Chrome's auto-dark) then leave the colours alone */
+  :root { color-scheme: light dark; }
+  :root[data-theme="light"] { color-scheme: only light; }
+  :root[data-theme="dark"] { color-scheme: only dark; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0; color: var(--ink);
@@ -149,10 +154,7 @@
   }
   .mono { font-family: var(--mono); font-feature-settings: "zero" 0; }
 
-  /* links answer in ink, not blue: an underline draws in on hover */
-  a { color: var(--ink); text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 1px; text-underline-offset: 3px; transition: text-decoration-color .2s ease; }
-  .icons a, .news-social, .section-menu a, .back-top, .contact-actions a, .proj-img, .news-media > a, .skip-link { text-decoration: none; }
-  @media (hover: hover) and (pointer: fine) { a:hover { text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); } }
+  a { color: var(--ink); text-decoration: none; }
   a, button, summary { -webkit-tap-highlight-color: transparent; }
   :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
 
@@ -427,10 +429,15 @@
   .news-media > a { display: block; overflow: hidden; border-radius: 12px; border: 1px solid var(--card-edge); }
   .news-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
   .news-item::before { transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+  .news-item::after {
+    content: ""; position: absolute; inset: 6px -12px 6px 14px; z-index: -1; border-radius: 14px;
+    background: var(--chip); opacity: 0; transition: opacity .2s ease; pointer-events: none;
+  }
   @media (hover: hover) and (pointer: fine) {
-    /* hovering a story lights its dot, underlines the headline, nudges the picture */
+    /* hovering a story brings up the same grey pane as Experience, lights
+       its dot and nudges the picture */
+    .news-item:hover::after { opacity: 1; }
     .news-item:hover::before { background: var(--ink); border-color: var(--ink); transform: scale(1.2); }
-    .news-item:hover .news-head { text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
     .news-item:hover .news-media img { transform: scale(1.04); }
   }
   .news-media .news-summary { margin-top: 0; }
@@ -487,17 +494,22 @@
   .tags.has-more { -webkit-mask-image: linear-gradient(to right, #000 80%, transparent); mask-image: linear-gradient(to right, #000 80%, transparent); }
   .tags span { flex: none; white-space: nowrap; font-family: var(--mono); font-size: 11px; padding: 3px 9px; border-radius: 999px; background: var(--chip); border: 1px solid var(--card-edge); color: var(--muted); }
   .proj-link { margin-top: auto; font-size: 14px; font-weight: 600; color: var(--ink); }
-  .proj-link span { color: var(--muted); }
+  .proj-link span { display: inline-block; color: var(--muted); transition: transform .2s ease; }
   @media (hover: hover) and (pointer: fine) {
     .proj:hover, .proj:focus-within { transform: translateY(-2px); }
     .proj:hover .proj-img img, .proj:focus-within .proj-img img { transform: scale(1.04); }
-    .proj:hover h3 a, .proj-link:hover { text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+    .proj:hover .proj-link span { transform: translate(2px, -2px); }
   }
 
   /* ---------- publications ---------- */
   .pubs { padding: 4px 24px 8px; }
   .year-head { margin: 18px 0 2px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; color: var(--faint); }
-  .pub { padding: 12px 0; border-top: 1px solid var(--rule-soft); }
+  .pub { position: relative; padding: 12px 0; border-top: 1px solid var(--rule-soft); }
+  .pub::before {
+    content: ""; position: absolute; inset: 4px -12px; z-index: -1; border-radius: 14px;
+    background: var(--chip); opacity: 0; transition: opacity .2s ease; pointer-events: none;
+  }
+  @media (hover: hover) and (pointer: fine) { .pub:hover::before { opacity: 1; } }
   .year-head + .pub { border-top: 0; }
   .pub-title { font-size: 15px; font-weight: 600; line-height: 1.45; letter-spacing: -.005em; }
   /* long titles stop at two lines; hovering shows the whole thing */
