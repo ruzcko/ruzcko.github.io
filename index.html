@@ -45,7 +45,7 @@
     --chip: #0f12180b;
     --chip-solid: #ECEEF1;
     --pill: #f2f3f5b8;
-    --dot: #0f121814;
+    --star: #5E646E;
     --btn-bg: #15171B;
     --btn-ink: #FFFFFF;
     --focus: color-mix(in srgb, var(--ink) 55%, transparent);
@@ -88,7 +88,7 @@
       --chip: #ffffff0f;
       --chip-solid: #17191D;
       --pill: #0b0c0eb3;
-      --dot: #ffffff12;
+      --star: #A9AEB6;
       --btn-bg: #F2F3F5;
       --btn-ink: #0B0C0E;
       --contact-booking-bg: color-mix(in srgb, #984B3D 55%, transparent);
@@ -122,7 +122,7 @@
     --chip: #ffffff0f;
     --chip-solid: #17191D;
     --pill: #0b0c0eb3;
-    --dot: #ffffff12;
+    --star: #A9AEB6;
     --btn-bg: #F2F3F5;
     --btn-ink: #0B0C0E;
     --contact-booking-bg: color-mix(in srgb, #984B3D 55%, transparent);
@@ -153,13 +153,13 @@
     font-family: var(--sans); font-size: 16px; line-height: 1.6;
     -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   }
-  /* faint dot grid that fades out down the page: texture, not decoration */
+  /* a still sky of scattered specks: two layers on different spacings so
+     the pattern never visibly repeats */
   body::before {
-    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background-image: radial-gradient(var(--dot) 1px, transparent 1.2px);
-    background-size: 22px 22px;
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 10%, transparent 75%);
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 10%, transparent 75%);
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .55;
+    background-image: radial-gradient(1.3px 1.3px at 12% 18%, var(--star), transparent), radial-gradient(1px 1px at 33% 72%, var(--star), transparent), radial-gradient(1.5px 1.5px at 58% 26%, var(--star), transparent), radial-gradient(1px 1px at 77% 61%, var(--star), transparent), radial-gradient(1.2px 1.2px at 91% 12%, var(--star), transparent), radial-gradient(1px 1px at 46% 48%, var(--star), transparent), radial-gradient(1px 1px at 22% 88%, var(--star), transparent), radial-gradient(1.3px 1.3px at 68% 90%, var(--star), transparent), radial-gradient(1px 1px at 5% 50%, var(--star), transparent), radial-gradient(1.2px 1.2px at 84% 40%, var(--star), transparent),
+      radial-gradient(1px 1px at 8% 8%, var(--star), transparent), radial-gradient(1.2px 1.2px at 27% 41%, var(--star), transparent), radial-gradient(1px 1px at 49% 79%, var(--star), transparent), radial-gradient(1px 1px at 63% 14%, var(--star), transparent), radial-gradient(1.4px 1.4px at 88% 67%, var(--star), transparent), radial-gradient(1px 1px at 39% 23%, var(--star), transparent), radial-gradient(1px 1px at 71% 47%, var(--star), transparent), radial-gradient(1.2px 1.2px at 16% 63%, var(--star), transparent);
+    background-size: 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 300px 250px, 470px 390px, 470px 390px, 470px 390px, 470px 390px, 470px 390px, 470px 390px, 470px 390px, 470px 390px;
   }
   .mono { font-family: var(--mono); font-feature-settings: "zero" 0; }
 
