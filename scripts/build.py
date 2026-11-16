@@ -10,7 +10,7 @@ ASSETS = (
     'index.html', 'coffee-script.ttf', 'coffee-font-license.txt', 'portrait.jpg',
     'share.jpg', 'favicon.svg', 'weather-observatory.jpg', 's2rain.jpg',
     'precipitation-downscaling.jpg', 'di-lab.jpg', 'ai-deadlines.jpg',
-    'apelyido.jpg', 'catalogo-1849.jpg',
+    'apelyido.jpg', 'catalogo-1849.jpg', 'project-claire.jpg',
 )
 
 # Slugs of the publication pages the old Hugo site published. They no longer
@@ -27,6 +27,15 @@ PUBLICATIONS = (
     'samba',
     'smart-aquaponics-machine-learning',
 )
+
+# Fail the build when the page points at a local file that is not published,
+# so a new image cannot ship as a broken link.
+import re
+_page = (ROOT / 'index.html').read_text(encoding='utf-8')
+_local = {m for m in re.findall(r'(?:src|href)="([^"#?:]+\.(?:jpg|jpeg|png|webp|svg|gif|ttf|pdf))"', _page)}
+_missing = sorted(_local - set(ASSETS) - {'cv.pdf'})
+if _missing:
+    raise SystemExit('index.html uses files missing from ASSETS: ' + ', '.join(_missing))
 
 OUT.mkdir(exist_ok=True)
 for name in ASSETS:
